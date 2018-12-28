@@ -1,0 +1,4 @@
+@ParametersAreNonnullByDefault
+package com.jamieswhiteshirt.clotheslinefabric.client.raytrace;
+
+import javax.annotation.ParametersAreNonnullByDefault;

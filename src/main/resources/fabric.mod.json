@@ -1,0 +1,18 @@
+{
+  "id": "clothesline-fabric",
+  "name": "Clothesline Fabric",
+  "description": "A seamless laundry experience that is definitely not an item transport mod.",
+  "version": "0.0.0.1",
+  "side": "universal",
+  "initializers": [
+    "com.jamieswhiteshirt.clotheslinefabric.Clothesline",
+    "com.jamieswhiteshirt.clotheslinefabric.client.ClotheslineClient"
+  ],
+  "requires": {
+    "fabric": "*"
+  },
+  "mixins": {
+    "client": "mixins.clothesline-fabric.client.json",
+    "common": "mixins.clothesline-fabric.common.json"
+  }
+}

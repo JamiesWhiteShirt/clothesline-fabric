@@ -1,0 +1,19 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "wheel": "clothesline-fabric:items/pulley_wheel"
+    },
+    "elements": [
+        {   "from": [ 6, 7, 6 ],
+            "to": [ 10, 9, 10 ],
+            "faces": {
+                "down":  { "uv": [8, 12, 12, 16], "texture": "#wheel" },
+                "up":    { "uv": [8, 12, 12, 16], "texture": "#wheel" },
+                "north": { "uv": [8, 10, 12, 12], "texture": "#wheel" },
+                "south": { "uv": [8, 10, 12, 12], "texture": "#wheel" },
+                "west":  { "uv": [8, 10, 12, 12], "texture": "#wheel" },
+                "east":  { "uv": [8, 10, 12, 12], "texture": "#wheel" }
+            }
+        }
+    ]
+}

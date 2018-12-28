@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "com.jamieswhiteshirt.clotheslinefabric.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "entity.player.PlayerEntityMixin",
+    "server.world.ServerWorldMixin",
+    "world.WorldMixin",
+    "class_3898Mixin",
+    "world.chunk.WorldChunkMixin",
+    "server.network.ServerPlayerEntityMixin",
+    "item.ItemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
