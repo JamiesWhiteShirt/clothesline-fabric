@@ -23,7 +23,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
     @Inject(
         at = @At("RETURN"),
-        method = "method_4215(Lnet/minecraft/client/network/AbstractClientPlayerEntity;DDDFF)V"
+        method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;DDDFF)V"
     )
     private void method_4215(AbstractClientPlayerEntity player, double x, double y, double z, float float_1, float delta, CallbackInfo ci) {
         double posX = MathHelper.lerp(delta, player.prevRenderX, player.x);

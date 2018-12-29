@@ -16,7 +16,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.FontRenderer;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
-import net.minecraft.client.render.model.json.ModelTransformations;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.GlAllocationUtils;
 import net.minecraft.client.util.math.Matrix4f;
 import net.minecraft.client.util.math.Vector4f;
@@ -182,7 +182,7 @@ public final class RenderClotheslineNetwork {
                     GlStateManager.pushMatrix();
                     GlStateManager.translated(-viewPos.x, -viewPos.y, -viewPos.z);
                     GlStateManager.multMatrix(l2wBuffer);
-                    client.getItemRenderer().renderItemWithTransformation(attachmentEntry.getValue(), ModelTransformations.Type.FIXED);
+                    client.getItemRenderer().renderItemWithTransformation(attachmentEntry.getValue(), ModelTransformation.Type.FIXED);
                     GlStateManager.popMatrix();
 
                     l2wBuffer.clear();

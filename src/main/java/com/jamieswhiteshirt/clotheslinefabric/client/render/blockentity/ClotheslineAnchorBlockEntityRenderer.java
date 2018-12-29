@@ -19,7 +19,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.client.render.model.json.ModelTransformations;
+import net.minecraft.client.render.model.json.Transformation;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
@@ -55,23 +55,23 @@ public class ClotheslineAnchorBlockEntityRenderer extends BlockEntityRenderer<Cl
 
         GlStateManager.pushMatrix();
         GlStateManager.scalef(2.0F, 2.0F, 2.0F);
-        renderModel(BakedModels.pulleyWheel, ModelTransformations.Type.FIXED);
+        renderModel(BakedModels.pulleyWheel, ModelTransformation.Type.FIXED);
         if (node != null && !node.getNetwork().getState().getTree().isEmpty()) {
-            renderModel(BakedModels.pulleyWheelRope, ModelTransformations.Type.FIXED);
+            renderModel(BakedModels.pulleyWheelRope, ModelTransformation.Type.FIXED);
         }
         GlStateManager.popMatrix();
 
         if (te.getHasCrank()) {
             GlStateManager.pushMatrix();
             GlStateManager.translatef(0.0F, 4.0F / 16.0F, 0.0F);
-            client.getItemRenderer().renderItemWithTransformation(new ItemStack(ClotheslineItems.CRANK), ModelTransformations.Type.FIXED);
+            client.getItemRenderer().renderItemWithTransformation(new ItemStack(ClotheslineItems.CRANK), ModelTransformation.Type.FIXED);
             GlStateManager.popMatrix();
         }
 
         GlStateManager.popMatrix();
     }
 
-    private void renderModel(BakedModel bakedModel, ModelTransformations.Type modelTransformationsType) {
+    private void renderModel(BakedModel bakedModel, ModelTransformation.Type modelTransformationType) {
         if (bakedModel.isBuiltin()) return;
 
         client.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
@@ -82,9 +82,9 @@ public class ClotheslineAnchorBlockEntityRenderer extends BlockEntityRenderer<Cl
         GlStateManager.enableBlend();
         GlStateManager.blendFuncSeparate(GlStateManager.SrcBlendFactor.SRC_ALPHA, GlStateManager.DstBlendFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcBlendFactor.ONE, GlStateManager.DstBlendFactor.ZERO);
         GlStateManager.pushMatrix();
-        ModelTransformations modelTransformations = bakedModel.getTransformations();
-        ModelTransformations.applyGl(modelTransformations.getTransformation(modelTransformationsType), false);
-        if (isInverted(modelTransformations.getTransformation(modelTransformationsType))) {
+        ModelTransformation modelTransformation = bakedModel.getTransformation();
+        ModelTransformation.applyGl(modelTransformation.getTransformation(modelTransformationType), false);
+        if (isInverted(modelTransformation.getTransformation(modelTransformationType))) {
             GlStateManager.cullFace(GlStateManager.FaceSides.FRONT);
         }
 
@@ -133,7 +133,7 @@ public class ClotheslineAnchorBlockEntityRenderer extends BlockEntityRenderer<Cl
         bufferBuilder.postNormal((float)vec3i_1.getX(), (float)vec3i_1.getY(), (float)vec3i_1.getZ());
     }
 
-    private boolean isInverted(ModelTransformation modelTransformation_1) {
-        return modelTransformation_1.field_4285.x() < 0.0F ^ modelTransformation_1.field_4285.y() < 0.0F ^ modelTransformation_1.field_4285.z() < 0.0F;
+    private boolean isInverted(Transformation transformation) {
+        return transformation.scale.x() < 0.0F ^ transformation.scale.y() < 0.0F ^ transformation.scale.z() < 0.0F;
     }
 }
