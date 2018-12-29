@@ -1,8 +1,8 @@
 {
   "id": "clothesline-fabric",
-  "name": "Clothesline Fabric",
+  "name": "Clothesline",
   "description": "A seamless laundry experience that is definitely not an item transport mod.",
-  "version": "0.0.0.1",
+  "version": "0.0.1.0",
   "side": "universal",
   "initializers": [
     "com.jamieswhiteshirt.clotheslinefabric.Clothesline",
