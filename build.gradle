@@ -53,6 +53,10 @@ test {
     useJUnitPlatform()
 }
 
+processResources {
+    exclude "**/*.psd"
+}
+
 task remapShadowJar(type: RemapJar) {
     jar = shadowJar.archivePath
 }
