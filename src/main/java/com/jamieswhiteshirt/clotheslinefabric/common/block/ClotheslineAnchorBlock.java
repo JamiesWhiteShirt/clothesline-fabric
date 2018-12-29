@@ -4,7 +4,7 @@ import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManager;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkNode;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkState;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
-import com.jamieswhiteshirt.clotheslinefabric.common.blockentity.ClotheslineAnchorBlockEntity;
+import com.jamieswhiteshirt.clotheslinefabric.common.block.entity.ClotheslineAnchorBlockEntity;
 import com.jamieswhiteshirt.clotheslinefabric.common.item.ClotheslineItems;
 import com.jamieswhiteshirt.clotheslinefabric.common.sound.ClotheslineSoundEvents;
 import net.fabricmc.api.EnvType;

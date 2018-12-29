@@ -1,8 +1,7 @@
 package com.jamieswhiteshirt.clotheslinefabric;
 
-import com.jamieswhiteshirt.clotheslinefabric.client.network.ClientMessageHandling;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
-import com.jamieswhiteshirt.clotheslinefabric.common.blockentity.ClotheslineBlockEntityTypes;
+import com.jamieswhiteshirt.clotheslinefabric.common.block.entity.ClotheslineBlockEntityTypes;
 import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkLoadEvent;
 import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkWatchEvent;
 import com.jamieswhiteshirt.clotheslinefabric.common.event.TrackEntityEvent;

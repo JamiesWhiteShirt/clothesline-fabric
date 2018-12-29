@@ -2,7 +2,7 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.client.gui.hud;
 
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineAnchorBlock;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
-import com.jamieswhiteshirt.clotheslinefabric.common.blockentity.ClotheslineAnchorBlockEntity;
+import com.jamieswhiteshirt.clotheslinefabric.common.block.entity.ClotheslineAnchorBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.hud.InGameHud;

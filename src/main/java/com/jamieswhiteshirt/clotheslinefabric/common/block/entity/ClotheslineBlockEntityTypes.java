@@ -1,4 +1,4 @@
-package com.jamieswhiteshirt.clotheslinefabric.common.blockentity;
+package com.jamieswhiteshirt.clotheslinefabric.common.block.entity;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;

@@ -5,7 +5,7 @@ import com.jamieswhiteshirt.clotheslinefabric.api.Network;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkNode;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.BakedModels;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineAnchorBlock;
-import com.jamieswhiteshirt.clotheslinefabric.common.blockentity.ClotheslineAnchorBlockEntity;
+import com.jamieswhiteshirt.clotheslinefabric.common.block.entity.ClotheslineAnchorBlockEntity;
 import com.jamieswhiteshirt.clotheslinefabric.common.item.ClotheslineItems;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.EnvType;

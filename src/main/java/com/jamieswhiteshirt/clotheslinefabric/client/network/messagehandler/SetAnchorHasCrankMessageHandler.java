@@ -1,6 +1,6 @@
 package com.jamieswhiteshirt.clotheslinefabric.client.network.messagehandler;
 
-import com.jamieswhiteshirt.clotheslinefabric.common.blockentity.ClotheslineAnchorBlockEntity;
+import com.jamieswhiteshirt.clotheslinefabric.common.block.entity.ClotheslineAnchorBlockEntity;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.SetAnchorHasCrankMessage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

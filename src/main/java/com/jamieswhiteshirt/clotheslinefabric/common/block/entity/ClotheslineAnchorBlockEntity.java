@@ -1,4 +1,4 @@
-package com.jamieswhiteshirt.clotheslinefabric.common.blockentity;
+package com.jamieswhiteshirt.clotheslinefabric.common.block.entity;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.*;
 import com.jamieswhiteshirt.clotheslinefabric.api.util.MutableSortedIntMap;

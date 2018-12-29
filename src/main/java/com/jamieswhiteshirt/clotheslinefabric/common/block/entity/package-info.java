@@ -1,4 +1,4 @@
 @ParametersAreNonnullByDefault
-package com.jamieswhiteshirt.clotheslinefabric.common.blockentity;
+package com.jamieswhiteshirt.clotheslinefabric.common.block.entity;
 
 import javax.annotation.ParametersAreNonnullByDefault;
