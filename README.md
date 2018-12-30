@@ -6,4 +6,4 @@ A seamless laundry experience that is definitely not an item transport mod for [
 
 ## Developing Clothesline Fabric
 
-To get started, refer to the [Fabric documentation](https://mcforge.readthedocs.io/en/latest/gettingstarted/).
+To get started, refer to the [Fabric documentation](https://fabricmc.net/wiki/start/).
