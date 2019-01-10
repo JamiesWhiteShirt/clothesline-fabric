@@ -81,7 +81,6 @@ public final class NetworkStateBuilder {
         return new SplitResult(
             new NetworkStateBuilder(momentum, result.getTree()),
             result.getSubTrees().stream()
-                .filter(tree -> !tree.isEmpty())
                 .map(tree -> new NetworkStateBuilder(momentum, tree))
                 .collect(Collectors.toList())
         );
@@ -92,7 +91,6 @@ public final class NetworkStateBuilder {
         return new SplitResult(
             new NetworkStateBuilder(momentum, result.getTree()),
             result.getSubTrees().stream()
-                .filter(tree -> !tree.isEmpty())
                 .map(tree -> new NetworkStateBuilder(momentum, tree))
                 .collect(Collectors.toList())
         );
