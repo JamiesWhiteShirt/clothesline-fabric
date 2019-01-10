@@ -16,22 +16,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(class_3898.class)
 public class class_3898Mixin {
-    @Shadow @Final private World field_17214;
+    @Shadow @Final private World world;
 
     @Inject(
         at = @At("RETURN"),
         method = "method_17241(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/world/chunk/ChunkPos;[Lnet/minecraft/network/Packet;ZZ)V"
     )
     private void method_17241(ServerPlayerEntity player, ChunkPos pos, Packet<?>[] packets, boolean previouslyWatching, boolean currentlyWatching, CallbackInfo ci) {
-        if (player.world == field_17214) {
+        if (player.world == world) {
             if (currentlyWatching && !previouslyWatching) {
                 for (ChunkWatchEvent.ChunkWatchEventConsumer handler : ((HandlerArray<ChunkWatchEvent.ChunkWatchEventConsumer>) ChunkWatchEvent.WATCH).getBackingArray()) {
-                    handler.accept(field_17214, pos, player);
+                    handler.accept(world, pos, player);
                 }
             }
             if (!currentlyWatching && previouslyWatching) {
                 for (ChunkWatchEvent.ChunkWatchEventConsumer handler : ((HandlerArray<ChunkWatchEvent.ChunkWatchEventConsumer>) ChunkWatchEvent.UNWATCH).getBackingArray()) {
-                    handler.accept(field_17214, pos, player);
+                    handler.accept(world, pos, player);
                 }
             }
         }
