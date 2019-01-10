@@ -14,6 +14,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.Properties;
@@ -92,6 +93,18 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements BlockEnt
     public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState state2, boolean var5) {
         NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
         manager.breakNode(null, pos);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+        ClotheslineAnchorBlockEntity blockEntity = getBlockEntity(world, pos);
+        if (blockEntity != null && blockEntity.getHasCrank()) {
+            blockEntity.setHasCrank(false);
+            if (!world.isClient && !player.isCreative()) {
+                dropStack(world, pos, new ItemStack(ClotheslineItems.CRANK));
+            }
+        }
     }
 
     @Override
