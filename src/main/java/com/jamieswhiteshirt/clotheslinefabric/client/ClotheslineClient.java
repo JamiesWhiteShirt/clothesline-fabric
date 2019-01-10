@@ -2,7 +2,7 @@ package com.jamieswhiteshirt.clotheslinefabric.client;
 
 import com.jamieswhiteshirt.clotheslinefabric.client.network.ClientMessageHandling;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.BakedModels;
-import com.jamieswhiteshirt.clotheslinefabric.client.render.blockentity.ClotheslineAnchorBlockEntityRenderer;
+import com.jamieswhiteshirt.clotheslinefabric.client.render.block.entity.ClotheslineAnchorBlockEntityRenderer;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.entity.ClotheslineAnchorBlockEntity;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;

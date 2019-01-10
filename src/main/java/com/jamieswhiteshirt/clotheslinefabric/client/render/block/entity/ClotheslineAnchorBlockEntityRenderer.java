@@ -1,4 +1,4 @@
-package com.jamieswhiteshirt.clotheslinefabric.client.render.blockentity;
+package com.jamieswhiteshirt.clotheslinefabric.client.render.block.entity;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.AttachmentUnit;
 import com.jamieswhiteshirt.clotheslinefabric.api.Network;
@@ -37,8 +37,8 @@ public class ClotheslineAnchorBlockEntityRenderer extends BlockEntityRenderer<Cl
     }
 
     @Override
-    public void render(ClotheslineAnchorBlockEntity te, double x, double y, double z, float delta, int destroyStage) {
-        NetworkNode node = te.getNetworkNode();
+    public void render(ClotheslineAnchorBlockEntity be, double x, double y, double z, float delta, int destroyStage) {
+        NetworkNode node = be.getNetworkNode();
         float crankRotation = 0.0F;
         if (node != null) {
             Network network = node.getNetwork();
@@ -47,7 +47,7 @@ public class ClotheslineAnchorBlockEntityRenderer extends BlockEntityRenderer<Cl
         }
         GlStateManager.pushMatrix();
         GlStateManager.translated(x + 0.5D, y + 0.5D, z + 0.5D);
-        if (te.getCachedState().get(ClotheslineAnchorBlock.field_11007) == WallMountLocation.CEILING) {
+        if (be.getCachedState().get(ClotheslineAnchorBlock.field_11007) == WallMountLocation.CEILING) {
             GlStateManager.rotatef(180.0F, 1.0F, 0.0F, 0.0F);
             crankRotation = -crankRotation;
         }
@@ -61,7 +61,7 @@ public class ClotheslineAnchorBlockEntityRenderer extends BlockEntityRenderer<Cl
         }
         GlStateManager.popMatrix();
 
-        if (te.getHasCrank()) {
+        if (be.getHasCrank()) {
             GlStateManager.pushMatrix();
             GlStateManager.translatef(0.0F, 4.0F / 16.0F, 0.0F);
             client.getItemRenderer().renderItemWithTransformation(new ItemStack(ClotheslineItems.CRANK), ModelTransformation.Type.FIXED);
