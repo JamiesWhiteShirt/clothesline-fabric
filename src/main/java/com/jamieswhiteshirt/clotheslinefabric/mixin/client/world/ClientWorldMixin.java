@@ -11,7 +11,7 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Profiler;
+import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
@@ -43,7 +43,7 @@ public abstract class ClientWorldMixin extends World implements NetworkManagerPr
 
     @Inject(
         at = @At("RETURN"),
-        method = "<init>(Lnet/minecraft/client/network/ClientPlayNetworkHandler;Lnet/minecraft/world/level/LevelInfo;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/world/Difficulty;Lnet/minecraft/util/Profiler;)V"
+        method = "<init>(Lnet/minecraft/client/network/ClientPlayNetworkHandler;Lnet/minecraft/world/level/LevelInfo;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/world/Difficulty;Lnet/minecraft/util/profiler/Profiler;)V"
     )
     private void constructor(ClientPlayNetworkHandler clientPlayNetworkHandler_1, LevelInfo levelInfo_1, DimensionType dimensionType_1, Difficulty difficulty_1, Profiler profiler_1, CallbackInfo ci) {
         networkManager.getNetworks().addEventListener(SOUND_KEY, new SoundNetworkCollectionListener());

@@ -31,9 +31,9 @@ public abstract class CommonNetworkManager implements NetworkManager {
 
     @Override
     public final void update() {
-        world.getProfiler().begin("tickClotheslines");
+        world.getProfiler().push("tickClotheslines");
         networks.getValues().forEach(Network::update);
-        world.getProfiler().end();
+        world.getProfiler().pop();
     }
 
     private void extend(Network network, BlockPos fromPos, BlockPos toPos) {

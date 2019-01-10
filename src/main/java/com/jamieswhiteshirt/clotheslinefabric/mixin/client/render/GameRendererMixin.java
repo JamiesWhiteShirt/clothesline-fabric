@@ -26,7 +26,7 @@ public class GameRendererMixin {
     @Inject(
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/util/Profiler;end()V"
+            target = "Lnet/minecraft/util/profiler/Profiler;pop()V"
         ),
         method = "method_3190(F)V"
     )

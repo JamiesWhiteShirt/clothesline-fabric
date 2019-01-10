@@ -25,9 +25,9 @@ public class DebugHudMixin extends Drawable {
 
     @Inject(
         at = @At("RETURN"),
-        method = "method_1839()Ljava/util/List;"
+        method = "getRightText()Ljava/util/List;"
     )
-    private void method_1830(CallbackInfoReturnable<List<String>> cir) {
+    private void getRightText(CallbackInfoReturnable<List<String>> cir) {
         if (!client.hasReducedDebugInfo()) {
             if (client.field_1692 instanceof NetworkRaytraceHitEntity) {
                 NetworkRaytraceHit hit = ((NetworkRaytraceHitEntity) client.field_1692).getHit();

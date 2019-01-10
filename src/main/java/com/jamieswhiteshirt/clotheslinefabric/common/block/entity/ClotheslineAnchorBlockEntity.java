@@ -187,11 +187,6 @@ public class ClotheslineAnchorBlockEntity extends BlockEntity implements SidedIn
     }
 
     @Override
-    public TextComponent getName() {
-        return new TranslatableTextComponent("container.clothesline-fabric.clothesline_anchor");
-    }
-
-    @Override
     public int getInvMaxStackAmount() {
         return 1;
     }

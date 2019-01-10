@@ -27,7 +27,7 @@ public final class ServerNetworkManager extends CommonNetworkManager {
         if (!stack.isEmpty()) {
             Vec3d pos = state.getPath().getPositionForOffset(state.attachmentKeyToOffset(attachmentKey));
             ItemEntity itemEntity = new ItemEntity(world, pos.x, pos.y - 0.5D, pos.z, stack);
-            itemEntity.setPickupDelayDefault();
+            itemEntity.method_6988();
             world.spawnEntity(itemEntity);
         }
     }
@@ -43,7 +43,7 @@ public final class ServerNetworkManager extends CommonNetworkManager {
                 (1 + from.getZ() + to.getZ()) / 2.0D,
                 new ItemStack(ClotheslineItems.CLOTHESLINE)
             );
-            itemEntity.setPickupDelayDefault();
+            itemEntity.method_6988();
             world.spawnEntity(itemEntity);
             dropTreeItems(edge.getTree());
         }

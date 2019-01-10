@@ -29,13 +29,13 @@ public class WorldRendererMixin {
     @Inject(
         at = @At(
             value = "INVOKE_STRING",
-            target = "Lnet/minecraft/util/Profiler;endBegin(Ljava/lang/String;)V",
+            target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
             args = "ldc=blockentities"
         ),
         method = "renderEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/class_856;F)V"
     )
     private void renderEntities(Entity cameraEntity, class_856 camera, float delta, CallbackInfo ci) {
-        world.getProfiler().endBegin("renderClotheslines");
+        world.getProfiler().swap("renderClotheslines");
         double x = MathHelper.lerp(delta, cameraEntity.prevRenderX, cameraEntity.x);
         double y = MathHelper.lerp(delta, cameraEntity.prevRenderY, cameraEntity.y);
         double z = MathHelper.lerp(delta, cameraEntity.prevRenderZ, cameraEntity.z);
@@ -57,7 +57,7 @@ public class WorldRendererMixin {
         at = @At("TAIL"),
         method = "drawHighlightedBlockOutline(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/HitResult;IF)V"
     )
-    private void method_3294(PlayerEntity player, HitResult hitResult, int var3, float delta, CallbackInfo ci) {
+    private void drawHighlightedBlockOutline(PlayerEntity player, HitResult hitResult, int var3, float delta, CallbackInfo ci) {
         if (var3 == 0 && hitResult.type == HitResult.Type.ENTITY && hitResult.entity instanceof NetworkRaytraceHitEntity) {
             NetworkRaytraceHitEntity entity = (NetworkRaytraceHitEntity) hitResult.entity;
 
