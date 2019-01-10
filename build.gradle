@@ -4,6 +4,7 @@ plugins {
     id "fabric-loom" version "0.2.0-SNAPSHOT"
     id "com.github.johnrengelman.shadow" version "4.0.3"
     id "jacoco"
+    id "com.matthewprenger.cursegradle" version "1.1.2"
 }
 
 sourceCompatibility = 1.8
@@ -61,3 +62,31 @@ task remapShadowJar(type: RemapJar) {
     jar = shadowJar.archivePath
 }
 tasks.remapShadowJar.dependsOn tasks.shadowJar
+
+curseforge {
+    if (project.hasProperty("curseForgeApiKey")) {
+        apiKey = project.properties.curseForgeApiKey
+    }
+    project {
+        id = "310078"
+        changelogType = "markdown"
+        changelog = file("CHANGELOG.md")
+        releaseType = "beta"
+        addGameVersion "1.14-Snapshot"
+        mainArtifact(remapShadowJar.jar) {
+            displayName = "Clothesline $project.version"
+            relations {
+                requiredDependency "fabric"
+            }
+        }
+    }
+    options {
+        forgeGradleIntegration = false
+    }
+}
+
+afterEvaluate {
+    // CurseGradle generates tasks in afterEvaluate for each project
+    // There isn't really any other way to make it depend on a task unless it is an AbstractArchiveTask
+    tasks.curseforge310078.dependsOn remapShadowJar
+}
