@@ -6,7 +6,6 @@ import com.jamieswhiteshirt.clotheslinefabric.client.EdgeAttachmentProjector;
 import com.jamieswhiteshirt.clotheslinefabric.client.LineProjection;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineAnchorBlock;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
-import com.jamieswhiteshirt.clotheslinefabric.common.item.ClotheslineItems;
 import com.jamieswhiteshirt.clotheslinefabric.internal.ConnectorHolder;
 import com.jamieswhiteshirt.rtree3i.RTreeMap;
 import com.jamieswhiteshirt.rtree3i.Selection;
@@ -55,11 +54,9 @@ public final class RenderClotheslineNetwork {
     private static final double[] NORMAL_UP_MULTIPLIERS = new double[] { 0.0D, 1.0D, 0.0D, -1.0D };
 
     private final MinecraftClient client;
-    private final ItemModelRenderer itemModelRenderer;
 
     public RenderClotheslineNetwork(MinecraftClient client) {
         this.client = client;
-        this.itemModelRenderer = new ItemModelRenderer(client);
     }
 
     private static BufferBuilder pos(BufferBuilder bufferBuilder, Vec3d pos) {
@@ -174,16 +171,16 @@ public final class RenderClotheslineNetwork {
 
             GlStateManager.pushMatrix();
             GlStateManager.scalef(2.0F, 2.0F, 2.0F);
-            itemModelRenderer.renderModel(BakedModels.pulleyWheel, ModelTransformation.Type.FIXED);
+            ItemModelRenderer.renderModel(BakedModels.pulleyWheel, ModelTransformation.Type.FIXED);
             if (!node.getNetwork().getState().getTree().isEmpty()) {
-                itemModelRenderer.renderModel(BakedModels.pulleyWheelRope, ModelTransformation.Type.FIXED);
+                ItemModelRenderer.renderModel(BakedModels.pulleyWheelRope, ModelTransformation.Type.FIXED);
             }
             GlStateManager.popMatrix();
 
             if (state.get(ClotheslineAnchorBlock.CRANK)) {
                 GlStateManager.pushMatrix();
                 GlStateManager.translatef(0.0F, 4.0F / 16.0F, 0.0F);
-                itemModelRenderer.renderModel(BakedModels.crank, ModelTransformation.Type.FIXED);
+                ItemModelRenderer.renderModel(BakedModels.crank, ModelTransformation.Type.FIXED);
                 GlStateManager.popMatrix();
             }
 

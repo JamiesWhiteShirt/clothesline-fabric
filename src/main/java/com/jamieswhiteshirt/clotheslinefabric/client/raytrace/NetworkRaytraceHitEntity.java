@@ -42,12 +42,12 @@ public final class NetworkRaytraceHitEntity extends Entity implements PickStackE
     @Override
     public boolean method_5698(Entity entity) {
         // Called when a player attacks the entity
-        return hit.hitByEntity(manager, (PlayerEntity) entity);
+        return hit.hitByEntity((PlayerEntity) entity);
     }
 
     @Override
     public boolean interact(PlayerEntity player, Hand hand) {
-        return hit.useItem(manager, player, hand);
+        return hit.useItem(player, hand);
     }
 
     @Override

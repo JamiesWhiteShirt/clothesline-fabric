@@ -2,7 +2,6 @@ package com.jamieswhiteshirt.clotheslinefabric.client.raytrace;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.Network;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkEdge;
-import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManager;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.MessageChannels;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.HitAttachmentMessage;
@@ -35,7 +34,7 @@ public class AttachmentRaytraceHit extends NetworkRaytraceHit {
     }
 
     @Override
-    public boolean hitByEntity(NetworkManager manager, PlayerEntity player) {
+    public boolean hitByEntity(PlayerEntity player) {
         Network network = edge.getNetwork();
         MinecraftClient.getInstance().getNetworkHandler().sendPacket(MessageChannels.HIT_ATTACHMENT.createServerboundPacket(
             new HitAttachmentMessage(network.getId(), attachmentKey)
@@ -45,7 +44,7 @@ public class AttachmentRaytraceHit extends NetworkRaytraceHit {
     }
 
     @Override
-    public boolean useItem(NetworkManager manager, PlayerEntity player, Hand hand) {
+    public boolean useItem(PlayerEntity player, Hand hand) {
         return false;
     }
 

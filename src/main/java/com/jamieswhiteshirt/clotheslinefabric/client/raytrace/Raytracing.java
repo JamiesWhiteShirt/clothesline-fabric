@@ -13,7 +13,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.Matrix4f;
 import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.HitResult;
 import net.minecraft.util.math.BoundingBox;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;

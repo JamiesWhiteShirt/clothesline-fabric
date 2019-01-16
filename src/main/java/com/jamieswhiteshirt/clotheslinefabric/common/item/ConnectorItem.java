@@ -1,11 +1,7 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.item;
 
 import com.jamieswhiteshirt.clotheslinefabric.Clothesline;
-import com.jamieswhiteshirt.clotheslinefabric.common.network.MessageChannels;
-import com.jamieswhiteshirt.clotheslinefabric.common.network.message.ResetConnectorStateMessage;
-import com.jamieswhiteshirt.clotheslinefabric.common.network.message.SetConnectorStateMessage;
 import com.jamieswhiteshirt.clotheslinefabric.internal.ConnectorHolder;
-import net.minecraft.client.network.packet.CustomPayloadClientPacket;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

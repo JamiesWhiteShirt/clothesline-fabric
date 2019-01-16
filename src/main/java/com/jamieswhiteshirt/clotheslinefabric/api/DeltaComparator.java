@@ -8,7 +8,7 @@ import java.util.Comparator;
  * Compares Vec3i by XZ angle, then XZ length, then Y.
  */
 public class DeltaComparator implements Comparator<Vec3i> {
-    private static DeltaComparator ourInstance = new DeltaComparator();
+    private static final DeltaComparator ourInstance = new DeltaComparator();
 
     public static DeltaComparator getInstance() {
         return ourInstance;

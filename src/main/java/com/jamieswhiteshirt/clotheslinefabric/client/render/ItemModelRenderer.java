@@ -1,7 +1,6 @@
 package com.jamieswhiteshirt.clotheslinefabric.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
@@ -16,13 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ItemModelRenderer {
-    private final MinecraftClient client;
-
-    public ItemModelRenderer(MinecraftClient client) {
-        this.client = client;
-    }
-
-    public void renderModel(BakedModel bakedModel, ModelTransformation.Type modelTransformationType) {
+    public static void renderModel(BakedModel bakedModel, ModelTransformation.Type modelTransformationType) {
         if (bakedModel.isBuiltin()) return;
 
         GlStateManager.pushMatrix();
@@ -38,7 +31,7 @@ public class ItemModelRenderer {
         GlStateManager.popMatrix();
     }
 
-    private void renderModelColored(BakedModel bakedModel, int color) {
+    private static void renderModelColored(BakedModel bakedModel, int color) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBufferBuilder();
         bufferBuilder.begin(7, VertexFormats.POSITION_COLOR_UV_NORMAL);
@@ -47,8 +40,7 @@ public class ItemModelRenderer {
         Direction[] directions = Direction.values();
         int length = directions.length;
 
-        for(int i = 0; i < length; ++i) {
-            Direction direction_1 = directions[i];
+        for (Direction direction_1 : directions) {
             random.setSeed(seed);
             renderQuadsColored(bufferBuilder, bakedModel.getQuads(null, direction_1, random), color);
         }
@@ -58,7 +50,7 @@ public class ItemModelRenderer {
         tessellator.draw();
     }
 
-    private void renderQuadsColored(BufferBuilder bufferBuilder_1, List<BakedQuad> list_1, int color) {
+    private static void renderQuadsColored(BufferBuilder bufferBuilder_1, List<BakedQuad> list_1, int color) {
         int i = 0;
         for(int size = list_1.size(); i < size; ++i) {
             BakedQuad bakedQuad = list_1.get(i);
@@ -66,14 +58,14 @@ public class ItemModelRenderer {
         }
     }
 
-    private void renderQuadColored(BufferBuilder bufferBuilder, BakedQuad bakedQuad, int color) {
+    private static void renderQuadColored(BufferBuilder bufferBuilder, BakedQuad bakedQuad, int color) {
         bufferBuilder.putVertexData(bakedQuad.getVertexData());
         bufferBuilder.setQuadColor(color);
         Vec3i vec3i_1 = bakedQuad.getFace().getVector();
         bufferBuilder.postNormal((float)vec3i_1.getX(), (float)vec3i_1.getY(), (float)vec3i_1.getZ());
     }
 
-    private boolean isInverted(Transformation transformation) {
+    private static boolean isInverted(Transformation transformation) {
         return transformation.scale.x() < 0.0F ^ transformation.scale.y() < 0.0F ^ transformation.scale.z() < 0.0F;
     }
 }
