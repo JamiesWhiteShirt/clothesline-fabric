@@ -1,7 +1,6 @@
 package com.jamieswhiteshirt.clotheslinefabric;
 
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
-import com.jamieswhiteshirt.clotheslinefabric.common.block.entity.ClotheslineBlockEntityTypes;
 import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkLoadEvent;
 import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkWatchEvent;
 import com.jamieswhiteshirt.clotheslinefabric.common.event.TrackEntityEvent;
@@ -21,7 +20,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3d;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +30,6 @@ public class Clothesline implements ModInitializer {
     public void onInitialize() {
         ClotheslineBlocks.init();
         ClotheslineItems.init();
-        ClotheslineBlockEntityTypes.init();
         ClotheslineSoundEvents.init();
         ServerMessageHandling.init();
 

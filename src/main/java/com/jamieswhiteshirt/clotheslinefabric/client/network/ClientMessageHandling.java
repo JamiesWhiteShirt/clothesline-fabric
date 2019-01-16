@@ -13,7 +13,6 @@ public class ClientMessageHandling {
         MessageChannels.REMOVE_ATTACHMENT.registerHandler(CustomPayloadPacketRegistry.CLIENT, new RemoveAttachmentMessageHandler());
         MessageChannels.REMOVE_NETWORK.registerHandler(CustomPayloadPacketRegistry.CLIENT, new RemoveNetworkMessageHandler());
         MessageChannels.RESET_CONNECTOR_STATE.registerHandler(CustomPayloadPacketRegistry.CLIENT, new ResetConnectorStateMessageHandler());
-        MessageChannels.SET_ANCHOR_HAS_CRANK.registerHandler(CustomPayloadPacketRegistry.CLIENT, new SetAnchorHasCrankMessageHandler());
         MessageChannels.SET_ATTACHMENT.registerHandler(CustomPayloadPacketRegistry.CLIENT, new SetAttachmentMessageHandler());
         MessageChannels.SET_CONNECTOR_STATE.registerHandler(CustomPayloadPacketRegistry.CLIENT, new SetConnectorStateMessageHandler());
         MessageChannels.UPDATE_NETWORK.registerHandler(CustomPayloadPacketRegistry.CLIENT, new UpdateNetworkMessageHandler());

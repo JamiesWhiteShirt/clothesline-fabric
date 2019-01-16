@@ -4,6 +4,9 @@ import com.jamieswhiteshirt.clotheslinefabric.api.*;
 import com.jamieswhiteshirt.clotheslinefabric.api.util.MutableSortedIntMap;
 import com.jamieswhiteshirt.clotheslinefabric.client.EdgeAttachmentProjector;
 import com.jamieswhiteshirt.clotheslinefabric.client.LineProjection;
+import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineAnchorBlock;
+import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
+import com.jamieswhiteshirt.clotheslinefabric.common.item.ClotheslineItems;
 import com.jamieswhiteshirt.clotheslinefabric.internal.ConnectorHolder;
 import com.jamieswhiteshirt.rtree3i.RTreeMap;
 import com.jamieswhiteshirt.rtree3i.Selection;
@@ -11,11 +14,14 @@ import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.FontRenderer;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.GlAllocationUtils;
 import net.minecraft.client.util.math.Matrix4f;
 import net.minecraft.client.util.math.Vector4f;
@@ -49,9 +55,11 @@ public final class RenderClotheslineNetwork {
     private static final double[] NORMAL_UP_MULTIPLIERS = new double[] { 0.0D, 1.0D, 0.0D, -1.0D };
 
     private final MinecraftClient client;
+    private final ItemModelRenderer itemModelRenderer;
 
     public RenderClotheslineNetwork(MinecraftClient client) {
         this.client = client;
+        this.itemModelRenderer = new ItemModelRenderer(client);
     }
 
     private static BufferBuilder pos(BufferBuilder bufferBuilder, Vec3d pos) {
@@ -132,8 +140,60 @@ public final class RenderClotheslineNetwork {
         GlStateManager.disableCull();
     }
 
-    public void render(ExtendedBlockView world, RTreeMap<Line, NetworkEdge> edgesMap, VisibleRegion camera, double x, double y, double z, float delta) {
+    public void render(ExtendedBlockView world, RTreeMap<BlockPos, NetworkNode> nodesMap, RTreeMap<Line, NetworkEdge> edgesMap, VisibleRegion camera, double x, double y, double z, float delta) {
         Vec3d viewPos = new Vec3d(x, y, z);
+
+        // Select all entries in the node map intersecting with the camera frustum
+        Selection<NetworkNode> nodes = nodesMap
+            .values(box -> camera.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
+
+        client.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
+        client.getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX).pushFilter(false, false);
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.alphaFunc(516, 0.1F);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFuncSeparate(GlStateManager.SrcBlendFactor.SRC_ALPHA, GlStateManager.DstBlendFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcBlendFactor.ONE, GlStateManager.DstBlendFactor.ZERO);
+
+        nodes.forEach(node -> {
+            BlockPos pos = node.getPathNode().getPos();
+            BlockState state = world.getBlockState(pos);
+            if (state.getBlock() != ClotheslineBlocks.CLOTHESLINE_ANCHOR) return;
+
+            Network network = node.getNetwork();
+            float shift = network.getState().getShift() * delta + network.getState().getPreviousShift() * (1.0F - delta);
+            float crankRotation = -(node.getPathNode().getBaseRotation() + shift) * 360.0F / AttachmentUnit.UNITS_PER_BLOCK;
+
+            GlStateManager.pushMatrix();
+            GlStateManager.translated(pos.getX() - x + 0.5D, pos.getY() - y + 0.5D, pos.getZ() - z + 0.5D);
+            if (state.get(ClotheslineAnchorBlock.field_11007) == WallMountLocation.CEILING) {
+                GlStateManager.rotatef(180.0F, 1.0F, 0.0F, 0.0F);
+                crankRotation = -crankRotation;
+            }
+            GlStateManager.rotatef(crankRotation, 0.0F, 1.0F, 0.0F);
+
+            GlStateManager.pushMatrix();
+            GlStateManager.scalef(2.0F, 2.0F, 2.0F);
+            itemModelRenderer.renderModel(BakedModels.pulleyWheel, ModelTransformation.Type.FIXED);
+            if (!node.getNetwork().getState().getTree().isEmpty()) {
+                itemModelRenderer.renderModel(BakedModels.pulleyWheelRope, ModelTransformation.Type.FIXED);
+            }
+            GlStateManager.popMatrix();
+
+            if (state.get(ClotheslineAnchorBlock.CRANK)) {
+                GlStateManager.pushMatrix();
+                GlStateManager.translatef(0.0F, 4.0F / 16.0F, 0.0F);
+                itemModelRenderer.renderModel(BakedModels.crank, ModelTransformation.Type.FIXED);
+                GlStateManager.popMatrix();
+            }
+
+            GlStateManager.popMatrix();
+        });
+
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.disableBlend();
+        client.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
+        client.getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX).popFilter();
 
         // Select all entries in the edge map intersecting with the camera frustum
         Selection<NetworkEdge> edges = edgesMap

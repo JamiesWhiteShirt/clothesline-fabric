@@ -43,7 +43,7 @@ public class WorldRendererMixin {
 
         NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
         boolean showDebugInfo = client.options.debugEnabled;
-        renderClotheslineNetwork.render(world, manager.getNetworks().getEdges(), camera, x, y, z, delta);
+        renderClotheslineNetwork.render(world, manager.getNetworks().getNodes(), manager.getNetworks().getEdges(), camera, x, y, z, delta);
         if (showDebugInfo) {
             renderClotheslineNetwork.debugRender(manager.getNetworks().getNodes(), manager.getNetworks().getEdges(), camera, x, y, z, delta);
         }

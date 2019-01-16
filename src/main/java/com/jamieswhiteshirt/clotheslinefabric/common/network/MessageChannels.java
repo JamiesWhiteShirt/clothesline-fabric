@@ -22,9 +22,6 @@ public class MessageChannels {
     public static final MessageChannel<ResetConnectorStateMessage> RESET_CONNECTOR_STATE = new MessageChannel<>(
         new Identifier("clothesline-fabric", "reset_connector_state"), ResetConnectorStateMessage::serialize, ResetConnectorStateMessage::deserialize
     );
-    public static final MessageChannel<SetAnchorHasCrankMessage> SET_ANCHOR_HAS_CRANK = new MessageChannel<>(
-        new Identifier("clothesline-fabric", "set_anchor_has_crank"), SetAnchorHasCrankMessage::serialize, SetAnchorHasCrankMessage::deserialize
-    );
     public static final MessageChannel<SetAttachmentMessage> SET_ATTACHMENT = new MessageChannel<>(
         new Identifier("clothesline-fabric", "set_attachment"), SetAttachmentMessage::serialize, SetAttachmentMessage::deserialize
     );

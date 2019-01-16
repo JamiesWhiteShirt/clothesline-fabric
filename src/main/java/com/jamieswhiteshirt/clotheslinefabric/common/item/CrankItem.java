@@ -2,7 +2,7 @@ package com.jamieswhiteshirt.clotheslinefabric.common.item;
 
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineAnchorBlock;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
-import com.jamieswhiteshirt.clotheslinefabric.common.block.entity.ClotheslineAnchorBlockEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
@@ -14,15 +14,11 @@ public class CrankItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext ctx) {
-        if (ctx.getWorld().getBlockState(ctx.getPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR) {
-            ClotheslineAnchorBlockEntity blockEntity = ClotheslineAnchorBlock.getBlockEntity(ctx.getWorld(), ctx.getPos());
-            if (blockEntity != null) {
-                if (!blockEntity.getHasCrank()) {
-                    blockEntity.setHasCrank(true);
-                    ctx.getItemStack().subtractAmount(1);
-                    return ActionResult.SUCCESS;
-                }
-            }
+        BlockState state = ctx.getWorld().getBlockState(ctx.getPos());
+        if (state.getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR && !state.get(ClotheslineAnchorBlock.CRANK)) {
+            ctx.getWorld().setBlockState(ctx.getPos(), state.with(ClotheslineAnchorBlock.CRANK, true));
+            ctx.getItemStack().subtractAmount(1);
+            return ActionResult.SUCCESS;
         }
         return super.useOnBlock(ctx);
     }
