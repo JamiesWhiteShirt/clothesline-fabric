@@ -1,3 +1,8 @@
+# 0.0.3.0
+
+- Updated to Minecraft 19w03a
+- Removed Clothesline Anchor block entities. Any previously placed cranks will be lost. Sorry!
+
 # 0.0.2.0
 
 - Updated to Minecraft 19w02a
