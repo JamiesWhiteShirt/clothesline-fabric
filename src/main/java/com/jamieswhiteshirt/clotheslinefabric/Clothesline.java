@@ -15,11 +15,13 @@ import com.jamieswhiteshirt.clotheslinefabric.internal.ConnectorHolder;
 import com.jamieswhiteshirt.clotheslinefabric.internal.WorldExtension;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.events.TickEvent;
+import net.minecraft.class_3965;
 import net.minecraft.client.network.packet.CustomPayloadClientPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Vec3d;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -62,12 +64,8 @@ public class Clothesline implements ModInitializer {
         if (ctx != null) {
             return MessageChannels.SET_CONNECTOR_STATE.createClientboundPacket(new SetConnectorStateMessage(
                 entity.getEntityId(),
-                ctx.getPos(),
-                ctx.getFacing(),
                 getUsageHand(ctx),
-                ctx.getHitX(),
-                ctx.getHitY(),
-                ctx.getHitZ()
+                new class_3965(ctx.method_17698(), ctx.getFacing(), ctx.getPos(), ctx.method_17699())
             ));
         } else {
             return MessageChannels.RESET_CONNECTOR_STATE.createClientboundPacket(new ResetConnectorStateMessage(

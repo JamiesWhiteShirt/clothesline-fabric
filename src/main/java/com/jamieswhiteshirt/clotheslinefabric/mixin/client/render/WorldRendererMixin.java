@@ -5,8 +5,9 @@ import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHitEntity;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.class_856;
+import net.minecraft.class_3966;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.VisibleRegion;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
@@ -32,9 +33,9 @@ public class WorldRendererMixin {
             target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
             args = "ldc=blockentities"
         ),
-        method = "renderEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/class_856;F)V"
+        method = "renderEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/render/VisibleRegion;F)V"
     )
-    private void renderEntities(Entity cameraEntity, class_856 camera, float delta, CallbackInfo ci) {
+    private void renderEntities(Entity cameraEntity, VisibleRegion camera, float delta, CallbackInfo ci) {
         world.getProfiler().swap("renderClotheslines");
         double x = MathHelper.lerp(delta, cameraEntity.prevRenderX, cameraEntity.x);
         double y = MathHelper.lerp(delta, cameraEntity.prevRenderY, cameraEntity.y);
@@ -55,18 +56,18 @@ public class WorldRendererMixin {
 
     @Inject(
         at = @At("TAIL"),
-        method = "drawHighlightedBlockOutline(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/HitResult;IF)V"
+        method = "drawHighlightedBlockOutline(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/HitResult;IF)V"
     )
-    private void drawHighlightedBlockOutline(PlayerEntity player, HitResult hitResult, int var3, float delta, CallbackInfo ci) {
-        if (var3 == 0 && hitResult.type == HitResult.Type.ENTITY && hitResult.entity instanceof NetworkRaytraceHitEntity) {
-            NetworkRaytraceHitEntity entity = (NetworkRaytraceHitEntity) hitResult.entity;
+    private void drawHighlightedBlockOutline(Entity player, HitResult hitResult, int var3, float delta, CallbackInfo ci) {
+        if (var3 == 0 && hitResult.method_17783() == HitResult.Type.ENTITY && ((class_3966) hitResult).method_17782() instanceof NetworkRaytraceHitEntity) {
+            NetworkRaytraceHitEntity entity = (NetworkRaytraceHitEntity) ((class_3966) hitResult).method_17782();
 
             double x = MathHelper.lerp(delta, player.prevRenderX, player.x);
             double y = MathHelper.lerp(delta, player.prevRenderY, player.y);
             double z = MathHelper.lerp(delta, player.prevRenderZ, player.z);
             GlStateManager.enableBlend();
             GlStateManager.blendFuncSeparate(GlStateManager.SrcBlendFactor.SRC_ALPHA, GlStateManager.DstBlendFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcBlendFactor.ONE, GlStateManager.DstBlendFactor.ZERO);
-            GlStateManager.lineWidth(Math.max(2.5F, (float)this.client.window.getWindowWidth() / 1920.0F * 2.5F));
+            GlStateManager.lineWidth(Math.max(2.5F, (float)this.client.window.getFramebufferWidth() / 1920.0F * 2.5F));
             GlStateManager.disableTexture();
             GlStateManager.depthMask(false);
             entity.getHit().renderHighlight(renderClotheslineNetwork, delta, x, y, z, 0.0F, 0.0F, 0.0F, 0.4F);

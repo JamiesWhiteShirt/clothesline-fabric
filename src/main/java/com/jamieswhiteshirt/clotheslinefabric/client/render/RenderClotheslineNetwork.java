@@ -11,7 +11,6 @@ import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.class_856;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.FontRenderer;
 import net.minecraft.client.render.*;
@@ -121,7 +120,7 @@ public final class RenderClotheslineNetwork {
     public void buildAndDrawEdgeQuads(Consumer<BufferBuilder> consumer) {
         client.getTextureManager().bindTexture(TEXTURE);
         GuiLighting.enable();
-        client.worldRenderer.enableLightmap();
+        client.gameRenderer.enableLightmap();
         GlStateManager.enableCull();
 
         Tessellator tessellator = Tessellator.getInstance();
@@ -133,12 +132,12 @@ public final class RenderClotheslineNetwork {
         GlStateManager.disableCull();
     }
 
-    public void render(ExtendedBlockView world, RTreeMap<Line, NetworkEdge> edgesMap, class_856 camera, double x, double y, double z, float delta) {
+    public void render(ExtendedBlockView world, RTreeMap<Line, NetworkEdge> edgesMap, VisibleRegion camera, double x, double y, double z, float delta) {
         Vec3d viewPos = new Vec3d(x, y, z);
 
         // Select all entries in the edge map intersecting with the camera frustum
         Selection<NetworkEdge> edges = edgesMap
-            .values(box -> camera.method_3699(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
+            .values(box -> camera.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
 
         // Draw the rope for all edges
         buildAndDrawEdgeQuads(bufferBuilder -> edges.forEach(edge -> renderEdge(world, edge, x, y, z, bufferBuilder, delta)));
@@ -216,7 +215,7 @@ public final class RenderClotheslineNetwork {
     public void debugRender(
         RTreeMap<BlockPos, NetworkNode> nodesMap,
         RTreeMap<Line, NetworkEdge> edgesMap,
-        class_856 camera, double x, double y, double z, float delta
+        VisibleRegion camera, double x, double y, double z, float delta
     ) {
         BlockEntityRenderDispatcher rendererDispatcher = BlockEntityRenderDispatcher.INSTANCE;
         float yaw = rendererDispatcher.cameraYaw;
@@ -225,7 +224,7 @@ public final class RenderClotheslineNetwork {
 
         // Select all edges in the edges map intersecting with the camera frustum
         Selection<NetworkEdge> edges = edgesMap
-            .values(box -> camera.method_3699(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
+            .values(box -> camera.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
 
         edges.forEach(edge -> {
             Path.Edge pathEdge = edge.getPathEdge();

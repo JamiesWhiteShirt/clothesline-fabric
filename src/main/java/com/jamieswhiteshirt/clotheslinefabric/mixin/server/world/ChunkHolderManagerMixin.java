@@ -1,10 +1,10 @@
-package com.jamieswhiteshirt.clotheslinefabric.mixin;
+package com.jamieswhiteshirt.clotheslinefabric.mixin.server.world;
 
 import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkWatchEvent;
 import net.fabricmc.fabric.util.HandlerArray;
-import net.minecraft.class_3898;
 import net.minecraft.network.Packet;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ChunkHolderManager;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPos;
 import org.spongepowered.asm.mixin.Final;
@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(class_3898.class)
-public class class_3898Mixin {
+@Mixin(ChunkHolderManager.class)
+public class ChunkHolderManagerMixin {
     @Shadow @Final private World world;
 
     @Inject(

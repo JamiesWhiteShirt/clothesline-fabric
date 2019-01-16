@@ -6,6 +6,7 @@ import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Ray;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Raytracing;
+import net.minecraft.class_3966;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
@@ -28,24 +29,24 @@ public class GameRendererMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/util/profiler/Profiler;pop()V"
         ),
-        method = "method_3190(F)V"
+        method = "updateTargettedEntity(F)V"
     )
-    private void method_3190(float delta, CallbackInfo ci) {
+    private void updateTargettedEntity(float delta, CallbackInfo ci) {
         World world = client.world;
         Entity cameraEntity = client.getCameraEntity();
         HitResult hitResult = client.hitResult;
         if (hitResult != null) {
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
             Vec3d rayFrom = cameraEntity.getCameraPosVec(delta);
-            Vec3d rayTo = hitResult.pos;
+            Vec3d rayTo = hitResult.method_17784();
 
             Ray ray = new Ray(rayFrom, rayTo);
 
             NetworkRaytraceHit hit = Raytracing.raytraceNetworks(manager, ray, ray.lengthSq, delta);
             if (hit != null) {
                 NetworkRaytraceHitEntity hitResultEntity = new NetworkRaytraceHitEntity(world, manager, hit);
-                client.hitResult = new HitResult(hitResultEntity);
-                client.field_1692 = hitResultEntity;
+                client.hitResult = new class_3966(hitResultEntity);
+                client.targetedEntity = hitResultEntity;
             }
         }
     }

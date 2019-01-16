@@ -4,7 +4,9 @@ import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManager;
 import com.jamieswhiteshirt.clotheslinefabric.internal.PickStackEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -13,11 +15,13 @@ import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public final class NetworkRaytraceHitEntity extends Entity implements PickStackEntity {
+    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.create(NetworkRaytraceHitEntity.class).size(0.25F, 0.25F).build();
+
     private NetworkManager manager;
     private NetworkRaytraceHit hit;
 
     public NetworkRaytraceHitEntity(World world) {
-        super(null, world);
+        super(ENTITY_TYPE, world);
     }
 
     @Override

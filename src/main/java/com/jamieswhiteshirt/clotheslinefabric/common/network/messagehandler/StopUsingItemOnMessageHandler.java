@@ -6,6 +6,7 @@ import com.jamieswhiteshirt.clotheslinefabric.common.network.message.StopUsingIt
 import net.fabricmc.fabric.networking.PacketContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.function.BiConsumer;
 
@@ -13,21 +14,18 @@ public class StopUsingItemOnMessageHandler implements BiConsumer<PacketContext, 
     @Override
     public void accept(PacketContext ctx, StopUsingItemOnMessage msg) {
         PlayerEntity player = ctx.getPlayer();
-        if (player.squaredDistanceTo(msg.pos.getX() + 0.5D, msg.pos.getY() + 0.5D, msg.pos.getZ() + 0.5D) >= 64.0D) {
+        BlockPos pos = msg.hitResult.method_17777();
+        if (player.squaredDistanceTo(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) >= 64.0D) {
             return;
         }
 
         if (player.getActiveItem().getItem() instanceof ConnectorItem) {
             ConnectorItem connectorItem = (ConnectorItem) player.getActiveItem().getItem();
-            if (Validation.canReachPos(player, Utility.midVec(msg.pos))) {
+            if (Validation.canReachPos(player, Utility.midVec(pos))) {
                 connectorItem.stopActiveHandWithTo(player, new ItemUsageContext(
                     player,
                     player.getActiveItem(),
-                    msg.pos,
-                    msg.direction,
-                    msg.hitX,
-                    msg.hitY,
-                    msg.hitZ
+                    msg.hitResult
                 ));
             } else {
                 player.method_6075();

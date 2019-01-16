@@ -103,9 +103,9 @@ public class Raytracing {
                 lTo.set((float) viewRay.to.x, (float) viewRay.to.y, (float) viewRay.to.z, 1.0F);
                 lTo.multiply(w2l);
 
-                HitResult result = ATTACHMENT_BOX.rayTrace(new Vec3d(lFrom.x(), lFrom.y(), lFrom.z()), new Vec3d(lTo.x(), lTo.y(), lTo.z()));
+                Vec3d result = ATTACHMENT_BOX.rayTrace(new Vec3d(lFrom.x(), lFrom.y(), lFrom.z()), new Vec3d(lTo.x(), lTo.y(), lTo.z()));
                 if (result != null) {
-                    wHitVec.set((float) result.pos.x, (float) result.pos.y, (float) result.pos.z, 1.0F);
+                    wHitVec.set((float) result.x, (float) result.y, (float) result.z, 1.0F);
                     wHitVec.multiply(l2w);
                     double distanceSq = new Vec3d(wHitVec.x(), wHitVec.y(), wHitVec.z()).squaredDistanceTo(viewRay.from);
                     if (distanceSq < maxDistanceSq) {

@@ -10,8 +10,8 @@ import com.jamieswhiteshirt.clotheslinefabric.common.impl.*;
 import com.jamieswhiteshirt.clotheslinefabric.internal.NetworkCollectionTracker;
 import com.jamieswhiteshirt.clotheslinefabric.internal.NetworkProvider;
 import com.jamieswhiteshirt.clotheslinefabric.internal.WorldExtension;
-import net.minecraft.class_3949;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.profiler.Profiler;
@@ -49,9 +49,9 @@ public abstract class ServerWorldMixin extends World implements NetworkManagerPr
 
     @Inject(
         at = @At("RETURN"),
-        method = "<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/WorldSaveHandler;Lnet/minecraft/world/PersistentStateManager;Lnet/minecraft/world/level/LevelProperties;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/class_3949;)V"
+        method = "<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/WorldSaveHandler;Lnet/minecraft/world/PersistentStateManager;Lnet/minecraft/world/level/LevelProperties;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/server/WorldGenerationProgressListener;)V"
     )
-    private void constructor(MinecraftServer server, Executor executor, WorldSaveHandler worldSaveHandler, PersistentStateManager persistentStateManager, LevelProperties levelProperties, DimensionType dimensionType, Profiler profiler, class_3949 class_3949_1, CallbackInfo ci) {
+    private void constructor(MinecraftServer server, Executor executor, WorldSaveHandler worldSaveHandler, PersistentStateManager persistentStateManager, LevelProperties levelProperties, DimensionType dimensionType, Profiler profiler, WorldGenerationProgressListener class_3949_1, CallbackInfo ci) {
         PersistentState persistentState = persistentStateManager.get(dimensionType, key -> new NetworkProviderPersistentState(key, networkProvider), PERSISTENT_STATE_KEY);
         if (persistentState == null) {
             persistentStateManager.set(dimensionType, PERSISTENT_STATE_KEY, new NetworkProviderPersistentState(PERSISTENT_STATE_KEY, networkProvider));

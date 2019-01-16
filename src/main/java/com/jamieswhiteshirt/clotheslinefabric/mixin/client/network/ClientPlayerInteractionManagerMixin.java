@@ -3,6 +3,7 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.client.network;
 import com.jamieswhiteshirt.clotheslinefabric.common.item.ConnectorItem;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.MessageChannels;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.StopUsingItemOnMessage;
+import net.minecraft.class_3965;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,21 +32,15 @@ public class ClientPlayerInteractionManagerMixin {
         info.cancel();
         HitResult hitResult = MinecraftClient.getInstance().hitResult;
         ClientWorld world = MinecraftClient.getInstance().world;
-        if (hitResult != null && world != null && hitResult.type == HitResult.Type.BLOCK) {
+        if (hitResult != null && world != null && hitResult.method_17783() == HitResult.Type.BLOCK) {
             ClientPlayerEntity player = MinecraftClient.getInstance().player;
             if (player != null && player.getActiveItem().getItem() instanceof ConnectorItem) {
                 // This is a connector item, we must therefore tell the server which block position where the connection
                 // will end.
-                BlockPos blockPos = hitResult.getBlockPos();
-                float x = (float) (hitResult.pos.x - blockPos.getX());
-                float y = (float) (hitResult.pos.y - blockPos.getY());
-                float z = (float) (hitResult.pos.z - blockPos.getZ());
                 MinecraftClient.getInstance().getNetworkHandler().sendPacket(
                     MessageChannels.STOP_USING_ITEM_ON.createServerboundPacket(new StopUsingItemOnMessage(
-                        hitResult.getBlockPos(),
-                        hitResult.side,
                         player.getActiveHand(),
-                        x, y, z
+                        (class_3965) hitResult
                     ))
                 );
 
@@ -52,9 +48,7 @@ public class ClientPlayerInteractionManagerMixin {
                 itemConnector.stopActiveHandWithTo(player, new ItemUsageContext(
                     player,
                     player.getActiveItem(),
-                    blockPos,
-                    hitResult.side,
-                    x, y, z
+                    (class_3965) hitResult
                 ));
 
                 // Cancel to avoid sending any more messages

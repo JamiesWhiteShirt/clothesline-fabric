@@ -9,7 +9,7 @@ public class ClotheslineBlockEntityTypes {
     public static final BlockEntityType<ClotheslineAnchorBlockEntity> CLOTHESLINE_ANCHOR = create("clothesline_anchor", BlockEntityType.Builder.create(ClotheslineAnchorBlockEntity::new));
 
     private static <T extends BlockEntity> BlockEntityType<T> create(String id, BlockEntityType.Builder<T> builder) {
-        return Registry.register(Registry.BLOCK_ENTITY, new Identifier("clothesline-fabric", id), builder.method_11034(null));
+        return Registry.register(Registry.BLOCK_ENTITY, new Identifier("clothesline-fabric", id), builder.build(null));
     }
 
     public static void init() {

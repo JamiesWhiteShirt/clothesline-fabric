@@ -3,6 +3,7 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.client.gui.hud;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineAnchorBlock;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.entity.ClotheslineAnchorBlockEntity;
+import net.minecraft.class_3965;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -57,12 +58,12 @@ public abstract class InGameHudMixin extends Drawable {
         PlayerEntity player = getCameraPlayer();
         HitResult hitResult = client.hitResult;
         if (player != null && hitResult != null) {
-            if (hitResult.type == HitResult.Type.BLOCK) {
-                BlockPos pos = hitResult.getBlockPos();
+            if (hitResult.method_17783() == HitResult.Type.BLOCK) {
+                BlockPos pos = ((class_3965) hitResult).method_17777();
                 if (client.world.getBlockState(pos).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR) {
                     ClotheslineAnchorBlockEntity blockEntity = ClotheslineAnchorBlock.getBlockEntity(client.world, pos);
                     if (blockEntity != null && blockEntity.getHasCrank()) {
-                        Vec3d hitVec = hitResult.pos;
+                        Vec3d hitVec = hitResult.method_17784();
                         int offset = ClotheslineAnchorBlock.getCrankMultiplier(pos, hitVec.x, hitVec.z, player) * -8;
                         client.getTextureManager().bindTexture(CLOTHESLINE_ICONS);
                         drawTexturedRect(scaledWidth / 2.0F - 7.5F + offset, scaledHeight / 2.0F - 7.5F, 8 + offset, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);

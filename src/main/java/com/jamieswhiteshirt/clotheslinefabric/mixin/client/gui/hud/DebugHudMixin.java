@@ -3,6 +3,7 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.client.gui.hud;
 import com.jamieswhiteshirt.clotheslinefabric.api.*;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHitEntity;
+import net.minecraft.class_3965;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.hud.DebugHud;
@@ -29,8 +30,8 @@ public class DebugHudMixin extends Drawable {
     )
     private void getRightText(CallbackInfoReturnable<List<String>> cir) {
         if (!client.hasReducedDebugInfo()) {
-            if (client.field_1692 instanceof NetworkRaytraceHitEntity) {
-                NetworkRaytraceHit hit = ((NetworkRaytraceHitEntity) client.field_1692).getHit();
+            if (client.targetedEntity instanceof NetworkRaytraceHitEntity) {
+                NetworkRaytraceHit hit = ((NetworkRaytraceHitEntity) client.targetedEntity).getHit();
                 NetworkEdge edge = hit.edge;
                 Network network = edge.getNetwork();
                 cir.getReturnValue().addAll(Arrays.asList(
@@ -41,9 +42,9 @@ public class DebugHudMixin extends Drawable {
                     hit.getDebugString()
                 ));
             }
-            if (blockHit != null && blockHit.type == HitResult.Type.BLOCK) {
+            if (blockHit != null && blockHit.method_17783() == HitResult.Type.BLOCK) {
                 NetworkManager manager = ((NetworkManagerProvider) client.world).getNetworkManager();
-                NetworkNode node = manager.getNetworks().getNodes().get(blockHit.getBlockPos());
+                NetworkNode node = manager.getNetworks().getNodes().get(((class_3965) blockHit).method_17777());
                 if (node != null) {
                     cir.getReturnValue().addAll(Arrays.asList(
                         "",

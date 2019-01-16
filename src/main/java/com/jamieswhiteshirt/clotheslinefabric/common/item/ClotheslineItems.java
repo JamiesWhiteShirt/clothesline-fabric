@@ -6,6 +6,8 @@ import com.jamieswhiteshirt.clotheslinefabric.api.Utility;
 import com.jamieswhiteshirt.clotheslinefabric.common.Util;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.class_3959;
+import net.minecraft.class_3965;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemUsageContext;
@@ -14,8 +16,8 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.HitResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.FluidRayTraceMode;
 import net.minecraft.world.World;
 
 public class ClotheslineItems {
@@ -31,8 +33,10 @@ public class ClotheslineItems {
             World world = to.getWorld();
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
             if (world.getBlockState(to.getPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR) {
-                HitResult hitResult = world.rayTrace(Utility.midVec(from.getPos()), Utility.midVec(to.getPos()), FluidRayTraceMode.NONE, true, false);
-                if (hitResult == null || hitResult.type == HitResult.Type.NONE) {
+                Vec3d fromVec = Utility.midVec(from.getPos());
+                Vec3d toVec = Utility.midVec(to.getPos());
+                class_3965 hitResult = world.method_17742(new class_3959(fromVec, toVec, class_3959.class_3960.COLLIDER, class_3959.class_242.NONE, to.getPlayer()));
+                if (hitResult.method_17783() == HitResult.Type.NONE) {
                     if (manager.connect(from.getPos(), to.getPos())) {
                         if (!Util.isCreativePlayer(to.getPlayer())) {
                             to.getItemStack().subtractAmount(1);

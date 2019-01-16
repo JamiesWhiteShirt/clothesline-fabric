@@ -12,7 +12,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.WallMountLocation;
+import net.minecraft.class_3965;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -48,7 +50,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements BlockEnt
 
     @SuppressWarnings("deprecation")
     @Override
-    public VoxelShape getBoundingShape(BlockState state, BlockView view, BlockPos pos) {
+    public VoxelShape canCollideWith(BlockState state, BlockView view, BlockPos pos, VerticalEntityPosition verticalEntityPosition) {
         switch (state.get(field_11007)) {
             case FLOOR:
                 return DOWN;
@@ -116,17 +118,17 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements BlockEnt
 
     @SuppressWarnings("deprecation")
     @Override
-    public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction direction, float x, float y, float z) {
+    public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, class_3965 hitResult) {
         if (player.getStackInHand(hand).getItem() == ClotheslineItems.CLOTHESLINE) return false;
 
         ClotheslineAnchorBlockEntity blockEntity = getBlockEntity(world, pos);
         if (blockEntity != null) {
             if (blockEntity.getHasCrank()) {
-                blockEntity.crank(getCrankMultiplier(pos, pos.getX() + x, pos.getZ() + z, player) * 5);
+                blockEntity.crank(getCrankMultiplier(pos, hitResult.method_17784().x, hitResult.method_17784().z, player) * 5);
                 return true;
             }
         }
-        return super.activate(state, world, pos, player, hand, direction, x, y, z);
+        return super.activate(state, world, pos, player, hand, hitResult);
     }
 
     @Override

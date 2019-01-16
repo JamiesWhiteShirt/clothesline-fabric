@@ -22,11 +22,7 @@ public class SetConnectorStateMessageHandler implements BiConsumer<PacketContext
             connectorHolder.setFrom(new ItemUsageContext(
                 playerEntity,
                 playerEntity.getStackInHand(msg.hand),
-                msg.pos,
-                msg.direction,
-                msg.hitX,
-                msg.hitY,
-                msg.hitZ
+                msg.hitResult
             ));
         }
     }
