@@ -27,7 +27,6 @@ public class ClientPlayerInteractionManagerMixin {
         cancellable = true
     )
     private void method_2897(PlayerEntity var1, CallbackInfo info) {
-        info.cancel();
         HitResult hitResult = MinecraftClient.getInstance().hitResult;
         ClientWorld world = MinecraftClient.getInstance().world;
         if (hitResult != null && world != null && hitResult.method_17783() == HitResult.Type.BLOCK) {
