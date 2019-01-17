@@ -13,7 +13,10 @@ import net.minecraft.class_3965;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateFactory;
@@ -32,7 +35,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class ClotheslineAnchorBlock extends WallMountedBlock implements class_3954 {
+public class ClotheslineAnchorBlock extends WallMountedBlock implements class_3954, Waterloggable {
     private static final VoxelShape DOWN  = Block.createCubeShape(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D);
     private static final VoxelShape UP    = Block.createCubeShape(6.0D, 4.0D, 6.0D, 10.0D, 16.0D, 10.0D);
     private static final VoxelShape NORTH = Block.createCubeShape(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 16.0D);
@@ -40,16 +43,17 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements class_39
     private static final VoxelShape WEST  = Block.createCubeShape(6.0D, 0.0D, 6.0D, 16.0D, 12.0D, 10.0D);
     private static final VoxelShape EAST  = Block.createCubeShape(0.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D);
 
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final Property<Boolean> CRANK = BooleanProperty.create("crank");
 
     public ClotheslineAnchorBlock(Settings settings) {
         super(settings);
-        setDefaultState(stateFactory.getDefaultState().with(field_11007, WallMountLocation.WALL).with(field_11177, Direction.NORTH).with(Properties.WATERLOGGED, false).with(CRANK, false));
+        setDefaultState(stateFactory.getDefaultState().with(field_11007, WallMountLocation.WALL).with(field_11177, Direction.NORTH).with(WATERLOGGED, false).with(CRANK, false));
     }
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
-        builder.with(field_11007, field_11177, Properties.WATERLOGGED, CRANK);
+        builder.with(field_11007, field_11177, WATERLOGGED, CRANK);
     }
 
     @SuppressWarnings("deprecation")
@@ -97,6 +101,17 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements class_39
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
             manager.breakNode(null, pos);
         }
+    }
+
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        BlockState state = super.getPlacementState(ctx);
+        if (state != null) {
+            FluidState fluidState = ctx.getWorld().getFluidState(ctx.getPos());
+            return state.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+        }
+        return null;
     }
 
     @SuppressWarnings("deprecation")
@@ -147,6 +162,26 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements class_39
         }
     }
 
+    @Override
+    public SidedInventory method_17680(BlockState state, IWorld world, BlockPos pos) {
+        return new ClotheslineAnchorInventory(((NetworkManagerProvider) world).getNetworkManager(), pos);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getState(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos) {
+        if (state.get(WATERLOGGED)) {
+            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.method_15789(world));
+        }
+
+        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    }
+
     @Nullable
     private static NetworkNode getNode(World world, BlockPos pos) {
         return ((NetworkManagerProvider) world).getNetworkManager().getNetworks().getNodes().get(pos);
@@ -163,11 +198,6 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements class_39
         // The sign of the Y component indicates which "side" of the anchor is hit, which determines which way to crank
         double y = dzCenter * dxHit - dxCenter * dzHit;
         return (int) Math.signum(y);
-    }
-
-    @Override
-    public SidedInventory method_17680(BlockState state, IWorld world, BlockPos pos) {
-        return new ClotheslineAnchorInventory(((NetworkManagerProvider) world).getNetworkManager(), pos);
     }
 
     private class ClotheslineAnchorInventory implements SidedInventory {
