@@ -157,6 +157,9 @@ public final class RenderClotheslineNetwork {
             BlockState state = world.getBlockState(pos);
             if (state.getBlock() != ClotheslineBlocks.CLOTHESLINE_ANCHOR) return;
 
+            int light = world.getLightmapIndex(pos, 0);
+            GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float)(light & 0xFFFF), (float)((light >> 16) & 0xFFFF));
+
             Network network = node.getNetwork();
             float shift = network.getState().getShift() * delta + network.getState().getPreviousShift() * (1.0F - delta);
             float crankRotation = -(node.getPathNode().getBaseRotation() + shift) * 360.0F / AttachmentUnit.UNITS_PER_BLOCK;
