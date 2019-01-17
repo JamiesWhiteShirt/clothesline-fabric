@@ -1,3 +1,9 @@
+# 0.0.3.1
+
+- Made clothesline anchors waterloggable
+- Fixed bug where clothesline anchors were not lit properly
+- Fixed bug where usage interactions for all items except Clotheslines would never end
+
 # 0.0.3.0
 
 - Updated to Minecraft 19w03a
