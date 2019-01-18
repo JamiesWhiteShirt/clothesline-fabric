@@ -1,3 +1,7 @@
+# 0.0.4.0
+
+- Updated to Minecraft 19w03b
+
 # 0.0.3.1
 
 - Made clothesline anchors waterloggable
