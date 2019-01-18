@@ -3,11 +3,11 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.client.gui.hud;
 import com.jamieswhiteshirt.clotheslinefabric.api.*;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHitEntity;
-import net.minecraft.class_3965;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.text.TextFormat;
+import net.minecraft.util.BlockHitResult;
 import net.minecraft.util.HitResult;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,9 +42,9 @@ public class DebugHudMixin extends Drawable {
                     hit.getDebugString()
                 ));
             }
-            if (blockHit != null && blockHit.method_17783() == HitResult.Type.BLOCK) {
+            if (blockHit != null && blockHit.getType() == HitResult.Type.BLOCK) {
                 NetworkManager manager = ((NetworkManagerProvider) client.world).getNetworkManager();
-                NetworkNode node = manager.getNetworks().getNodes().get(((class_3965) blockHit).method_17777());
+                NetworkNode node = manager.getNetworks().getNodes().get(((BlockHitResult) blockHit).getBlockPos());
                 if (node != null) {
                     cir.getReturnValue().addAll(Arrays.asList(
                         "",

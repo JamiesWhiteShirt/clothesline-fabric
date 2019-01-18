@@ -1,15 +1,15 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.network.message;
 
-import net.minecraft.class_3965;
+import net.minecraft.util.BlockHitResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.PacketByteBuf;
 
 public class SetConnectorStateMessage {
     public final int entityId;
     public final Hand hand;
-    public final class_3965 hitResult;
+    public final BlockHitResult hitResult;
 
-    public SetConnectorStateMessage(int entityId, Hand hand, class_3965 hitResult) {
+    public SetConnectorStateMessage(int entityId, Hand hand, BlockHitResult hitResult) {
         this.entityId = entityId;
         this.hand = hand;
         this.hitResult = hitResult;

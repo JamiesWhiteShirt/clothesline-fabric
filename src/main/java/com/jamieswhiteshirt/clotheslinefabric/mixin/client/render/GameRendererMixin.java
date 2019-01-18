@@ -6,10 +6,10 @@ import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Ray;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Raytracing;
-import net.minecraft.class_3966;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.EntityHitResult;
 import net.minecraft.util.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -38,14 +38,14 @@ public class GameRendererMixin {
         if (hitResult != null) {
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
             Vec3d rayFrom = cameraEntity.getCameraPosVec(delta);
-            Vec3d rayTo = hitResult.method_17784();
+            Vec3d rayTo = hitResult.getPos();
 
             Ray ray = new Ray(rayFrom, rayTo);
 
             NetworkRaytraceHit hit = Raytracing.raytraceNetworks(manager, ray, ray.lengthSq, delta);
             if (hit != null) {
                 NetworkRaytraceHitEntity hitResultEntity = new NetworkRaytraceHitEntity(world, manager, hit);
-                client.hitResult = new class_3966(hitResultEntity);
+                client.hitResult = new EntityHitResult(hitResultEntity);
                 client.targetedEntity = hitResultEntity;
             }
         }

@@ -1,7 +1,6 @@
 package com.jamieswhiteshirt.clotheslinefabric.mixin.client;
 
 import com.jamieswhiteshirt.clotheslinefabric.internal.PickStackEntity;
-import net.minecraft.class_3966;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -9,6 +8,7 @@ import net.minecraft.item.ItemProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -23,7 +23,7 @@ public class MinecraftClientMixin {
         method = "doItemPick()V"
     )
     private SpawnEggItem substitutePhantomEggToAvoidReturn(EntityType<?> entityType) {
-        if (((class_3966) ((MinecraftClient) (Object) this).hitResult).method_17782() instanceof PickStackEntity) {
+        if (((EntityHitResult) ((MinecraftClient) (Object) this).hitResult).getEntity() instanceof PickStackEntity) {
             return (SpawnEggItem) Items.PHANTOM_SPAWN_EGG;
         } else {
             return SpawnEggItem.method_8019(entityType);
@@ -38,7 +38,7 @@ public class MinecraftClientMixin {
         method = "doItemPick()V"
     )
     private ItemStack constructTheRightItemStack(ItemProvider provider) {
-        Entity entity = ((class_3966) ((MinecraftClient) (Object) this).hitResult).method_17782();
+        Entity entity = ((EntityHitResult) ((MinecraftClient) (Object) this).hitResult).getEntity();
         if (entity instanceof PickStackEntity) {
             return ((PickStackEntity) entity).getPickStack();
         }

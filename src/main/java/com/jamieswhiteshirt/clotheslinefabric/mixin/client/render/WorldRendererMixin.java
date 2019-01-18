@@ -5,13 +5,13 @@ import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHitEntity;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.class_3966;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VisibleRegion;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.EntityHitResult;
 import net.minecraft.util.HitResult;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
@@ -59,14 +59,14 @@ public class WorldRendererMixin {
         method = "drawHighlightedBlockOutline(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/HitResult;IF)V"
     )
     private void drawHighlightedBlockOutline(Entity player, HitResult hitResult, int var3, float delta, CallbackInfo ci) {
-        if (var3 == 0 && hitResult.method_17783() == HitResult.Type.ENTITY && ((class_3966) hitResult).method_17782() instanceof NetworkRaytraceHitEntity) {
-            NetworkRaytraceHitEntity entity = (NetworkRaytraceHitEntity) ((class_3966) hitResult).method_17782();
+        if (var3 == 0 && hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof NetworkRaytraceHitEntity) {
+            NetworkRaytraceHitEntity entity = (NetworkRaytraceHitEntity) ((EntityHitResult) hitResult).getEntity();
 
             double x = MathHelper.lerp(delta, player.prevRenderX, player.x);
             double y = MathHelper.lerp(delta, player.prevRenderY, player.y);
             double z = MathHelper.lerp(delta, player.prevRenderZ, player.z);
             GlStateManager.enableBlend();
-            GlStateManager.blendFuncSeparate(GlStateManager.SrcBlendFactor.SRC_ALPHA, GlStateManager.DstBlendFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcBlendFactor.ONE, GlStateManager.DstBlendFactor.ZERO);
+            GlStateManager.blendFuncSeparate(GlStateManager.class_1033.SRC_ALPHA, GlStateManager.class_1027.ONE_MINUS_SRC_ALPHA, GlStateManager.class_1033.ONE, GlStateManager.class_1027.ZERO);
             GlStateManager.lineWidth(Math.max(2.5F, (float)this.client.window.getFramebufferWidth() / 1920.0F * 2.5F));
             GlStateManager.disableTexture();
             GlStateManager.depthMask(false);

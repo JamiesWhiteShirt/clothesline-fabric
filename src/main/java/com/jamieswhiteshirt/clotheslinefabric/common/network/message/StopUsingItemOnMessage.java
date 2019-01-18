@@ -1,14 +1,14 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.network.message;
 
-import net.minecraft.class_3965;
+import net.minecraft.util.BlockHitResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.PacketByteBuf;
 
 public class StopUsingItemOnMessage {
     public final Hand hand;
-    public final class_3965 hitResult;
+    public final BlockHitResult hitResult;
 
-    public StopUsingItemOnMessage(Hand hand, class_3965 hitResult) {
+    public StopUsingItemOnMessage(Hand hand, BlockHitResult hitResult) {
         this.hand = hand;
         this.hitResult = hitResult;
     }

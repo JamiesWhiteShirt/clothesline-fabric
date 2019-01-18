@@ -14,7 +14,7 @@ public class StopUsingItemOnMessageHandler implements BiConsumer<PacketContext, 
     @Override
     public void accept(PacketContext ctx, StopUsingItemOnMessage msg) {
         PlayerEntity player = ctx.getPlayer();
-        BlockPos pos = msg.hitResult.method_17777();
+        BlockPos pos = msg.hitResult.getBlockPos();
         if (player.squaredDistanceTo(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) >= 64.0D) {
             return;
         }
