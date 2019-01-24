@@ -19,7 +19,7 @@ public abstract class WorldMixin implements ViewableWorld, NetworkManagerProvide
         if (ViewableWorld.super.method_8628(state, pos)) {
             VoxelShape shape = state.getCollisionShape(this, pos);
             if (!shape.isEmpty()) {
-                BoundingBox bb = shape.method_1096(pos.getX(), pos.getY(), pos.getZ()).getBoundingBox();
+                BoundingBox bb = shape.offset(pos.getX(), pos.getY(), pos.getZ()).getBoundingBox();
                 Box box = Box.create(
                     MathHelper.floor(bb.minX), MathHelper.floor(bb.minY), MathHelper.floor(bb.minZ),
                     MathHelper.ceil(bb.maxX), MathHelper.ceil(bb.maxY), MathHelper.ceil(bb.maxZ)

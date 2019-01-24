@@ -13,9 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSaveHandler;
 import net.minecraft.world.chunk.ChunkManager;
 import net.minecraft.world.chunk.ChunkPos;
 import net.minecraft.world.dimension.Dimension;
@@ -27,7 +25,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
 import java.util.function.BiFunction;
 
 @Mixin(ClientWorld.class)
@@ -37,8 +34,8 @@ public abstract class ClientWorldMixin extends World implements NetworkManagerPr
     private final NetworkCollection networkCollection = new NetworkCollectionImpl();
     private final NetworkManager networkManager = new ClientNetworkManager((ClientWorld)(Object) this, networkCollection);
 
-    protected ClientWorldMixin(WorldSaveHandler var1, @Nullable PersistentStateManager var2, LevelProperties var3, DimensionType var4, BiFunction<World, Dimension, ChunkManager> var5, Profiler var6, boolean var7) {
-        super(var1, var2, var3, var4, var5, var6, var7);
+    protected ClientWorldMixin(LevelProperties levelProperties, DimensionType dimensionType, BiFunction<World, Dimension, ChunkManager> biFunction, Profiler profiler, boolean boolean_1) {
+        super(levelProperties, dimensionType, biFunction, profiler, boolean_1);
     }
 
     @Inject(

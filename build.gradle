@@ -34,12 +34,12 @@ shadowJar {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:19w03b"
-    mappings "net.fabricmc:yarn:19w03b.1"
-    modCompile "net.fabricmc:fabric-loader:0.3.2.96"
+    minecraft "com.mojang:minecraft:19w04a"
+    mappings "net.fabricmc:yarn:19w04a.1"
+    modCompile "net.fabricmc:fabric-loader:0.3.3.101"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
-    modCompile "net.fabricmc:fabric:0.1.4.76"
+    modCompile "net.fabricmc:fabric:0.1.4.79"
 
     compile "com.jamieswhiteshirt:rtree-3i-lite:0.1-SNAPSHOT"
     contained "com.jamieswhiteshirt:rtree-3i-lite:0.1-SNAPSHOT"

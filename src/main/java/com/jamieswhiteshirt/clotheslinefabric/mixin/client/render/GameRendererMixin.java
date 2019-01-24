@@ -9,8 +9,8 @@ import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Raytracing;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EntityHitResult;
-import net.minecraft.util.HitResult;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
@@ -29,9 +29,9 @@ public class GameRendererMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/util/profiler/Profiler;pop()V"
         ),
-        method = "updateTargettedEntity(F)V"
+        method = "updateTargetedEntity(F)V"
     )
-    private void updateTargettedEntity(float delta, CallbackInfo ci) {
+    private void updateTargetedEntity(float delta, CallbackInfo ci) {
         World world = client.world;
         Entity cameraEntity = client.getCameraEntity();
         HitResult hitResult = client.hitResult;

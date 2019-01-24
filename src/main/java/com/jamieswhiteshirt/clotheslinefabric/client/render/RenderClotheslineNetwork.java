@@ -150,7 +150,7 @@ public final class RenderClotheslineNetwork {
         GlStateManager.enableRescaleNormal();
         GlStateManager.alphaFunc(516, 0.1F);
         GlStateManager.enableBlend();
-        GlStateManager.blendFuncSeparate(GlStateManager.class_1033.SRC_ALPHA, GlStateManager.class_1027.ONE_MINUS_SRC_ALPHA, GlStateManager.class_1033.ONE, GlStateManager.class_1027.ZERO);
+        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
         nodes.forEach(node -> {
             BlockPos pos = node.getPathNode().getPos();
@@ -166,7 +166,7 @@ public final class RenderClotheslineNetwork {
 
             GlStateManager.pushMatrix();
             GlStateManager.translated(pos.getX() - x + 0.5D, pos.getY() - y + 0.5D, pos.getZ() - z + 0.5D);
-            if (state.get(ClotheslineAnchorBlock.field_11007) == WallMountLocation.CEILING) {
+            if (state.get(ClotheslineAnchorBlock.FACE) == WallMountLocation.CEILING) {
                 GlStateManager.rotatef(180.0F, 1.0F, 0.0F, 0.0F);
                 crankRotation = -crankRotation;
             }
@@ -206,7 +206,7 @@ public final class RenderClotheslineNetwork {
         GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
         GlStateManager.enableBlend();
         GuiLighting.enable();
-        GlStateManager.blendFuncSeparate(GlStateManager.class_1033.SRC_ALPHA, GlStateManager.class_1027.ONE_MINUS_SRC_ALPHA, GlStateManager.class_1033.ONE, GlStateManager.class_1027.ZERO);
+        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
         // World position of attachment item
         Vector4f wPos = new Vector4f();
@@ -307,7 +307,7 @@ public final class RenderClotheslineNetwork {
             double f10 = client.options.fov / 100.0D;
             Vec3d vecB = new Vec3d(x, y + player.getEyeHeight(), z).add(new Vec3d(k * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
 
-            renderHeldClothesline(from.getPos(), vecB, player.world, x, y, z);
+            renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
         }
     }
 
@@ -329,7 +329,7 @@ public final class RenderClotheslineNetwork {
                 posZ - d0 * k + d1
             );
 
-            renderHeldClothesline(from.getPos(), vecB, player.world, x, y, z);
+            renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
         }
     }
 

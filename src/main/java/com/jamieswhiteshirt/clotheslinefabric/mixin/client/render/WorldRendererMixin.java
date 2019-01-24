@@ -11,8 +11,8 @@ import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.EntityHitResult;
-import net.minecraft.util.HitResult;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -56,7 +56,7 @@ public class WorldRendererMixin {
 
     @Inject(
         at = @At("TAIL"),
-        method = "drawHighlightedBlockOutline(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/HitResult;IF)V"
+        method = "drawHighlightedBlockOutline(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/hit/HitResult;IF)V"
     )
     private void drawHighlightedBlockOutline(Entity player, HitResult hitResult, int var3, float delta, CallbackInfo ci) {
         if (var3 == 0 && hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof NetworkRaytraceHitEntity) {
@@ -66,7 +66,7 @@ public class WorldRendererMixin {
             double y = MathHelper.lerp(delta, player.prevRenderY, player.y);
             double z = MathHelper.lerp(delta, player.prevRenderZ, player.z);
             GlStateManager.enableBlend();
-            GlStateManager.blendFuncSeparate(GlStateManager.class_1033.SRC_ALPHA, GlStateManager.class_1027.ONE_MINUS_SRC_ALPHA, GlStateManager.class_1033.ONE, GlStateManager.class_1027.ZERO);
+            GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.lineWidth(Math.max(2.5F, (float)this.client.window.getFramebufferWidth() / 1920.0F * 2.5F));
             GlStateManager.disableTexture();
             GlStateManager.depthMask(false);

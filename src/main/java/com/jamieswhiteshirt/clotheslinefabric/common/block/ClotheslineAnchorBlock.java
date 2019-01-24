@@ -21,7 +21,7 @@ import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
-import net.minecraft.util.BlockHitResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -35,34 +35,34 @@ import java.util.List;
 import java.util.Random;
 
 public class ClotheslineAnchorBlock extends WallMountedBlock implements InventoryProvider, Waterloggable {
-    private static final VoxelShape DOWN  = Block.createCubeShape(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D);
-    private static final VoxelShape UP    = Block.createCubeShape(6.0D, 4.0D, 6.0D, 10.0D, 16.0D, 10.0D);
-    private static final VoxelShape NORTH = Block.createCubeShape(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 16.0D);
-    private static final VoxelShape SOUTH = Block.createCubeShape(6.0D, 0.0D, 0.0D, 10.0D, 12.0D, 10.0D);
-    private static final VoxelShape WEST  = Block.createCubeShape(6.0D, 0.0D, 6.0D, 16.0D, 12.0D, 10.0D);
-    private static final VoxelShape EAST  = Block.createCubeShape(0.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D);
+    private static final VoxelShape DOWN  = Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D);
+    private static final VoxelShape UP    = Block.createCuboidShape(6.0D, 4.0D, 6.0D, 10.0D, 16.0D, 10.0D);
+    private static final VoxelShape NORTH = Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 16.0D);
+    private static final VoxelShape SOUTH = Block.createCuboidShape(6.0D, 0.0D, 0.0D, 10.0D, 12.0D, 10.0D);
+    private static final VoxelShape WEST  = Block.createCuboidShape(6.0D, 0.0D, 6.0D, 16.0D, 12.0D, 10.0D);
+    private static final VoxelShape EAST  = Block.createCuboidShape(0.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D);
 
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final Property<Boolean> CRANK = BooleanProperty.create("crank");
 
     public ClotheslineAnchorBlock(Settings settings) {
         super(settings);
-        setDefaultState(stateFactory.getDefaultState().with(field_11007, WallMountLocation.WALL).with(field_11177, Direction.NORTH).with(WATERLOGGED, false).with(CRANK, false));
+        setDefaultState(stateFactory.getDefaultState().with(FACE, WallMountLocation.WALL).with(FACING, Direction.NORTH).with(WATERLOGGED, false).with(CRANK, false));
     }
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
-        builder.with(field_11007, field_11177, WATERLOGGED, CRANK);
+        builder.with(FACE, FACING, WATERLOGGED, CRANK);
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, VerticalEntityPosition verticalEntityPosition) {
-        switch (state.get(field_11007)) {
+        switch (state.get(FACE)) {
             case FLOOR:
                 return DOWN;
             case WALL:
-                switch (state.get(field_11177)) {
+                switch (state.get(FACING)) {
                     case NORTH:
                         return NORTH;
                     case SOUTH:
@@ -107,7 +107,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockState state = super.getPlacementState(ctx);
         if (state != null) {
-            FluidState fluidState = ctx.getWorld().getFluidState(ctx.getPos());
+            FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
             return state.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
         }
         return null;
@@ -175,7 +175,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
-            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.method_15789(world));
+            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);

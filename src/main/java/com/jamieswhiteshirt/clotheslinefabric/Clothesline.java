@@ -18,7 +18,7 @@ import net.minecraft.client.network.packet.CustomPayloadClientPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.util.BlockHitResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.Hand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,7 +62,7 @@ public class Clothesline implements ModInitializer {
             return MessageChannels.SET_CONNECTOR_STATE.createClientboundPacket(new SetConnectorStateMessage(
                 entity.getEntityId(),
                 getUsageHand(ctx),
-                new BlockHitResult(ctx.method_17698(), ctx.getFacing(), ctx.getPos(), ctx.method_17699())
+                new BlockHitResult(ctx.getPos(), ctx.getFacing(), ctx.getBlockPos(), ctx.method_17699())
             ));
         } else {
             return MessageChannels.RESET_CONNECTOR_STATE.createClientboundPacket(new ResetConnectorStateMessage(

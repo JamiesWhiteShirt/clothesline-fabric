@@ -65,7 +65,7 @@ public final class NetworkImpl implements Network {
             if (!world.isClient && world.getGameRules().getBoolean("doTileDrops")) {
                 Vec3d pos = state.getPath().getPositionForOffset(state.attachmentKeyToOffset(attachmentKey));
                 ItemEntity itemEntity = new ItemEntity(world, pos.x, pos.y - 0.5D, pos.z, stack);
-                itemEntity.method_6988();
+                itemEntity.setToDefaultPickupDelay();
                 world.spawnEntity(itemEntity);
             }
         }

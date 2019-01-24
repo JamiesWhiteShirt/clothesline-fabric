@@ -14,9 +14,9 @@ public class CrankItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext ctx) {
-        BlockState state = ctx.getWorld().getBlockState(ctx.getPos());
+        BlockState state = ctx.getWorld().getBlockState(ctx.getBlockPos());
         if (state.getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR && !state.get(ClotheslineAnchorBlock.CRANK)) {
-            ctx.getWorld().setBlockState(ctx.getPos(), state.with(ClotheslineAnchorBlock.CRANK, true));
+            ctx.getWorld().setBlockState(ctx.getBlockPos(), state.with(ClotheslineAnchorBlock.CRANK, true));
             ctx.getItemStack().subtractAmount(1);
             return ActionResult.SUCCESS;
         }

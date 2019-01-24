@@ -15,21 +15,19 @@ import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.world.PersistentState;
-import net.minecraft.world.PersistentStateManager;
+import net.minecraft.world.OldWorldSaveHandler;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSaveHandler;
 import net.minecraft.world.chunk.ChunkManager;
 import net.minecraft.world.chunk.ChunkPos;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.dimension.DimensionalPersistentStateManager;
 import net.minecraft.world.level.LevelProperties;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
 import java.util.concurrent.Executor;
 import java.util.function.BiFunction;
 
@@ -43,19 +41,17 @@ public abstract class ServerWorldMixin extends World implements NetworkManagerPr
     private final NetworkManager networkManager = new ServerNetworkManager((ServerWorld)(Object) this, networkCollection, networkProvider);
     private final NetworkCollectionTracker<ServerPlayerEntity> tracker = new NetworkCollectionTrackerImpl<>(networkCollection, chunkWatchers::get, new PlayerNetworkMessenger());
 
-    protected ServerWorldMixin(WorldSaveHandler var1, @Nullable PersistentStateManager var2, LevelProperties var3, DimensionType var4, BiFunction<World, Dimension, ChunkManager> var5, Profiler var6, boolean var7) {
-        super(var1, var2, var3, var4, var5, var6, var7);
+    protected ServerWorldMixin(LevelProperties levelProperties, DimensionType dimensionType, BiFunction<World, Dimension, ChunkManager> biFunction, Profiler profiler, boolean boolean_1) {
+        super(levelProperties, dimensionType, biFunction, profiler, boolean_1);
     }
 
     @Inject(
         at = @At("RETURN"),
-        method = "<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/WorldSaveHandler;Lnet/minecraft/world/PersistentStateManager;Lnet/minecraft/world/level/LevelProperties;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/server/WorldGenerationProgressListener;)V"
+        method = "<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/OldWorldSaveHandler;Lnet/minecraft/world/level/LevelProperties;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/server/WorldGenerationProgressListener;)V"
     )
-    private void constructor(MinecraftServer server, Executor executor, WorldSaveHandler worldSaveHandler, PersistentStateManager persistentStateManager, LevelProperties levelProperties, DimensionType dimensionType, Profiler profiler, WorldGenerationProgressListener class_3949_1, CallbackInfo ci) {
-        PersistentState persistentState = persistentStateManager.get(dimensionType, key -> new NetworkProviderPersistentState(key, networkProvider), PERSISTENT_STATE_KEY);
-        if (persistentState == null) {
-            persistentStateManager.set(dimensionType, PERSISTENT_STATE_KEY, new NetworkProviderPersistentState(PERSISTENT_STATE_KEY, networkProvider));
-        }
+    private void constructor(MinecraftServer server, Executor executor, OldWorldSaveHandler oldWorldSaveHandler, LevelProperties levelProperties, DimensionType dimensionType, Profiler profiler, WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo ci) {
+        DimensionalPersistentStateManager persistentStateManager = ((ServerWorld) (Object) this).method_17983();
+        persistentStateManager.method_17924(() -> new NetworkProviderPersistentState(PERSISTENT_STATE_KEY, networkProvider), PERSISTENT_STATE_KEY);
     }
 
     @Override

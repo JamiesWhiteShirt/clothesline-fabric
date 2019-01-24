@@ -12,8 +12,8 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.block.BlockItem;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.BlockHitResult;
-import net.minecraft.util.HitResult;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
@@ -25,23 +25,23 @@ public class ClotheslineItems {
     public static final Item CLOTHESLINE = register("clothesline", new ConnectorItem(new Item.Settings().itemGroup(ClotheslineItemGroups.ITEMS), new ConnectorItem.ConnectorBehavior() {
         @Override
         public boolean canConnectFrom(ItemUsageContext from) {
-            return from.getWorld().getBlockState(from.getPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR;
+            return from.getWorld().getBlockState(from.getBlockPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR;
         }
 
         @Override
         public boolean connect(ItemUsageContext from, ItemUsageContext to) {
             World world = to.getWorld();
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
-            if (world.getBlockState(to.getPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR) {
-                Vec3d fromVec = Utility.midVec(from.getPos());
-                Vec3d toVec = Utility.midVec(to.getPos());
+            if (world.getBlockState(to.getBlockPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR) {
+                Vec3d fromVec = Utility.midVec(from.getBlockPos());
+                Vec3d toVec = Utility.midVec(to.getBlockPos());
                 BlockHitResult hitResult = world.rayTrace(new RayTraceContext(fromVec, toVec, RayTraceContext.ShapeType.COLLIDER, RayTraceContext.FluidHandling.NONE, to.getPlayer()));
                 if (hitResult.getType() == HitResult.Type.NONE) {
-                    if (manager.connect(from.getPos(), to.getPos())) {
+                    if (manager.connect(from.getBlockPos(), to.getBlockPos())) {
                         if (!Util.isCreativePlayer(to.getPlayer())) {
                             to.getItemStack().subtractAmount(1);
                         }
-                        world.playSound(to.getPlayer(), to.getPos(), SoundEvents.ENTITY_LEASH_KNOT_PLACE, SoundCategory.BLOCK, 1.0F, 1.0F);
+                        world.playSound(to.getPlayer(), to.getBlockPos(), SoundEvents.ENTITY_LEASH_KNOT_PLACE, SoundCategory.BLOCK, 1.0F, 1.0F);
                         return true;
                     }
                 }

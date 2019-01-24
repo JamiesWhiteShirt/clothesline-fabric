@@ -1,6 +1,6 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.network.message;
 
-import net.minecraft.util.BlockHitResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.PacketByteBuf;
 
