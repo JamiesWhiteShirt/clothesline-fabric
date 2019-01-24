@@ -10,6 +10,7 @@ out/
 *.iml
 *.ipr
 *.iws
+classes/
 
 # fabric
 
