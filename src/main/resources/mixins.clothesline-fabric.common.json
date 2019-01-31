@@ -6,7 +6,7 @@
     "entity.player.PlayerEntityMixin",
     "server.world.ServerWorldMixin",
     "world.WorldMixin",
-    "server.world.ChunkHolderManagerMixin",
+    "server.world.ThreadedAnvilChunkStorageMixin",
     "world.chunk.WorldChunkMixin",
     "server.network.ServerPlayerEntityMixin",
     "item.ItemMixin"

@@ -241,7 +241,7 @@ public final class RenderClotheslineNetwork {
                     GlStateManager.pushMatrix();
                     GlStateManager.translated(-viewPos.x, -viewPos.y, -viewPos.z);
                     GlStateManager.multMatrix(l2wBuffer);
-                    client.getItemRenderer().renderItemWithTransformation(attachmentEntry.getValue(), ModelTransformation.Type.FIXED);
+                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Type.FIXED);
                     GlStateManager.popMatrix();
 
                     l2wBuffer.clear();

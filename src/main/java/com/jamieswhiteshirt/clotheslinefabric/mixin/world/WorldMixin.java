@@ -4,6 +4,7 @@ import com.jamieswhiteshirt.clotheslinefabric.api.Line;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
 import com.jamieswhiteshirt.rtree3i.Box;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BoundingBox;
 import net.minecraft.util.math.MathHelper;
@@ -15,8 +16,8 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(World.class)
 public abstract class WorldMixin implements ViewableWorld, NetworkManagerProvider {
     @Override
-    public boolean method_8628(BlockState state, BlockPos pos) {
-        if (ViewableWorld.super.method_8628(state, pos)) {
+    public boolean method_8628(BlockState state, BlockPos pos, VerticalEntityPosition verticalEntityPosition) {
+        if (ViewableWorld.super.method_8628(state, pos, verticalEntityPosition)) {
             VoxelShape shape = state.getCollisionShape(this, pos);
             if (!shape.isEmpty()) {
                 BoundingBox bb = shape.offset(pos.getX(), pos.getY(), pos.getZ()).getBoundingBox();

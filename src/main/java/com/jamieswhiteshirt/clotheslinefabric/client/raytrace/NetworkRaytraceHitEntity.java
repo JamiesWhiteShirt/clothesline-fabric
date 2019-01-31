@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Packet;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
@@ -43,6 +44,11 @@ public final class NetworkRaytraceHitEntity extends Entity implements PickStackE
     public boolean method_5698(Entity entity) {
         // Called when a player attacks the entity
         return hit.hitByEntity((PlayerEntity) entity);
+    }
+
+    @Override
+    public Packet<?> createSpawnPacket() {
+        return null;
     }
 
     @Override

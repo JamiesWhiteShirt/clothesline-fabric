@@ -47,12 +47,12 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     public ClotheslineAnchorBlock(Settings settings) {
         super(settings);
-        setDefaultState(stateFactory.getDefaultState().with(FACE, WallMountLocation.WALL).with(FACING, Direction.NORTH).with(WATERLOGGED, false).with(CRANK, false));
+        setDefaultState(stateFactory.getDefaultState().with(FACE, WallMountLocation.WALL).with(field_11177, Direction.NORTH).with(WATERLOGGED, false).with(CRANK, false));
     }
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
-        builder.with(FACE, FACING, WATERLOGGED, CRANK);
+        builder.with(FACE, field_11177, WATERLOGGED, CRANK);
     }
 
     @SuppressWarnings("deprecation")
@@ -62,7 +62,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
             case FLOOR:
                 return DOWN;
             case WALL:
-                switch (state.get(FACING)) {
+                switch (state.get(field_11177)) {
                     case NORTH:
                         return NORTH;
                     case SOUTH:

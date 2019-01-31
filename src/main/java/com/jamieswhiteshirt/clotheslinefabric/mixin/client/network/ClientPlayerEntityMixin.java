@@ -18,11 +18,11 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     @Redirect(
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/network/ClientPlayerEntity;method_6115()Z"
+            target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"
         ),
         method = "updateMovement()V"
     )
     public boolean redirectIsUsingItem(ClientPlayerEntity clientPlayerEntity) {
-        return clientPlayerEntity.method_6115() && !(clientPlayerEntity.getActiveItem().getItem() instanceof ConnectorItem);
+        return clientPlayerEntity.isUsingItem() && !(clientPlayerEntity.getActiveItem().getItem() instanceof ConnectorItem);
     }
 }

@@ -37,7 +37,7 @@ public abstract class ServerWorldMixin extends World implements NetworkManagerPr
 
     private final SetMultimap<ChunkPos, ServerPlayerEntity> chunkWatchers = MultimapBuilder.hashKeys().linkedHashSetValues().build();
     private final NetworkCollection networkCollection = new NetworkCollectionImpl();
-    private final NetworkProvider networkProvider = new NetworkProviderImpl(networkCollection, pos -> isChunkLoaded(ChunkPos.longX(pos), ChunkPos.longZ(pos)));
+    private final NetworkProvider networkProvider = new NetworkProviderImpl(networkCollection, pos -> isChunkLoaded(ChunkPos.getPackedX(pos), ChunkPos.getPackedZ(pos)));
     private final NetworkManager networkManager = new ServerNetworkManager((ServerWorld)(Object) this, networkCollection, networkProvider);
     private final NetworkCollectionTracker<ServerPlayerEntity> tracker = new NetworkCollectionTrackerImpl<>(networkCollection, chunkWatchers::get, new PlayerNetworkMessenger());
 
@@ -50,7 +50,7 @@ public abstract class ServerWorldMixin extends World implements NetworkManagerPr
         method = "<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/OldWorldSaveHandler;Lnet/minecraft/world/level/LevelProperties;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/server/WorldGenerationProgressListener;)V"
     )
     private void constructor(MinecraftServer server, Executor executor, OldWorldSaveHandler oldWorldSaveHandler, LevelProperties levelProperties, DimensionType dimensionType, Profiler profiler, WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo ci) {
-        DimensionalPersistentStateManager persistentStateManager = ((ServerWorld) (Object) this).method_17983();
+        DimensionalPersistentStateManager persistentStateManager = ((ServerWorld) (Object) this).getDimensionalPersistentStateManager();
         persistentStateManager.method_17924(() -> new NetworkProviderPersistentState(PERSISTENT_STATE_KEY, networkProvider), PERSISTENT_STATE_KEY);
     }
 
