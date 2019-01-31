@@ -34,6 +34,6 @@ public abstract class WorldMixin implements ViewableWorld, NetworkManagerProvide
                 return !intersects;
             }
         }
-        return true;
+        return false;
     }
 }
