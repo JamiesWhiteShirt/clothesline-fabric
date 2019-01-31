@@ -12,7 +12,7 @@ targetCompatibility = 1.8
 
 group = "com.jamieswhiteshirt"
 archivesBaseName = "clothesline-fabric"
-version = "0.0.5.0"
+version = "0.0.6.0"
 
 repositories {
     maven {

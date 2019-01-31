@@ -1,3 +1,8 @@
+# 0.0.6.0
+
+- Updated to Minecraft 19w05a
+- Fixed bug allowing blocks to be placed in a colliding state
+
 # 0.0.5.0
 
 - Updated to Minecraft 19w04a
