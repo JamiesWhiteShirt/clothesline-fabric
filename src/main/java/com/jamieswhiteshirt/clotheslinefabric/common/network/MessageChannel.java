@@ -1,8 +1,8 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.network;
 
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.networking.CustomPayloadPacketRegistry;
-import net.fabricmc.fabric.networking.PacketContext;
+import net.fabricmc.fabric.api.network.PacketContext;
+import net.fabricmc.fabric.api.network.PacketRegistry;
 import net.minecraft.client.network.packet.CustomPayloadClientPacket;
 import net.minecraft.server.network.packet.CustomPayloadServerPacket;
 import net.minecraft.util.Identifier;
@@ -22,7 +22,7 @@ public final class MessageChannel<T> {
         this.deserializer = deserializer;
     }
 
-    public void registerHandler(CustomPayloadPacketRegistry registry, BiConsumer<PacketContext, T> handler) {
+    public void registerHandler(PacketRegistry registry, BiConsumer<PacketContext, T> handler) {
         registry.register(id, (ctx, buf) -> {
             T msg = deserializer.apply(buf);
             ctx.getTaskQueue().execute(() -> handler.accept(ctx, msg));

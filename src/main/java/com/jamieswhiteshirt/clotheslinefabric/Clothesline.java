@@ -1,9 +1,9 @@
 package com.jamieswhiteshirt.clotheslinefabric;
 
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
-import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkLoadEvent;
-import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkWatchEvent;
-import com.jamieswhiteshirt.clotheslinefabric.common.event.TrackEntityEvent;
+import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkLoadCallback;
+import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkWatchCallback;
+import com.jamieswhiteshirt.clotheslinefabric.common.event.TrackEntityCallback;
 import com.jamieswhiteshirt.clotheslinefabric.common.item.ClotheslineItems;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.MessageChannels;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.ServerMessageHandling;
@@ -13,7 +13,7 @@ import com.jamieswhiteshirt.clotheslinefabric.common.sound.ClotheslineSoundEvent
 import com.jamieswhiteshirt.clotheslinefabric.internal.ConnectorHolder;
 import com.jamieswhiteshirt.clotheslinefabric.internal.WorldExtension;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.events.TickEvent;
+import net.fabricmc.fabric.api.event.world.WorldTickCallback;
 import net.minecraft.client.network.packet.CustomPayloadClientPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,12 +33,12 @@ public class Clothesline implements ModInitializer {
         ClotheslineSoundEvents.init();
         ServerMessageHandling.init();
 
-        TickEvent.WORLD.register(world -> ((WorldExtension) world).clotheslineTick());
-        ChunkWatchEvent.WATCH.register((world, pos, playerEntity) -> ((WorldExtension) world).onPlayerWatchChunk(pos, playerEntity));
-        ChunkWatchEvent.UNWATCH.register((world, pos, playerEntity) -> ((WorldExtension) world).onPlayerUnWatchChunk(pos, playerEntity));
-        ChunkLoadEvent.LOAD.register((world, pos) -> ((WorldExtension) world).onChunkLoaded(pos));
-        ChunkLoadEvent.UNLOAD.register((world, pos) -> ((WorldExtension) world).onChunkUnloaded(pos));
-        TrackEntityEvent.START.register((player, entity) -> {
+        WorldTickCallback.EVENT.register(world -> ((WorldExtension) world).clotheslineTick());
+        ChunkWatchCallback.WATCH.register((world, pos, playerEntity) -> ((WorldExtension) world).onPlayerWatchChunk(pos, playerEntity));
+        ChunkWatchCallback.UNWATCH.register((world, pos, playerEntity) -> ((WorldExtension) world).onPlayerUnWatchChunk(pos, playerEntity));
+        ChunkLoadCallback.LOAD.register((world, pos) -> ((WorldExtension) world).onChunkLoaded(pos));
+        ChunkLoadCallback.UNLOAD.register((world, pos) -> ((WorldExtension) world).onChunkUnloaded(pos));
+        TrackEntityCallback.START.register((player, entity) -> {
             if (entity instanceof ConnectorHolder) {
                 player.networkHandler.sendPacket(createConnectorStatePacket(((ConnectorHolder) entity).getFrom(), entity));
             }

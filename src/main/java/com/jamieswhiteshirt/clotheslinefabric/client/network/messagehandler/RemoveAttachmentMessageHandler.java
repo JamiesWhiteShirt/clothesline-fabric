@@ -6,7 +6,7 @@ import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.RemoveAttachmentMessage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.networking.PacketContext;
+import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.item.ItemStack;
 
 import java.util.function.BiConsumer;

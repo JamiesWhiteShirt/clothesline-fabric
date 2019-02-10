@@ -44,7 +44,7 @@ public class GameRendererMixin {
 
             NetworkRaytraceHit hit = Raytracing.raytraceNetworks(manager, ray, ray.lengthSq, delta);
             if (hit != null) {
-                NetworkRaytraceHitEntity hitResultEntity = new NetworkRaytraceHitEntity(world, manager, hit);
+                NetworkRaytraceHitEntity hitResultEntity = new NetworkRaytraceHitEntity(world, hit);
                 client.hitResult = new EntityHitResult(hitResultEntity);
                 client.targetedEntity = hitResultEntity;
             }

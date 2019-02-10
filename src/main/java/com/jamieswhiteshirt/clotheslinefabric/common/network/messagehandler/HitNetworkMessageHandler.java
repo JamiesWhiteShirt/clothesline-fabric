@@ -2,7 +2,7 @@ package com.jamieswhiteshirt.clotheslinefabric.common.network.messagehandler;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.*;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.HitNetworkMessage;
-import net.fabricmc.fabric.networking.PacketContext;
+import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;

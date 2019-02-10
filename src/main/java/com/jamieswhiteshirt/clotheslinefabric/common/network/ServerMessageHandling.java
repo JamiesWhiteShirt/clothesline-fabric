@@ -4,13 +4,14 @@ import com.jamieswhiteshirt.clotheslinefabric.common.network.messagehandler.HitA
 import com.jamieswhiteshirt.clotheslinefabric.common.network.messagehandler.HitNetworkMessageHandler;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.messagehandler.StopUsingItemOnMessageHandler;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.messagehandler.TryUseItemOnNetworkMessageHandler;
-import net.fabricmc.fabric.networking.CustomPayloadPacketRegistry;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 
 public class ServerMessageHandling {
     public static void init() {
-        MessageChannels.HIT_ATTACHMENT.registerHandler(CustomPayloadPacketRegistry.SERVER, new HitAttachmentMessageHandler());
-        MessageChannels.HIT_NETWORK.registerHandler(CustomPayloadPacketRegistry.SERVER, new HitNetworkMessageHandler());
-        MessageChannels.STOP_USING_ITEM_ON.registerHandler(CustomPayloadPacketRegistry.SERVER, new StopUsingItemOnMessageHandler());
-        MessageChannels.TRY_USE_ITEM_ON_NETWORK.registerHandler(CustomPayloadPacketRegistry.SERVER, new TryUseItemOnNetworkMessageHandler());
+        ServerSidePacketRegistry registry = ServerSidePacketRegistry.INSTANCE;
+        MessageChannels.HIT_ATTACHMENT.registerHandler(registry, new HitAttachmentMessageHandler());
+        MessageChannels.HIT_NETWORK.registerHandler(registry, new HitNetworkMessageHandler());
+        MessageChannels.STOP_USING_ITEM_ON.registerHandler(registry, new StopUsingItemOnMessageHandler());
+        MessageChannels.TRY_USE_ITEM_ON_NETWORK.registerHandler(registry, new TryUseItemOnNetworkMessageHandler());
     }
 }

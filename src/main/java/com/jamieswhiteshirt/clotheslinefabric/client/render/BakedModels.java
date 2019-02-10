@@ -1,6 +1,6 @@
 package com.jamieswhiteshirt.clotheslinefabric.client.render;
 
-import com.jamieswhiteshirt.clotheslinefabric.client.event.BakedModelManagerEvent;
+import com.jamieswhiteshirt.clotheslinefabric.client.event.BakedModelManagerCallback;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
@@ -24,7 +24,7 @@ public class BakedModels {
             out.accept(PULLEY_WHEEL_ROPE);
         });
 
-        BakedModelManagerEvent.GET_MODELS.register(bakedModelManager -> {
+        BakedModelManagerCallback.GET_MODELS.register(bakedModelManager -> {
             crank = bakedModelManager.getModel(CRANK);
             pulleyWheel = bakedModelManager.getModel(PULLEY_WHEEL);
             pulleyWheelRope = bakedModelManager.getModel(PULLEY_WHEEL_ROPE);

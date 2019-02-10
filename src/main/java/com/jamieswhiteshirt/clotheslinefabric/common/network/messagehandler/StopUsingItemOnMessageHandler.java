@@ -3,7 +3,7 @@ package com.jamieswhiteshirt.clotheslinefabric.common.network.messagehandler;
 import com.jamieswhiteshirt.clotheslinefabric.api.Utility;
 import com.jamieswhiteshirt.clotheslinefabric.common.item.ConnectorItem;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.StopUsingItemOnMessage;
-import net.fabricmc.fabric.networking.PacketContext;
+import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.math.BlockPos;

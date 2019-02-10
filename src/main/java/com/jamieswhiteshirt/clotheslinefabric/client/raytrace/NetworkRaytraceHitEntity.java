@@ -1,24 +1,24 @@
 package com.jamieswhiteshirt.clotheslinefabric.client.raytrace;
 
-import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManager;
-import com.jamieswhiteshirt.clotheslinefabric.internal.PickStackEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.entity.EntityPickInteractionAware;
+import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCategory;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
-public final class NetworkRaytraceHitEntity extends Entity implements PickStackEntity {
-    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.create(NetworkRaytraceHitEntity.class).size(0.25F, 0.25F).build();
+public final class NetworkRaytraceHitEntity extends Entity implements EntityPickInteractionAware {
+    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.create(EntityCategory.MISC, NetworkRaytraceHitEntity::new).size(0.25F, 0.25F).build();
 
-    private NetworkManager manager;
     private NetworkRaytraceHit hit;
 
     public NetworkRaytraceHitEntity(World world) {
@@ -28,9 +28,8 @@ public final class NetworkRaytraceHitEntity extends Entity implements PickStackE
     @Override
     protected void initDataTracker() { }
 
-    public NetworkRaytraceHitEntity(World world, NetworkManager manager, NetworkRaytraceHit hit) {
+    public NetworkRaytraceHitEntity(World world, NetworkRaytraceHit hit) {
         this(world);
-        this.manager = manager;
         this.hit = hit;
     }
 
@@ -56,12 +55,12 @@ public final class NetworkRaytraceHitEntity extends Entity implements PickStackE
         return hit.useItem(player, hand);
     }
 
-    @Override
-    public ItemStack getPickStack() {
-        return hit.getPickedResult();
-    }
-
     public NetworkRaytraceHit getHit() {
         return hit;
+    }
+
+    @Override
+    public ItemStack getPickedStack(PlayerEntity player, HitResult result) {
+        return hit.getPickedResult();
     }
 }

@@ -11,7 +11,6 @@
     "client.render.entity.PlayerEntityRendererMixin",
     "client.gui.hud.InGameHudMixin",
     "client.gui.hud.DebugHudMixin",
-    "client.MinecraftClientMixin",
     "client.render.model.BakedModelManagerMixin"
   ],
   "injectors": {

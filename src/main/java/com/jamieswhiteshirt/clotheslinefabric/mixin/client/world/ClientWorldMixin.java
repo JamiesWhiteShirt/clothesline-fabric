@@ -8,6 +8,7 @@ import com.jamieswhiteshirt.clotheslinefabric.client.impl.ClientNetworkManager;
 import com.jamieswhiteshirt.clotheslinefabric.common.impl.NetworkCollectionImpl;
 import com.jamieswhiteshirt.clotheslinefabric.internal.WorldExtension;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -40,9 +41,9 @@ public abstract class ClientWorldMixin extends World implements NetworkManagerPr
 
     @Inject(
         at = @At("RETURN"),
-        method = "<init>(Lnet/minecraft/client/network/ClientPlayNetworkHandler;Lnet/minecraft/world/level/LevelInfo;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/world/Difficulty;Lnet/minecraft/util/profiler/Profiler;)V"
+        method = "<init>(Lnet/minecraft/client/network/ClientPlayNetworkHandler;Lnet/minecraft/world/level/LevelInfo;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/world/Difficulty;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/client/render/WorldRenderer;)V"
     )
-    private void constructor(ClientPlayNetworkHandler clientPlayNetworkHandler_1, LevelInfo levelInfo_1, DimensionType dimensionType_1, Difficulty difficulty_1, Profiler profiler_1, CallbackInfo ci) {
+    private void constructor(ClientPlayNetworkHandler clientPlayNetworkHandler_1, LevelInfo levelInfo_1, DimensionType dimensionType_1, Difficulty difficulty_1, Profiler profiler_1, WorldRenderer worldRenderer_1, CallbackInfo ci) {
         networkManager.getNetworks().addEventListener(SOUND_KEY, new SoundNetworkCollectionListener());
     }
 

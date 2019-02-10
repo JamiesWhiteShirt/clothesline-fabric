@@ -8,7 +8,7 @@ import com.jamieswhiteshirt.clotheslinefabric.common.network.message.HitAttachme
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.RemoveAttachmentMessage;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.SetAttachmentMessage;
 import com.jamieswhiteshirt.clotheslinefabric.common.util.BasicAttachment;
-import net.fabricmc.fabric.networking.PacketContext;
+import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 
