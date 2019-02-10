@@ -1,3 +1,8 @@
+# 0.0.7.0
+
+- Updated to Minecraft 19w06a
+- Fixed bug disallowing placement of blocks without collision boxes
+
 # 0.0.6.0
 
 - Updated to Minecraft 19w05a
