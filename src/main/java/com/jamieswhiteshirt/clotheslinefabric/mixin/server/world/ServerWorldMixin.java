@@ -15,9 +15,9 @@ import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.world.OldWorldSaveHandler;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldSaveHandler;
 import net.minecraft.world.chunk.ChunkManager;
 import net.minecraft.world.chunk.ChunkPos;
 import net.minecraft.world.dimension.Dimension;
@@ -47,11 +47,11 @@ public abstract class ServerWorldMixin extends World implements NetworkManagerPr
 
     @Inject(
         at = @At("RETURN"),
-        method = "<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/OldWorldSaveHandler;Lnet/minecraft/world/level/LevelProperties;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/server/WorldGenerationProgressListener;)V"
+        method = "<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/world/WorldSaveHandler;Lnet/minecraft/world/level/LevelProperties;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/server/WorldGenerationProgressListener;)V"
     )
-    private void constructor(MinecraftServer server, Executor executor, OldWorldSaveHandler oldWorldSaveHandler, LevelProperties levelProperties, DimensionType dimensionType, Profiler profiler, WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo ci) {
+    private void constructor(MinecraftServer server, Executor executor, WorldSaveHandler oldWorldSaveHandler, LevelProperties levelProperties, DimensionType dimensionType, Profiler profiler, WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo ci) {
         PersistentStateManager persistentStateManager = ((ServerWorld) (Object) this).getPersistentStateManager();
-        persistentStateManager.method_17924(() -> new NetworkProviderPersistentState(PERSISTENT_STATE_KEY, networkProvider), PERSISTENT_STATE_KEY);
+        persistentStateManager.getOrCreate(() -> new NetworkProviderPersistentState(PERSISTENT_STATE_KEY, networkProvider), PERSISTENT_STATE_KEY);
     }
 
     @Override

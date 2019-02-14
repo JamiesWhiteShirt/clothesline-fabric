@@ -3,8 +3,8 @@ package com.jamieswhiteshirt.clotheslinefabric.common.network;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.PacketRegistry;
-import net.minecraft.client.network.packet.CustomPayloadClientPacket;
-import net.minecraft.server.network.packet.CustomPayloadServerPacket;
+import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
+import net.minecraft.server.network.packet.CustomPayloadC2SPacket;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 
@@ -29,15 +29,15 @@ public final class MessageChannel<T> {
         });
     }
 
-    public CustomPayloadClientPacket createClientboundPacket(T msg) {
+    public CustomPayloadS2CPacket createClientboundPacket(T msg) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         serializer.accept(msg, buf);
-        return new CustomPayloadClientPacket(id, buf);
+        return new CustomPayloadS2CPacket(id, buf);
     }
 
-    public CustomPayloadServerPacket createServerboundPacket(T msg) {
+    public CustomPayloadC2SPacket createServerboundPacket(T msg) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         serializer.accept(msg, buf);
-        return new CustomPayloadServerPacket(id, buf);
+        return new CustomPayloadC2SPacket(id, buf);
     }
 }

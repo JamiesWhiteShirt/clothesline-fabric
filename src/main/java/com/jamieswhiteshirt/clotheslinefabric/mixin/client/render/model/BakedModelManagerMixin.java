@@ -17,9 +17,9 @@ public class BakedModelManagerMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/util/profiler/Profiler;pop()V"
         ),
-        method = "method_18179(Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/client/render/model/ModelLoader;Lnet/minecraft/util/profiler/Profiler;)V"
+        method = "method_18179(Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/client/render/model/ModelLoader;)V"
     )
-    private void onResourceReload(ResourceManager resourceManager_1, ModelLoader modelLoader_1, Profiler profiler_1, CallbackInfo ci) {
+    private void method_18179(Profiler profiler, ModelLoader modelLoader, CallbackInfo ci) {
         BakedModelManagerCallback.GET_MODELS.invoker().accept((BakedModelManager) (Object) this);
     }
 }

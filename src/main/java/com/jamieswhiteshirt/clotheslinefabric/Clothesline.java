@@ -14,7 +14,7 @@ import com.jamieswhiteshirt.clotheslinefabric.internal.ConnectorHolder;
 import com.jamieswhiteshirt.clotheslinefabric.internal.WorldExtension;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.world.WorldTickCallback;
-import net.minecraft.client.network.packet.CustomPayloadClientPacket;
+import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
@@ -57,7 +57,7 @@ public class Clothesline implements ModInitializer {
         return null;
     }
 
-    public static CustomPayloadClientPacket createConnectorStatePacket(ItemUsageContext ctx, Entity entity) {
+    public static CustomPayloadS2CPacket createConnectorStatePacket(ItemUsageContext ctx, Entity entity) {
         if (ctx != null) {
             return MessageChannels.SET_CONNECTOR_STATE.createClientboundPacket(new SetConnectorStateMessage(
                 entity.getEntityId(),
