@@ -1,3 +1,7 @@
+# 0.0.8.0
+
+- Updated to Minecraft 19w07a
+
 # 0.0.7.0
 
 - Updated to Minecraft 19w06a
