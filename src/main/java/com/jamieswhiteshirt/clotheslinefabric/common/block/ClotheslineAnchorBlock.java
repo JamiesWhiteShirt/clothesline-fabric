@@ -304,7 +304,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
 
         @Override
-        public void method_5448() {
+        public void clear() {
             manager.removeNode(pos);
         }
 

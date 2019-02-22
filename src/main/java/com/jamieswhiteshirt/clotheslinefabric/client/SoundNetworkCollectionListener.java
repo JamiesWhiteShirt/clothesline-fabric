@@ -5,6 +5,7 @@ import com.jamieswhiteshirt.clotheslinefabric.client.audio.ClotheslineRopeSoundI
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.audio.SoundInstance;
 import net.minecraft.client.audio.SoundLoader;
 import net.minecraft.util.math.BlockPos;
 
@@ -12,22 +13,22 @@ import java.util.*;
 
 @Environment(EnvType.CLIENT)
 public class SoundNetworkCollectionListener implements NetworkCollectionListener {
-    private final Map<BlockPos, ClotheslineRopeSoundInstance> anchorSounds = new HashMap<>();
+    private final Map<BlockPos, SoundInstance> anchorSoundInstances = new HashMap<>();
     private final SoundLoader soundHandler = MinecraftClient.getInstance().getSoundLoader();
 
     private void listenTo(NetworkState state) {
         for (Path.Node node : state.getPath().getNodes().values()) {
-            ClotheslineRopeSoundInstance sound = new ClotheslineRopeSoundInstance(state, node);
-            anchorSounds.put(node.getPos(), sound);
-            soundHandler.play(sound);
+            SoundInstance soundInstance = new ClotheslineRopeSoundInstance(state, node);
+            anchorSoundInstances.put(node.getPos(), soundInstance);
+            soundHandler.play(soundInstance);
         }
     }
 
     private void unlistenTo(NetworkState state) {
         for (BlockPos pos : state.getPath().getNodes().keySet()) {
-            ClotheslineRopeSoundInstance sound = anchorSounds.remove(pos);
-            if (sound != null) {
-                soundHandler.stop(sound);
+            SoundInstance soundInstance = anchorSoundInstances.remove(pos);
+            if (soundInstance != null) {
+                soundHandler.stop(soundInstance);
             }
         }
     }

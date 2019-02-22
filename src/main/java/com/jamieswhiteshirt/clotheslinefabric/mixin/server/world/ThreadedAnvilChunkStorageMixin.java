@@ -9,6 +9,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.server.world.ThreadedAnvilChunkStorage;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPos;
+import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -49,14 +50,10 @@ public class ThreadedAnvilChunkStorageMixin {
     }
 
     @Inject(
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/server/world/ServerWorld;method_18202(Lnet/minecraft/world/chunk/WorldChunk;)V",
-            shift = At.Shift.AFTER
-        ),
-        method = "method_17261(Lnet/minecraft/world/chunk/Chunk;)V"
+        at = @At("RETURN"),
+        method = "method_18708(Lnet/minecraft/world/chunk/WorldChunk;)V"
     )
-    private void method_17261(Chunk chunk, CallbackInfo ci) {
+    private void method_18708(WorldChunk chunk, CallbackInfo ci) {
         ChunkLoadCallback.UNLOAD.invoker().accept(world, chunk.getPos());
     }
 }

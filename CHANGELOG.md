@@ -1,3 +1,7 @@
+# 0.0.9.0
+
+- Moved custom sound events from minecraft to clothesline-fabric namespace
+
 # 0.0.8.0
 
 - Updated to Minecraft 19w07a

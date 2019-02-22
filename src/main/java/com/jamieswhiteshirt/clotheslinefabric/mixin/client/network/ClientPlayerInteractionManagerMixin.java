@@ -23,10 +23,10 @@ public class ClientPlayerInteractionManagerMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/Packet;)V"
         ),
-        method = "method_2897(Lnet/minecraft/entity/player/PlayerEntity;)V",
+        method = "stopUsingItem(Lnet/minecraft/entity/player/PlayerEntity;)V",
         cancellable = true
     )
-    private void method_2897(PlayerEntity var1, CallbackInfo info) {
+    private void stopusingItem(PlayerEntity var1, CallbackInfo info) {
         HitResult hitResult = MinecraftClient.getInstance().hitResult;
         ClientWorld world = MinecraftClient.getInstance().world;
         if (hitResult != null && world != null && hitResult.getType() == HitResult.Type.BLOCK) {

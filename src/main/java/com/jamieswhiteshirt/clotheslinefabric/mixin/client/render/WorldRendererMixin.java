@@ -49,7 +49,7 @@ public class WorldRendererMixin {
         }
 
         // If not third person
-        if (client.options.field_1850 <= 0 && cameraEntity instanceof PlayerEntity) {
+        if (client.options.perspective <= 0 && cameraEntity instanceof PlayerEntity) {
             renderClotheslineNetwork.renderFirstPersonPlayerHeldClothesline((PlayerEntity) cameraEntity, x, y, z, delta);
         }
     }

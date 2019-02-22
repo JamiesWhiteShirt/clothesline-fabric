@@ -5,11 +5,12 @@ import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 import com.jamieswhiteshirt.clotheslinefabric.common.sound.ClotheslineSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.audio.MovingSoundInstance;
+import net.minecraft.client.audio.AbstractSoundInstance;
+import net.minecraft.client.audio.TickableSoundInstance;
 import net.minecraft.sound.SoundCategory;
 
 @Environment(EnvType.CLIENT)
-public class ClotheslineRopeSoundInstance extends MovingSoundInstance {
+public class ClotheslineRopeSoundInstance extends AbstractSoundInstance implements TickableSoundInstance {
     private final NetworkState state;
     private final Path.Node node;
 
@@ -27,7 +28,7 @@ public class ClotheslineRopeSoundInstance extends MovingSoundInstance {
     }
 
     @Override
-    public void tick() {
+    public void method_16896() {
         float momentum = Math.abs((float) state.getMomentum()) / NetworkState.MAX_MOMENTUM;
         this.volume = (2 + node.getEdges().size()) * momentum * 0.2F;
         this.pitch = 0.25F + momentum * 0.75F;

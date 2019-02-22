@@ -2,12 +2,15 @@ package com.jamieswhiteshirt.clotheslinefabric.common.item;
 
 import com.jamieswhiteshirt.clotheslinefabric.Clothesline;
 import com.jamieswhiteshirt.clotheslinefabric.internal.ConnectorHolder;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.UseAction;
@@ -69,8 +72,8 @@ public class ConnectorItem extends Item {
 
     private void applyConnectorState(ConnectorHolder connectorHolder, World world, PlayerEntity player, @Nullable ItemUsageContext ctx) {
         if (!world.isClient) {
-            ServerWorld serverWorld = (ServerWorld) world;
-            serverWorld.getEntityTracker().method_14079(player, Clothesline.createConnectorStatePacket(ctx, player));
+            Packet<ClientPlayPacketListener> packet = Clothesline.createConnectorStatePacket(ctx, player);
+            PlayerStream.watching(player).forEach(watcher -> ((ServerPlayerEntity) watcher).networkHandler.sendPacket(packet));
         }
         connectorHolder.setFrom(ctx);
     }

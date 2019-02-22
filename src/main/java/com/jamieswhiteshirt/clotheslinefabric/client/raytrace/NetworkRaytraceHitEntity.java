@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.entity.EntityPickInteractionAware;
 import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCategory;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -17,19 +18,19 @@ import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public final class NetworkRaytraceHitEntity extends Entity implements EntityPickInteractionAware {
-    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.create(EntityCategory.MISC, NetworkRaytraceHitEntity::new).size(0.25F, 0.25F).build();
+    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.<NetworkRaytraceHitEntity>create(EntityCategory.MISC, NetworkRaytraceHitEntity::new).size(EntitySize.resizeable(0.25F, 0.25F)).build();
 
     private NetworkRaytraceHit hit;
 
-    public NetworkRaytraceHitEntity(World world) {
-        super(ENTITY_TYPE, world);
+    public NetworkRaytraceHitEntity(EntityType<NetworkRaytraceHitEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     @Override
     protected void initDataTracker() { }
 
     public NetworkRaytraceHitEntity(World world, NetworkRaytraceHit hit) {
-        this(world);
+        this(ENTITY_TYPE, world);
         this.hit = hit;
     }
 

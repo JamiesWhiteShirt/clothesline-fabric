@@ -4,7 +4,7 @@ import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineAnchorBloc
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Drawable;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public abstract class InGameHudMixin extends Drawable {
+public abstract class InGameHudMixin extends DrawableHelper {
     private static final Identifier CLOTHESLINE_ICONS = new Identifier("clothesline-fabric", "textures/gui/icons.png");
     private static final int CLOTHESLINE_ICONS_WIDTH = 32, CLOTHESLINE_ICONS_HEIGHT = 16;
 
@@ -52,9 +52,9 @@ public abstract class InGameHudMixin extends Drawable {
             value = "INVOKE",
             target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexturedRect(FFIIII)V"
         ),
-        method = "method_1736(F)V"
+        method = "renderCrosshair(F)V"
     )
-    private void method_1736(float delta, CallbackInfo ci) {
+    private void renderCrosshair(float delta, CallbackInfo ci) {
         PlayerEntity player = getCameraPlayer();
         HitResult hitResult = client.hitResult;
         if (player != null && hitResult != null) {

@@ -4,7 +4,7 @@ import com.jamieswhiteshirt.clotheslinefabric.api.*;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHitEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Drawable;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.text.TextFormat;
 import net.minecraft.util.hit.BlockHitResult;
@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Mixin(DebugHud.class)
-public class DebugHudMixin extends Drawable {
+public class DebugHudMixin extends DrawableHelper {
     @Shadow @Final private MinecraftClient client;
     @Shadow private HitResult blockHit;
 

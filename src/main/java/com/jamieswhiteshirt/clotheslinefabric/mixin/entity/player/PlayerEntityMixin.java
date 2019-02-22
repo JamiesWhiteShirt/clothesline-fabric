@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class PlayerEntityMixin extends LivingEntity implements ConnectorHolder {
     private ItemUsageContext connectFrom;
 
-    protected PlayerEntityMixin(EntityType<?> var1, World var2) {
+    protected PlayerEntityMixin(EntityType<? extends LivingEntity> var1, World var2) {
         super(var1, var2);
     }
 

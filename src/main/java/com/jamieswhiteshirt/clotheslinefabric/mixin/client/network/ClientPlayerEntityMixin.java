@@ -10,11 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ClientPlayerEntity.class)
-public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
-    public ClientPlayerEntityMixin(ClientWorld var1, GameProfile var2) {
-        super(var1, var2);
-    }
-
+public abstract class ClientPlayerEntityMixin {
     @Redirect(
         at = @At(
             value = "INVOKE",

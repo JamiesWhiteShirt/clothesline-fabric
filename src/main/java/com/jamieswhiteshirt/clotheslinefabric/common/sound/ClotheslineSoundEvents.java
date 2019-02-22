@@ -9,7 +9,8 @@ public class ClotheslineSoundEvents {
     public static final SoundEvent BLOCK_CLOTHESLINE_ANCHOR_ROPE = register("block.clothesline_anchor.rope");
 
     private static SoundEvent register(String id) {
-        return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(new Identifier("clothesline-fabric", id)));
+        Identifier identifier = new Identifier("clothesline-fabric", id);
+        return Registry.register(Registry.SOUND_EVENT, identifier, new SoundEvent(identifier));
     }
 
     public static void init() { }

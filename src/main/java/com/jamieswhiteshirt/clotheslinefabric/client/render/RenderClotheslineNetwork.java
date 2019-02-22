@@ -16,7 +16,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.FontRenderer;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -268,8 +268,8 @@ public final class RenderClotheslineNetwork {
         tessellator.draw();
     }
 
-    private void debugRenderText(String msg, double x, double y, double z, float yaw, float pitch, FontRenderer fontRenderer) {
-        GameRenderer.method_3179(fontRenderer, msg, (float)x, (float)y, (float)z, 0, yaw, pitch, false, false);
+    private void debugRenderText(String msg, double x, double y, double z, float yaw, float pitch, TextRenderer textRenderer) {
+        GameRenderer.method_3179(textRenderer, msg, (float)x, (float)y, (float)z, 0, yaw, pitch, false, false);
     }
 
     public void debugRender(
@@ -280,7 +280,7 @@ public final class RenderClotheslineNetwork {
         BlockEntityRenderDispatcher rendererDispatcher = BlockEntityRenderDispatcher.INSTANCE;
         float yaw = rendererDispatcher.cameraYaw;
         float pitch = rendererDispatcher.cameraPitch;
-        FontRenderer fontRenderer = MinecraftClient.getInstance().fontRenderer;
+        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
         // Select all edges in the edges map intersecting with the camera frustum
         Selection<NetworkEdge> edges = edgesMap
@@ -293,7 +293,7 @@ public final class RenderClotheslineNetwork {
             Path.Node pathNode = node.getPathNode();
             int nodeIndex = pathNode.getEdges().indexOf(pathEdge);
             Vec3d pos = LineProjection.create(edge).projectRUF(-0.125D, 0.125D, 0.5D);
-            debugRenderText("L" + nodeIndex + " G" + edge.getIndex(), pos.x - x, pos.y - y, pos.z - z, yaw, pitch, fontRenderer);
+            debugRenderText("L" + nodeIndex + " G" + edge.getIndex(), pos.x - x, pos.y - y, pos.z - z, yaw, pitch, textRenderer);
         });
     }
 
@@ -305,7 +305,7 @@ public final class RenderClotheslineNetwork {
             float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
             int k = player.getMainHand() == OptionMainHand.RIGHT ? 1 : -1;
             double f10 = client.options.fov / 100.0D;
-            Vec3d vecB = new Vec3d(x, y + player.getEyeHeight(), z).add(new Vec3d(k * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
+            Vec3d vecB = new Vec3d(x, y + player.getStandingEyeHeight(), z).add(new Vec3d(k * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
 
             renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
         }
