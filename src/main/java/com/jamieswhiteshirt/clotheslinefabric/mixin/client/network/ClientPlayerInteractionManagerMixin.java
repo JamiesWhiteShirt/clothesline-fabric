@@ -26,7 +26,7 @@ public class ClientPlayerInteractionManagerMixin {
         method = "stopUsingItem(Lnet/minecraft/entity/player/PlayerEntity;)V",
         cancellable = true
     )
-    private void stopusingItem(PlayerEntity var1, CallbackInfo info) {
+    private void stopUsingItem(PlayerEntity var1, CallbackInfo info) {
         HitResult hitResult = MinecraftClient.getInstance().hitResult;
         ClientWorld world = MinecraftClient.getInstance().world;
         if (hitResult != null && world != null && hitResult.getType() == HitResult.Type.BLOCK) {

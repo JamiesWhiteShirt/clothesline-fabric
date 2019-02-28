@@ -40,20 +40,24 @@ public class ThreadedAnvilChunkStorageMixin {
     @Inject(
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/chunk/WorldChunk;loadToWorld()V",
+            target = "Lnet/minecraft/world/chunk/WorldChunk;setLoadedToWorld(Z)V",
             shift = At.Shift.AFTER
         ),
-        method = "method_17227(Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/server/world/ChunkHolder;)Lnet/minecraft/world/chunk/Chunk;"
+        method = "method_17227(Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/server/world/ChunkHolder;Lnet/minecraft/world/chunk/ChunkPos;)Lnet/minecraft/world/chunk/Chunk;"
     )
-    private void method_17227(Chunk chunk, ChunkHolder chunkHolder, CallbackInfoReturnable<Chunk> ci) {
-        ChunkLoadCallback.LOAD.invoker().accept(world, chunk.getPos());
+    private void method_17227(Chunk chunk, ChunkHolder chunkHolder, ChunkPos pos, CallbackInfoReturnable<Chunk> ci) {
+        ChunkLoadCallback.LOAD.invoker().accept(world, pos);
     }
 
     @Inject(
-        at = @At("RETURN"),
-        method = "method_18708(Lnet/minecraft/world/chunk/WorldChunk;)V"
+        at = @At(
+            value = "RETURN",
+            target = "Lnet/minecraft/world/chunk/WorldChunk;setLoadedToWorld(Z)V",
+            shift = At.Shift.AFTER
+        ),
+        method = "method_18843(JLnet/minecraft/world/chunk/Chunk;)V"
     )
-    private void method_18708(WorldChunk chunk, CallbackInfo ci) {
+    private void method_18843(long pos, Chunk chunk, CallbackInfo ci) {
         ChunkLoadCallback.UNLOAD.invoker().accept(world, chunk.getPos());
     }
 }
