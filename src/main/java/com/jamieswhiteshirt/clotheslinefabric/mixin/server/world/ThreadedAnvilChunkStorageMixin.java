@@ -9,7 +9,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.server.world.ThreadedAnvilChunkStorage;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPos;
-import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.function.IntSupplier;
 
 @Mixin(ThreadedAnvilChunkStorage.class)
 public class ThreadedAnvilChunkStorageMixin {
@@ -43,9 +44,9 @@ public class ThreadedAnvilChunkStorageMixin {
             target = "Lnet/minecraft/world/chunk/WorldChunk;setLoadedToWorld(Z)V",
             shift = At.Shift.AFTER
         ),
-        method = "method_17227(Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/server/world/ChunkHolder;Lnet/minecraft/world/chunk/ChunkPos;)Lnet/minecraft/world/chunk/Chunk;"
+        method = "method_17227(Lnet/minecraft/world/chunk/Chunk;Ljava/util/function/IntSupplier;Lnet/minecraft/world/chunk/ChunkPos;)Lnet/minecraft/world/chunk/Chunk;"
     )
-    private void method_17227(Chunk chunk, ChunkHolder chunkHolder, ChunkPos pos, CallbackInfoReturnable<Chunk> ci) {
+    private void method_17227(Chunk chunk, IntSupplier intSupplier, ChunkPos pos, CallbackInfoReturnable<Chunk> ci) {
         ChunkLoadCallback.LOAD.invoker().accept(world, pos);
     }
 
@@ -55,9 +56,9 @@ public class ThreadedAnvilChunkStorageMixin {
             target = "Lnet/minecraft/world/chunk/WorldChunk;setLoadedToWorld(Z)V",
             shift = At.Shift.AFTER
         ),
-        method = "method_18843(JLnet/minecraft/world/chunk/Chunk;)V"
+        method = "method_18843(JLnet/minecraft/server/world/ChunkHolder;Lnet/minecraft/world/chunk/Chunk;)V"
     )
-    private void method_18843(long pos, Chunk chunk, CallbackInfo ci) {
+    private void method_18843(long pos, ChunkHolder chunkHolder, Chunk chunk, CallbackInfo ci) {
         ChunkLoadCallback.UNLOAD.invoker().accept(world, chunk.getPos());
     }
 }

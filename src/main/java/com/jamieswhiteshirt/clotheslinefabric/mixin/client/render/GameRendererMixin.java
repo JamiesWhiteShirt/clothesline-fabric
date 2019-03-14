@@ -6,6 +6,9 @@ import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Ray;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Raytracing;
+import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.class_4184;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
@@ -23,6 +26,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
     @Shadow @Final private MinecraftClient client;
+    @Shadow @Final private class_4184 field_18765;
+
+    private final RenderClotheslineNetwork renderClotheslineNetwork = new RenderClotheslineNetwork(client);
 
     @Inject(
         at = @At(
@@ -48,6 +54,35 @@ public class GameRendererMixin {
                 client.hitResult = new EntityHitResult(hitResultEntity);
                 client.targetedEntity = hitResultEntity;
             }
+        }
+    }
+
+    @Inject(
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/render/WorldRenderer;drawHighlightedBlockOutline(Lnet/minecraft/class_4184;Lnet/minecraft/util/hit/HitResult;I)V"
+        ),
+        method = "renderCenter(FJ)V"
+    )
+    private void renderCenter(float delta, long long_1, CallbackInfo ci) {
+        class_4184 cameraEntity = this.field_18765;
+        HitResult hitResult = client.hitResult;
+        if (hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof NetworkRaytraceHitEntity) {
+            NetworkRaytraceHitEntity entity = (NetworkRaytraceHitEntity) ((EntityHitResult) hitResult).getEntity();
+
+            double x = cameraEntity.method_19326().x;
+            double y = cameraEntity.method_19326().y;
+            double z = cameraEntity.method_19326().z;
+            GlStateManager.enableBlend();
+            GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.lineWidth(Math.max(2.5F, (float)this.client.window.getFramebufferWidth() / 1920.0F * 2.5F));
+            GlStateManager.disableTexture();
+            GlStateManager.depthMask(false);
+            entity.getHit().renderHighlight(renderClotheslineNetwork, delta, x, y, z, 0.0F, 0.0F, 0.0F, 0.4F);
+
+            GlStateManager.depthMask(true);
+            GlStateManager.enableTexture();
+            GlStateManager.disableBlend();
         }
     }
 }

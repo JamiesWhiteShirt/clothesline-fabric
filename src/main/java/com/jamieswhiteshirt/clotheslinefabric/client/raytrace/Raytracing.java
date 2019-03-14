@@ -7,11 +7,11 @@ import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 import com.jamieswhiteshirt.clotheslinefabric.api.util.MutableSortedIntMap;
 import com.jamieswhiteshirt.clotheslinefabric.client.EdgeAttachmentProjector;
 import com.jamieswhiteshirt.clotheslinefabric.client.LineProjection;
+import com.jamieswhiteshirt.clotheslinefabric.client.Mat4f;
+import com.jamieswhiteshirt.clotheslinefabric.client.Vec4f;
 import com.jamieswhiteshirt.rtree3i.Box;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.util.math.Matrix4f;
-import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BoundingBox;
 import net.minecraft.util.math.MathHelper;
@@ -85,30 +85,30 @@ public class Raytracing {
         double toAttachmentKey = state.offsetToAttachmentKey(pathEdge.getToOffset(), delta);
         List<MutableSortedIntMap.Entry<ItemStack>> attachments = state.getAttachmentsInRange((int) fromAttachmentKey, (int) toAttachmentKey);
         if (!attachments.isEmpty()) {
-            Vector4f lFrom = new Vector4f();
-            Vector4f lTo = new Vector4f();
-            Vector4f wHitVec = new Vector4f();
+            Vec4f lFrom = new Vec4f();
+            Vec4f lTo = new Vec4f();
+            Vec4f wHitVec = new Vec4f();
 
             EdgeAttachmentProjector projector = EdgeAttachmentProjector.build(edge);
             for (MutableSortedIntMap.Entry<ItemStack> attachment : attachments) {
                 double attachmentOffset = state.attachmentKeyToOffset(attachment.getKey(), delta);
                 // Local space to world space matrix
-                Matrix4f l2w = projector.getL2WForAttachment(state.getMomentum(delta), attachmentOffset, delta);
+                Mat4f l2w = projector.getL2WForAttachment(state.getMomentum(delta), attachmentOffset, delta);
 
                 // World space to local space matrix
-                Matrix4f w2l = projector.getW2LForAttachment(state.getMomentum(delta), attachmentOffset, delta);
+                Mat4f w2l = projector.getW2LForAttachment(state.getMomentum(delta), attachmentOffset, delta);
 
                 lFrom.set((float) viewRay.from.x, (float) viewRay.from.y, (float) viewRay.from.z, 1.0F);
                 lFrom.multiply(w2l);
                 lTo.set((float) viewRay.to.x, (float) viewRay.to.y, (float) viewRay.to.z, 1.0F);
                 lTo.multiply(w2l);
 
-                Optional<Vec3d> lResult = ATTACHMENT_BOX.rayTrace(new Vec3d(lFrom.x(), lFrom.y(), lFrom.z()), new Vec3d(lTo.x(), lTo.y(), lTo.z()));
+                Optional<Vec3d> lResult = ATTACHMENT_BOX.rayTrace(new Vec3d(lFrom.getV0(), lFrom.getV1(), lFrom.getV2()), new Vec3d(lTo.getV0(), lTo.getV1(), lTo.getV2()));
                 if (lResult.isPresent()) {
                     Vec3d lHitVec = lResult.get();
                     wHitVec.set((float) lHitVec.x, (float) lHitVec.y, (float) lHitVec.z, 1.0F);
                     wHitVec.multiply(l2w);
-                    double distanceSq = new Vec3d(wHitVec.x(), wHitVec.y(), wHitVec.z()).squaredDistanceTo(viewRay.from);
+                    double distanceSq = new Vec3d(wHitVec.getV0(), wHitVec.getV1(), wHitVec.getV2()).squaredDistanceTo(viewRay.from);
                     if (distanceSq < maxDistanceSq) {
                         maxDistanceSq = distanceSq;
                         hit = new AttachmentRaytraceHit(distanceSq, edge, attachment.getKey(), l2w);

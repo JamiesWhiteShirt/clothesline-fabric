@@ -2,6 +2,7 @@ package com.jamieswhiteshirt.clotheslinefabric.client.raytrace;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.Network;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkEdge;
+import com.jamieswhiteshirt.clotheslinefabric.client.Mat4f;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.MessageChannels;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.HitAttachmentMessage;
@@ -11,7 +12,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.GlAllocationUtils;
-import net.minecraft.client.util.math.Matrix4f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -25,9 +25,9 @@ import java.nio.FloatBuffer;
 public class AttachmentRaytraceHit extends NetworkRaytraceHit {
     private static final VoxelShape attachmentBox = VoxelShapes.cube(new BoundingBox(-0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D));
     public final int attachmentKey;
-    private final Matrix4f l2w;
+    private final Mat4f l2w;
 
-    public AttachmentRaytraceHit(double distanceSq, NetworkEdge edge, int attachmentKey, Matrix4f l2w) {
+    public AttachmentRaytraceHit(double distanceSq, NetworkEdge edge, int attachmentKey, Mat4f l2w) {
         super(distanceSq, edge);
         this.attachmentKey = attachmentKey;
         this.l2w = l2w;

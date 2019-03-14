@@ -2,18 +2,14 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.client.render;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManager;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
-import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHitEntity;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
-import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.class_4184;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VisibleRegion;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,13 +29,13 @@ public class WorldRendererMixin {
             target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
             args = "ldc=blockentities"
         ),
-        method = "renderEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/render/VisibleRegion;F)V"
+        method = "renderEntities(Lnet/minecraft/class_4184;Lnet/minecraft/client/render/VisibleRegion;F)V"
     )
-    private void renderEntities(Entity cameraEntity, VisibleRegion camera, float delta, CallbackInfo ci) {
+    private void renderEntities(class_4184 cameraEntity, VisibleRegion camera, float delta, CallbackInfo ci) {
         world.getProfiler().swap("renderClotheslines");
-        double x = MathHelper.lerp(delta, cameraEntity.prevRenderX, cameraEntity.x);
-        double y = MathHelper.lerp(delta, cameraEntity.prevRenderY, cameraEntity.y);
-        double z = MathHelper.lerp(delta, cameraEntity.prevRenderZ, cameraEntity.z);
+        double x = cameraEntity.method_19326().x;
+        double y = cameraEntity.method_19326().y;
+        double z = cameraEntity.method_19326().z;
 
         NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
         boolean showDebugInfo = client.options.debugEnabled;
@@ -49,32 +45,9 @@ public class WorldRendererMixin {
         }
 
         // If not third person
-        if (client.options.perspective <= 0 && cameraEntity instanceof PlayerEntity) {
-            renderClotheslineNetwork.renderFirstPersonPlayerHeldClothesline((PlayerEntity) cameraEntity, x, y, z, delta);
-        }
-    }
-
-    @Inject(
-        at = @At("TAIL"),
-        method = "drawHighlightedBlockOutline(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/hit/HitResult;IF)V"
-    )
-    private void drawHighlightedBlockOutline(Entity player, HitResult hitResult, int var3, float delta, CallbackInfo ci) {
-        if (var3 == 0 && hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof NetworkRaytraceHitEntity) {
-            NetworkRaytraceHitEntity entity = (NetworkRaytraceHitEntity) ((EntityHitResult) hitResult).getEntity();
-
-            double x = MathHelper.lerp(delta, player.prevRenderX, player.x);
-            double y = MathHelper.lerp(delta, player.prevRenderY, player.y);
-            double z = MathHelper.lerp(delta, player.prevRenderZ, player.z);
-            GlStateManager.enableBlend();
-            GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            GlStateManager.lineWidth(Math.max(2.5F, (float)this.client.window.getFramebufferWidth() / 1920.0F * 2.5F));
-            GlStateManager.disableTexture();
-            GlStateManager.depthMask(false);
-            entity.getHit().renderHighlight(renderClotheslineNetwork, delta, x, y, z, 0.0F, 0.0F, 0.0F, 0.4F);
-
-            GlStateManager.depthMask(true);
-            GlStateManager.enableTexture();
-            GlStateManager.disableBlend();
+        Entity entity = MinecraftClient.getInstance().getCameraEntity();
+        if (client.options.perspective <= 0 && entity instanceof PlayerEntity) {
+            renderClotheslineNetwork.renderFirstPersonPlayerHeldClothesline((PlayerEntity) entity, x, y, z, delta);
         }
     }
 }

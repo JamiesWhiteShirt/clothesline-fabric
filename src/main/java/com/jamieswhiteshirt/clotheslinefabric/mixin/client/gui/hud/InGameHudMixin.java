@@ -52,9 +52,9 @@ public abstract class InGameHudMixin extends DrawableHelper {
             value = "INVOKE",
             target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexturedRect(FFIIII)V"
         ),
-        method = "renderCrosshair(F)V"
+        method = "renderCrosshair()V"
     )
-    private void renderCrosshair(float delta, CallbackInfo ci) {
+    private void renderCrosshair(CallbackInfo ci) {
         PlayerEntity player = getCameraPlayer();
         HitResult hitResult = client.hitResult;
         if (player != null && hitResult != null) {

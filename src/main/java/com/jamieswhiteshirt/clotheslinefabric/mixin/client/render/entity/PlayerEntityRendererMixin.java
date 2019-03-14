@@ -29,6 +29,6 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         double posX = MathHelper.lerp(delta, player.prevRenderX, player.x);
         double posY = MathHelper.lerp(delta, player.prevRenderY, player.y);
         double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
-        renderClotheslineNetwork.renderThirdPersonPlayerHeldClothesline(player, x + posX, y + posY, z + posZ, delta);
+        renderClotheslineNetwork.renderThirdPersonPlayerHeldClothesline(player, posX - x, posY - y, posZ - z, delta);
     }
 }

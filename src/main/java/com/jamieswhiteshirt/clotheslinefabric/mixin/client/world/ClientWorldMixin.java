@@ -41,9 +41,9 @@ public abstract class ClientWorldMixin extends World implements NetworkManagerPr
 
     @Inject(
         at = @At("RETURN"),
-        method = "<init>(Lnet/minecraft/client/network/ClientPlayNetworkHandler;Lnet/minecraft/world/level/LevelInfo;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/world/Difficulty;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/client/render/WorldRenderer;)V"
+        method = "<init>(Lnet/minecraft/client/network/ClientPlayNetworkHandler;Lnet/minecraft/world/level/LevelInfo;Lnet/minecraft/world/dimension/DimensionType;Lnet/minecraft/util/profiler/Profiler;Lnet/minecraft/client/render/WorldRenderer;)V"
     )
-    private void constructor(ClientPlayNetworkHandler clientPlayNetworkHandler_1, LevelInfo levelInfo_1, DimensionType dimensionType_1, Difficulty difficulty_1, Profiler profiler_1, WorldRenderer worldRenderer_1, CallbackInfo ci) {
+    private void constructor(ClientPlayNetworkHandler clientPlayNetworkHandler_1, LevelInfo levelInfo_1, DimensionType dimensionType_1, Profiler profiler_1, WorldRenderer worldRenderer_1, CallbackInfo ci) {
         networkManager.getNetworks().addEventListener(SOUND_KEY, new SoundNetworkCollectionListener());
     }
 

@@ -5,7 +5,6 @@ import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 import com.jamieswhiteshirt.clotheslinefabric.api.AttachmentUnit;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.util.math.Matrix4f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -89,73 +88,31 @@ public final class EdgeAttachmentProjector {
             MathHelper.sin((float)(Math.PI * t / AttachmentUnit.UNITS_PER_BLOCK));
     }
 
-    private static Matrix4f translate(float x, float y, float z) {
-        return new Matrix4f(new float[] {
-            1.0F, 0.0F, 0.0F, 0.0F,
-            0.0F, 1.0F, 0.0F, 0.0F,
-            0.0F, 0.0F, 1.0F, 0.0F,
-            x, y, z, 1.0F
-        });
-    }
-
-    private static Matrix4f scale(float x, float y, float z) {
-        return new Matrix4f(new float[] {
-               x, 0.0F, 0.0F, 0.0F,
-            0.0F,    y, 0.0F, 0.0F,
-            0.0F, 0.0F,    z, 0.0F,
-            0.0F, 0.0F, 0.0F, 1.0F
-        });
-    }
-
-    private static Matrix4f rotateY(float angle) {
-        float cos = MathHelper.cos(angle);
-        float sin = MathHelper.sin(angle);
-
-        return new Matrix4f(new float[] {
-             cos, 0.0F, -sin, 0.0F,
-            0.0F, 1.0F, 0.0F, 0.0F,
-             sin, 0.0F,  cos, 0.0F,
-            0.0F, 0.0F, 0.0F, 1.0F
-        });
-    }
-
-    private static Matrix4f rotateX(float angle) {
-        float cos = MathHelper.cos(angle);
-        float sin = MathHelper.sin(angle);
-
-        return new Matrix4f(new float[] {
-            1.0F, 0.0F, 0.0F, 0.0F,
-            0.0F,  cos,  sin, 0.0F,
-            0.0F, -sin,  cos, 0.0F,
-            0.0F, 0.0F, 0.0F, 1.0F
-        });
-    }
-
-    public Matrix4f getL2WForAttachment(double momentum, double offset, float delta) {
+    public Mat4f getL2WForAttachment(double momentum, double offset, float delta) {
         double relativeOffset = offset - fromOffset;
         double edgePosScalar = relativeOffset / (toOffset - fromOffset);
         Vec3d pos = projection.projectRUF(-2.0D / 16.0D, 0.0D, edgePosScalar);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Matrix4f result = translate((float) pos.x, (float) pos.y, (float) pos.z);
-        result.multiply(scale(0.5F, 0.5F, 0.5F));
-        result.multiply(rotateY((float) Math.toRadians(-angleY)));
-        result.multiply(rotateX((float) Math.toRadians(swingAngle)));
-        result.multiply(translate(0.0F, -0.5F, 0.0F));
+        Mat4f result = Mat4f.translate((float) pos.x, (float) pos.y, (float) pos.z);
+        result.multiply(Mat4f.scale(0.5F, 0.5F, 0.5F));
+        result.multiply(Mat4f.rotateY((float) Math.toRadians(-angleY)));
+        result.multiply(Mat4f.rotateX((float) Math.toRadians(swingAngle)));
+        result.multiply(Mat4f.translate(0.0F, -0.5F, 0.0F));
         return result;
     }
 
-    public Matrix4f getW2LForAttachment(double momentum, double offset, float delta) {
+    public Mat4f getW2LForAttachment(double momentum, double offset, float delta) {
         double relativeOffset = offset - fromOffset;
         double edgePosScalar = relativeOffset / (toOffset - fromOffset);
         Vec3d pos = projection.projectRUF(-2.0D / 16.0D, 0.0D, edgePosScalar);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Matrix4f result = translate(0.0F, 0.5F, 0.0F);
-        result.multiply(rotateX((float) Math.toRadians(-swingAngle)));
-        result.multiply(rotateY((float) Math.toRadians(angleY)));
-        result.multiply(scale(2.0F, 2.0F, 2.0F));
-        result.multiply(translate((float) -pos.x, (float) -pos.y, (float) -pos.z));
+        Mat4f result = Mat4f.translate(0.0F, 0.5F, 0.0F);
+        result.multiply(Mat4f.rotateX((float) Math.toRadians(-swingAngle)));
+        result.multiply(Mat4f.rotateY((float) Math.toRadians(angleY)));
+        result.multiply(Mat4f.scale(2.0F, 2.0F, 2.0F));
+        result.multiply(Mat4f.translate((float) -pos.x, (float) -pos.y, (float) -pos.z));
         return result;
     }
 }

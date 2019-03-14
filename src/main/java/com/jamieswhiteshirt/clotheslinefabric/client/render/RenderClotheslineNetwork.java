@@ -4,6 +4,8 @@ import com.jamieswhiteshirt.clotheslinefabric.api.*;
 import com.jamieswhiteshirt.clotheslinefabric.api.util.MutableSortedIntMap;
 import com.jamieswhiteshirt.clotheslinefabric.client.EdgeAttachmentProjector;
 import com.jamieswhiteshirt.clotheslinefabric.client.LineProjection;
+import com.jamieswhiteshirt.clotheslinefabric.client.Mat4f;
+import com.jamieswhiteshirt.clotheslinefabric.client.Vec4f;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineAnchorBlock;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
 import com.jamieswhiteshirt.clotheslinefabric.internal.ConnectorHolder;
@@ -15,6 +17,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.WallMountLocation;
+import net.minecraft.class_4184;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.*;
@@ -209,7 +212,7 @@ public final class RenderClotheslineNetwork {
         GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
         // World position of attachment item
-        Vector4f wPos = new Vector4f();
+        Vec4f wPos = new Vec4f();
         // Buffer for local space to world space matrix to upload to GL
         FloatBuffer l2wBuffer = GlAllocationUtils.allocateFloatBuffer(16);
 
@@ -226,12 +229,12 @@ public final class RenderClotheslineNetwork {
                 for (MutableSortedIntMap.Entry<ItemStack> attachmentEntry : attachments) {
                     double attachmentOffset = state.attachmentKeyToOffset(attachmentEntry.getKey(), delta);
                     // Local space to world space matrix
-                    Matrix4f l2w = projector.getL2WForAttachment(state.getMomentum(delta), attachmentOffset, delta);
+                    Mat4f l2w = projector.getL2WForAttachment(state.getMomentum(delta), attachmentOffset, delta);
 
                     // Create world position of attachment for lighting calculation
                     wPos.set(0.0F, 0.0F, 0.0F, 1.0F);
                     wPos.multiply(l2w);
-                    int light = world.getLightmapIndex(new BlockPos(MathHelper.floor(wPos.x()), MathHelper.floor(wPos.y()), MathHelper.floor(wPos.z())), 0);
+                    int light = world.getLightmapIndex(new BlockPos(MathHelper.floor(wPos.getV1()), MathHelper.floor(wPos.getV2()), MathHelper.floor(wPos.getV3())), 0);
                     GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float)(light & 0xFFFF), (float)((light >> 16) & 0xFFFF));
 
                     // Store and flip to be ready for read
@@ -269,7 +272,7 @@ public final class RenderClotheslineNetwork {
     }
 
     private void debugRenderText(String msg, double x, double y, double z, float yaw, float pitch, TextRenderer textRenderer) {
-        GameRenderer.method_3179(textRenderer, msg, (float)x, (float)y, (float)z, 0, yaw, pitch, false, false);
+        GameRenderer.method_3179(textRenderer, msg, (float)x, (float)y, (float)z, 0, yaw, pitch, false);
     }
 
     public void debugRender(
@@ -278,8 +281,9 @@ public final class RenderClotheslineNetwork {
         VisibleRegion camera, double x, double y, double z, float delta
     ) {
         BlockEntityRenderDispatcher rendererDispatcher = BlockEntityRenderDispatcher.INSTANCE;
-        float yaw = rendererDispatcher.cameraYaw;
-        float pitch = rendererDispatcher.cameraPitch;
+        class_4184 cameraEntity = rendererDispatcher.cameraEntity;
+        float yaw = cameraEntity.method_19330();
+        float pitch = cameraEntity.method_19329();
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
         // Select all edges in the edges map intersecting with the camera frustum
@@ -305,7 +309,7 @@ public final class RenderClotheslineNetwork {
             float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
             int k = player.getMainHand() == OptionMainHand.RIGHT ? 1 : -1;
             double f10 = client.options.fov / 100.0D;
-            Vec3d vecB = new Vec3d(x, y + player.getStandingEyeHeight(), z).add(new Vec3d(k * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
+            Vec3d vecB = new Vec3d(x, y, z).add(new Vec3d(k * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
 
             renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
         }
