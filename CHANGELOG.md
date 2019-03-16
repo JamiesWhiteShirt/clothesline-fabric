@@ -1,3 +1,8 @@
+# 0.0.11.0
+
+- Updated to Minecraft 19w11b
+- Fixed incompatibility with More Berries causing crashes
+
 # 0.0.10.0
 
 - Updated to Minecraft 19w09a
