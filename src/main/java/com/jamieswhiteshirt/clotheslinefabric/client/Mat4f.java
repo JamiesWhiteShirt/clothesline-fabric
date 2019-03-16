@@ -8,7 +8,7 @@ import java.nio.FloatBuffer;
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
-public class Mat4f {
+public final class Mat4f {
     private float v00;
     private float v01;
     private float v02;

@@ -6,7 +6,7 @@ import net.fabricmc.api.Environment;
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
-public class Vec4f {
+public final class Vec4f {
     private float v0;
     private float v1;
     private float v2;
