@@ -12,7 +12,7 @@ public class ItemMixin implements ItemExtension {
     @Mutable @Shadow @Final private Item recipeRemainder;
 
     @Override
-    public void setRecipeRemainder(Item item) {
+    public void clothesline_setRecipeRemainder(Item item) {
         recipeRemainder = item;
     }
 }
