@@ -28,7 +28,7 @@ public class ClotheslineRopeSoundInstance extends AbstractSoundInstance implemen
     }
 
     @Override
-    public void method_16896() {
+    public void tick() {
         float momentum = Math.abs((float) state.getMomentum()) / NetworkState.MAX_MOMENTUM;
         this.volume = (2 + node.getEdges().size()) * momentum * 0.2F;
         this.pitch = 0.25F + momentum * 0.75F;

@@ -18,7 +18,7 @@ public abstract class ClientPlayerEntityMixin {
         ),
         method = "updateMovement()V"
     )
-    public boolean redirectIsUsingItem(ClientPlayerEntity clientPlayerEntity) {
+    private boolean redirectIsUsingItem(ClientPlayerEntity clientPlayerEntity) {
         return clientPlayerEntity.isUsingItem() && !(clientPlayerEntity.getActiveItem().getItem() instanceof ConnectorItem);
     }
 }

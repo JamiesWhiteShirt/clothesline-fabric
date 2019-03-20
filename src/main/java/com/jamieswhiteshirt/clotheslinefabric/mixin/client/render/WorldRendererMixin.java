@@ -3,8 +3,8 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.client.render;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManager;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
-import net.minecraft.class_4184;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.VisibleRegion;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
@@ -29,19 +29,19 @@ public class WorldRendererMixin {
             target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
             args = "ldc=blockentities"
         ),
-        method = "renderEntities(Lnet/minecraft/class_4184;Lnet/minecraft/client/render/VisibleRegion;F)V"
+        method = "renderEntities(Lnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/VisibleRegion;F)V"
     )
-    private void renderEntities(class_4184 cameraEntity, VisibleRegion camera, float delta, CallbackInfo ci) {
+    private void renderEntities(Camera camera, VisibleRegion visibleRegion, float delta, CallbackInfo ci) {
         world.getProfiler().swap("renderClotheslines");
-        double x = cameraEntity.method_19326().x;
-        double y = cameraEntity.method_19326().y;
-        double z = cameraEntity.method_19326().z;
+        double x = camera.getPos().x;
+        double y = camera.getPos().y;
+        double z = camera.getPos().z;
 
         NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
         boolean showDebugInfo = client.options.debugEnabled;
-        renderClotheslineNetwork.render(world, manager.getNetworks().getNodes(), manager.getNetworks().getEdges(), camera, x, y, z, delta);
+        renderClotheslineNetwork.render(world, manager.getNetworks().getNodes(), manager.getNetworks().getEdges(), visibleRegion, x, y, z, delta);
         if (showDebugInfo) {
-            renderClotheslineNetwork.debugRender(manager.getNetworks().getNodes(), manager.getNetworks().getEdges(), camera, x, y, z, delta);
+            renderClotheslineNetwork.debugRender(manager.getNetworks().getNodes(), manager.getNetworks().getEdges(), visibleRegion, x, y, z, delta);
         }
 
         // If not third person

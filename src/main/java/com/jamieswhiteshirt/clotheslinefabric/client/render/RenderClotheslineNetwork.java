@@ -17,7 +17,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.WallMountLocation;
-import net.minecraft.class_4184;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.*;
@@ -25,12 +24,10 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.GlAllocationUtils;
-import net.minecraft.client.util.math.Matrix4f;
-import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.sortme.OptionMainHand;
+import net.minecraft.util.AbsoluteHand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BoundingBox;
@@ -140,12 +137,12 @@ public final class RenderClotheslineNetwork {
         GlStateManager.disableCull();
     }
 
-    public void render(ExtendedBlockView world, RTreeMap<BlockPos, NetworkNode> nodesMap, RTreeMap<Line, NetworkEdge> edgesMap, VisibleRegion camera, double x, double y, double z, float delta) {
+    public void render(ExtendedBlockView world, RTreeMap<BlockPos, NetworkNode> nodesMap, RTreeMap<Line, NetworkEdge> edgesMap, VisibleRegion visibleRegion, double x, double y, double z, float delta) {
         Vec3d viewPos = new Vec3d(x, y, z);
 
         // Select all entries in the node map intersecting with the camera frustum
         Selection<NetworkNode> nodes = nodesMap
-            .values(box -> camera.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
+            .values(box -> visibleRegion.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
 
         client.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
         client.getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX).pushFilter(false, false);
@@ -200,7 +197,7 @@ public final class RenderClotheslineNetwork {
 
         // Select all entries in the edge map intersecting with the camera frustum
         Selection<NetworkEdge> edges = edgesMap
-            .values(box -> camera.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
+            .values(box -> visibleRegion.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
 
         // Draw the rope for all edges
         buildAndDrawEdgeQuads(bufferBuilder -> edges.forEach(edge -> renderEdge(world, edge, x, y, z, bufferBuilder, delta)));
@@ -278,17 +275,17 @@ public final class RenderClotheslineNetwork {
     public void debugRender(
         RTreeMap<BlockPos, NetworkNode> nodesMap,
         RTreeMap<Line, NetworkEdge> edgesMap,
-        VisibleRegion camera, double x, double y, double z, float delta
+        VisibleRegion visibleRegion, double x, double y, double z, float delta
     ) {
         BlockEntityRenderDispatcher rendererDispatcher = BlockEntityRenderDispatcher.INSTANCE;
-        class_4184 cameraEntity = rendererDispatcher.cameraEntity;
-        float yaw = cameraEntity.method_19330();
-        float pitch = cameraEntity.method_19329();
+        Camera cameraEntity = rendererDispatcher.cameraEntity;
+        float yaw = cameraEntity.getYaw();
+        float pitch = cameraEntity.getPitch();
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
         // Select all edges in the edges map intersecting with the camera frustum
         Selection<NetworkEdge> edges = edgesMap
-            .values(box -> camera.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
+            .values(box -> visibleRegion.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
 
         edges.forEach(edge -> {
             Path.Edge pathEdge = edge.getPathEdge();
@@ -307,7 +304,7 @@ public final class RenderClotheslineNetwork {
         if (from != null) {
             float pitch = (float) Math.toRadians(MathHelper.lerp(delta, player.prevPitch, player.pitch));
             float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-            int k = player.getMainHand() == OptionMainHand.RIGHT ? 1 : -1;
+            int k = player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1;
             double f10 = client.options.fov / 100.0D;
             Vec3d vecB = new Vec3d(x, y, z).add(new Vec3d(k * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
 
@@ -324,7 +321,7 @@ public final class RenderClotheslineNetwork {
             double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
 
             float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-            int k = player.getMainHand() == OptionMainHand.RIGHT ? 1 : -1;
+            int k = player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1;
             double d0 = MathHelper.sin(yaw) * 0.35D;
             double d1 = MathHelper.cos(yaw) * 0.35D;
             Vec3d vecB = new Vec3d(
