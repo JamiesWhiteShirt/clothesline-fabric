@@ -6,7 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.audio.SoundInstance;
-import net.minecraft.client.audio.SoundLoader;
+import net.minecraft.client.audio.SoundManager;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.*;
@@ -14,13 +14,13 @@ import java.util.*;
 @Environment(EnvType.CLIENT)
 public class SoundNetworkCollectionListener implements NetworkCollectionListener {
     private final Map<BlockPos, SoundInstance> anchorSoundInstances = new HashMap<>();
-    private final SoundLoader soundHandler = MinecraftClient.getInstance().getSoundLoader();
+    private final SoundManager soundManager = MinecraftClient.getInstance().getSoundManager();
 
     private void listenTo(NetworkState state) {
         for (Path.Node node : state.getPath().getNodes().values()) {
             SoundInstance soundInstance = new ClotheslineRopeSoundInstance(state, node);
             anchorSoundInstances.put(node.getPos(), soundInstance);
-            soundHandler.play(soundInstance);
+            soundManager.play(soundInstance);
         }
     }
 
@@ -28,7 +28,7 @@ public class SoundNetworkCollectionListener implements NetworkCollectionListener
         for (BlockPos pos : state.getPath().getNodes().keySet()) {
             SoundInstance soundInstance = anchorSoundInstances.remove(pos);
             if (soundInstance != null) {
-                soundHandler.stop(soundInstance);
+                soundManager.stop(soundInstance);
             }
         }
     }
