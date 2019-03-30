@@ -18,14 +18,14 @@ public class SetConnectorStateMessage {
     public void serialize(PacketByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeEnumConstant(hand);
-        buf.method_17813(hitResult);
+        buf.writeBlockHitResult(hitResult);
     }
 
     public static SetConnectorStateMessage deserialize(PacketByteBuf buf) {
         return new SetConnectorStateMessage(
             buf.readInt(),
             buf.readEnumConstant(Hand.class),
-            buf.method_17814()
+            buf.readBlockHitResult()
         );
     }
 }

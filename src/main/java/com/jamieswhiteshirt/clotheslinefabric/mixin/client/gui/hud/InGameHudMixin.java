@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin extends DrawableHelper {
-    private static final Identifier CLOTHESLINE_ICONS = new Identifier("clothesline-fabric", "textures/gui/icons.png");
+    private static final Identifier CLOTHESLINE_GUI_ICONS = new Identifier("clothesline-fabric", "textures/gui/icons.png");
     private static final int CLOTHESLINE_ICONS_WIDTH = 32, CLOTHESLINE_ICONS_HEIGHT = 16;
 
     private static void drawTexturedRect(float x, float y, float uMin, float vMin, int width, int height, float vSize, float uSize) {
@@ -50,7 +50,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
     @Inject(
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexturedRect(FFIIII)V"
+            target = "Lnet/minecraft/client/gui/hud/InGameHud;blit(FFIIII)V"
         ),
         method = "renderCrosshair()V"
     )
@@ -64,9 +64,9 @@ public abstract class InGameHudMixin extends DrawableHelper {
                 if (state.getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR && state.get(ClotheslineAnchorBlock.CRANK)) {
                     Vec3d hitVec = hitResult.getPos();
                     int offset = ClotheslineAnchorBlock.getCrankMultiplier(pos, hitVec.x, hitVec.z, player) * -8;
-                    client.getTextureManager().bindTexture(CLOTHESLINE_ICONS);
+                    client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
                     drawTexturedRect(scaledWidth / 2.0F - 7.5F + offset, scaledHeight / 2.0F - 7.5F, 8 + offset, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
-                    client.getTextureManager().bindTexture(ICONS);
+                    client.getTextureManager().bindTexture(GUI_ICONS_LOCATION);
                 }
             }
         }

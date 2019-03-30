@@ -15,13 +15,13 @@ public class StopUsingItemOnMessage {
 
     public void serialize(PacketByteBuf buf) {
         buf.writeEnumConstant(hand);
-        buf.method_17813(hitResult);
+        buf.writeBlockHitResult(hitResult);
     }
 
     public static StopUsingItemOnMessage deserialize(PacketByteBuf buf) {
         return new StopUsingItemOnMessage(
             buf.readEnumConstant(Hand.class),
-            buf.method_17814()
+            buf.readBlockHitResult()
         );
     }
 }

@@ -23,7 +23,7 @@ import java.nio.FloatBuffer;
 
 @Environment(EnvType.CLIENT)
 public class AttachmentRaytraceHit extends NetworkRaytraceHit {
-    private static final VoxelShape attachmentBox = VoxelShapes.cube(new BoundingBox(-0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D));
+    private static final VoxelShape attachmentBox = VoxelShapes.cuboid(new BoundingBox(-0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D));
     public final int attachmentKey;
     private final Mat4f l2w;
 

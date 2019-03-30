@@ -86,8 +86,8 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @SuppressWarnings("deprecation")
     @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState) {
-        if (oldState.getBlock() != this) {
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean boolean_1) {
+        if (oldState.getBlock() != state.getBlock()) {
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
             manager.createNode(pos);
         }
@@ -95,10 +95,11 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @SuppressWarnings("deprecation")
     @Override
-    public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean var5) {
-        if (newState.getBlock() != this) {
+    public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean boolean_1) {
+        if (state.getBlock() != newState.getBlock()) {
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
             manager.breakNode(null, pos);
+            super.onBlockRemoved(state, world, pos, newState, boolean_1);
         }
     }
 
