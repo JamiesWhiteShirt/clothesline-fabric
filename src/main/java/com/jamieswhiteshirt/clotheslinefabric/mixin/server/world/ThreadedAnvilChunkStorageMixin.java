@@ -45,7 +45,7 @@ public class ThreadedAnvilChunkStorageMixin {
             target = "Lnet/minecraft/world/chunk/WorldChunk;setLoadedToWorld(Z)V",
             shift = At.Shift.AFTER
         ),
-        method = "method_17227(Lnet/minecraft/world/chunk/Chunk;Ljava/util/function/IntSupplier;Lnet/minecraft/world/chunk/ChunkPos;)Lnet/minecraft/world/chunk/Chunk;"
+        method = "method_17227(Lnet/minecraft/server/world/ChunkHolder;Lnet/minecraft/world/chunk/Chunk;)Lnet/minecraft/world/chunk/Chunk;"
     )
     private void method_17227(ChunkHolder holder, Chunk chunk, CallbackInfoReturnable<Chunk> ci) {
         ChunkLoadCallback.LOAD.invoker().accept(world, holder.getPos());
@@ -57,7 +57,7 @@ public class ThreadedAnvilChunkStorageMixin {
             target = "Lnet/minecraft/world/chunk/WorldChunk;setLoadedToWorld(Z)V",
             shift = At.Shift.AFTER
         ),
-        method = "method_18843(JLnet/minecraft/server/world/ChunkHolder;Lnet/minecraft/world/chunk/Chunk;)V"
+        method = "method_18843(Lnet/minecraft/server/world/ChunkHolder;Ljava/util/concurrent/CompletableFuture;JLnet/minecraft/world/chunk/Chunk;)V"
     )
     private void method_18843(ChunkHolder chunkHolder, CompletableFuture future, long pos, Chunk chunk, CallbackInfo ci) {
         ChunkLoadCallback.UNLOAD.invoker().accept(world, chunkHolder.getPos());
