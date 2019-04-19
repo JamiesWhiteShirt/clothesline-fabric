@@ -6,10 +6,10 @@ import com.jamieswhiteshirt.clotheslinefabric.api.Utility;
 import com.jamieswhiteshirt.clotheslinefabric.common.Util;
 import com.jamieswhiteshirt.clotheslinefabric.common.block.ClotheslineBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.block.BlockItem;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
@@ -41,7 +41,7 @@ public class ClotheslineItems {
                         if (!Util.isCreativePlayer(to.getPlayer())) {
                             to.getItemStack().subtractAmount(1);
                         }
-                        world.playSound(to.getPlayer(), to.getBlockPos(), SoundEvents.ENTITY_LEASH_KNOT_PLACE, SoundCategory.BLOCK, 1.0F, 1.0F);
+                        world.playSound(to.getPlayer(), to.getBlockPos(), SoundEvents.ENTITY_LEASH_KNOT_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
                         return true;
                     }
                 }

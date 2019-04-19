@@ -269,7 +269,7 @@ public final class RenderClotheslineNetwork {
     }
 
     private void debugRenderText(String msg, double x, double y, double z, float yaw, float pitch, TextRenderer textRenderer) {
-        GameRenderer.method_3179(textRenderer, msg, (float)x, (float)y, (float)z, 0, yaw, pitch, false);
+        GameRenderer.renderFloatingText(textRenderer, msg, (float)x, (float)y, (float)z, 0, yaw, pitch, false);
     }
 
     public void debugRender(

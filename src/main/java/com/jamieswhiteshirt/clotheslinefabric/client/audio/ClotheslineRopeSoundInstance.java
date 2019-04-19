@@ -15,7 +15,7 @@ public class ClotheslineRopeSoundInstance extends AbstractSoundInstance implemen
     private final Path.Node node;
 
     public ClotheslineRopeSoundInstance(NetworkState state, Path.Node node) {
-        super(ClotheslineSoundEvents.BLOCK_CLOTHESLINE_ANCHOR_ROPE, SoundCategory.BLOCK);
+        super(ClotheslineSoundEvents.BLOCK_CLOTHESLINE_ANCHOR_ROPE, SoundCategory.BLOCKS);
         this.state = state;
         this.node = node;
 

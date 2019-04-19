@@ -29,7 +29,7 @@ public class ConnectorItem extends Item {
 
     public void stopActiveHandWithTo(LivingEntity player, ItemUsageContext ctx) {
         toStore.set(ctx);
-        player.method_6075();
+        player.stopUsingItem();
         toStore.set(null);
     }
 

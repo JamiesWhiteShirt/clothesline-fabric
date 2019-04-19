@@ -24,14 +24,14 @@ public class StopUsingItemOnMessageHandler implements BiConsumer<PacketContext, 
             if (Validation.canReachPos(player, Utility.midVec(pos))) {
                 connectorItem.stopActiveHandWithTo(player, new ItemUsageContext(
                     player,
-                    player.getActiveItem(),
+                    player.getActiveHand(),
                     msg.hitResult
                 ));
             } else {
-                player.method_6075();
+                player.stopUsingItem();
             }
         } else {
-            player.method_6075();
+            player.stopUsingItem();
         }
     }
 }

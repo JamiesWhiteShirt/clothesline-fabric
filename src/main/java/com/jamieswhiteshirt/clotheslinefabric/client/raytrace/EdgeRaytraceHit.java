@@ -33,7 +33,7 @@ public class EdgeRaytraceHit extends NetworkRaytraceHit {
         Network network = edge.getNetwork();
         int attachmentKey = network.getState().offsetToAttachmentKey(offset);
         Vec3d pos = edge.getPathEdge().getPositionForOffset(offset);
-        player.world.playSound(player, pos.x, pos.y, pos.z, SoundEvents.ENTITY_LEASH_KNOT_BREAK, SoundCategory.BLOCK, 1.0F, 1.0F);
+        player.world.playSound(player, pos.x, pos.y, pos.z, SoundEvents.ENTITY_LEASH_KNOT_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
         MinecraftClient.getInstance().getNetworkHandler().sendPacket(MessageChannels.HIT_NETWORK.createServerboundPacket(
             new HitNetworkMessage(network.getId(), attachmentKey, offset)
         ));

@@ -24,7 +24,7 @@ public class HitNetworkMessageHandler implements BiConsumer<PacketContext, HitNe
             if (Validation.canReachPos(player, pos)) {
                 Line line = edge.getLine();
                 manager.breakConnection(player, line.getFromPos(), line.getToPos());
-                world.playSound(player, pos.x, pos.y, pos.z, SoundEvents.ENTITY_LEASH_KNOT_BREAK, SoundCategory.BLOCK, 1.0F, 1.0F);
+                world.playSound(player, pos.x, pos.y, pos.z, SoundEvents.ENTITY_LEASH_KNOT_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
         }
     }

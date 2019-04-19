@@ -41,8 +41,7 @@ public final class NetworkRaytraceHitEntity extends Entity implements EntityPick
     protected void writeCustomDataToTag(CompoundTag var1) { }
 
     @Override
-    public boolean method_5698(Entity entity) {
-        // Called when a player attacks the entity
+    public boolean handlePlayerAttack(Entity entity) {
         return hit.hitByEntity((PlayerEntity) entity);
     }
 

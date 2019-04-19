@@ -50,7 +50,8 @@ public abstract class InGameHudMixin extends DrawableHelper {
     @Inject(
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/hud/InGameHud;blit(FFIIII)V"
+            target = "Lnet/minecraft/client/gui/hud/InGameHud;blit(IIIIII)V",
+            ordinal = 0
         ),
         method = "renderCrosshair()V"
     )

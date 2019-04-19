@@ -44,7 +44,7 @@ public class ClientPlayerInteractionManagerMixin {
                 ConnectorItem itemConnector = (ConnectorItem) player.getActiveItem().getItem();
                 itemConnector.stopActiveHandWithTo(player, new ItemUsageContext(
                     player,
-                    player.getActiveItem(),
+                    player.getActiveHand(),
                     (BlockHitResult) hitResult
                 ));
 

@@ -1,18 +1,28 @@
 {
+  "schemaVersion": 1,
   "id": "clothesline-fabric",
   "name": "Clothesline",
   "description": "A seamless laundry experience that is definitely not an item transport mod.",
   "version": "0.0.13.0",
-  "side": "universal",
-  "initializers": [
-    "com.jamieswhiteshirt.clotheslinefabric.Clothesline",
-    "com.jamieswhiteshirt.clotheslinefabric.client.ClotheslineClient"
-  ],
-  "requires": {
-    "fabric": "*"
+  "icon": "assets/clothesline-fabric/icon.png",
+  "contact": {
+    "issues": "http://github.com/JamiesWhiteShirt/clothesline-fabric/issues",
+    "sources": "http://github.com/JamiesWhiteShirt/clothesline-fabric"
   },
-  "mixins": {
-    "client": "mixins.clothesline-fabric.client.json",
-    "common": "mixins.clothesline-fabric.common.json"
-  }
+  "entrypoints": {
+    "main": [
+      "com.jamieswhiteshirt.clotheslinefabric.Clothesline"
+    ],
+    "client": [
+      "com.jamieswhiteshirt.clotheslinefabric.client.ClotheslineClient"
+    ]
+  },
+  "requires": {
+    "fabricloader": ">=0.4.1",
+    "fabric": ">=0.2.7"
+  },
+  "mixins": [
+    "mixins.clothesline-fabric.client.json",
+    "mixins.clothesline-fabric.common.json"
+  ]
 }

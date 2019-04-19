@@ -47,12 +47,12 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     public ClotheslineAnchorBlock(Settings settings) {
         super(settings);
-        setDefaultState(stateFactory.getDefaultState().with(FACE, WallMountLocation.WALL).with(field_11177, Direction.NORTH).with(WATERLOGGED, false).with(CRANK, false));
+        setDefaultState(stateFactory.getDefaultState().with(FACE, WallMountLocation.WALL).with(FACING, Direction.NORTH).with(WATERLOGGED, false).with(CRANK, false));
     }
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
-        builder.with(FACE, field_11177, WATERLOGGED, CRANK);
+        builder.with(FACE, FACING, WATERLOGGED, CRANK);
     }
 
     @SuppressWarnings("deprecation")
@@ -62,7 +62,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
             case FLOOR:
                 return DOWN;
             case WALL:
-                switch (state.get(field_11177)) {
+                switch (state.get(FACING)) {
                     case NORTH:
                         return NORTH;
                     case SOUTH:
@@ -157,7 +157,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
             int momentum = Math.abs(node.getNetwork().getState().getMomentum());
             float pitch = 0.2F + 0.6F * ((float)momentum / NetworkState.MAX_MOMENTUM) + random.nextFloat() * 0.1F;
             if (random.nextInt(12 * NetworkState.MAX_MOMENTUM) < momentum) {
-                world.playSound(MinecraftClient.getInstance().player, pos, ClotheslineSoundEvents.BLOCK_CLOTHESLINE_ANCHOR_SQUEAK, SoundCategory.BLOCK, 0.1F, pitch);
+                world.playSound(MinecraftClient.getInstance().player, pos, ClotheslineSoundEvents.BLOCK_CLOTHESLINE_ANCHOR_SQUEAK, SoundCategory.BLOCKS, 0.1F, pitch);
             }
         }
     }
@@ -170,7 +170,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getState(false) : super.getFluidState(state);
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
     }
 
     @Override
