@@ -1,3 +1,8 @@
+# 0.0.14
+
+- Updated to Minecraft 1.14 Pre-Release 5 - [#4](https://github.com/JamiesWhiteShirt/clothesline-fabric/pull/4) by asiekierka
+- Fixed Clothesline rendering in the wrong hand
+
 # 0.0.13.0
 
 - Updated to Minecraft 19w13b
