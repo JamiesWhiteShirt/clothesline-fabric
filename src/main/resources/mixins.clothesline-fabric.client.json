@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.jamieswhiteshirt.clotheslinefabric.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
+  "client": [
     "client.network.ClientPlayerInteractionManagerMixin",
     "client.world.ClientWorldMixin",
     "client.render.WorldRendererMixin",
@@ -10,8 +10,7 @@
     "client.network.ClientPlayerEntityMixin",
     "client.render.entity.PlayerEntityRendererMixin",
     "client.gui.hud.InGameHudMixin",
-    "client.gui.hud.DebugHudMixin",
-    "client.render.model.BakedModelManagerMixin"
+    "client.gui.hud.DebugHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1

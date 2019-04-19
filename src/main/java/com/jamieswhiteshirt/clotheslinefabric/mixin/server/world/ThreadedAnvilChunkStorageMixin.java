@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.function.IntSupplier;
 
 @Mixin(ThreadedAnvilChunkStorage.class)
@@ -46,8 +47,8 @@ public class ThreadedAnvilChunkStorageMixin {
         ),
         method = "method_17227(Lnet/minecraft/world/chunk/Chunk;Ljava/util/function/IntSupplier;Lnet/minecraft/world/chunk/ChunkPos;)Lnet/minecraft/world/chunk/Chunk;"
     )
-    private void method_17227(Chunk chunk, IntSupplier intSupplier, ChunkPos pos, CallbackInfoReturnable<Chunk> ci) {
-        ChunkLoadCallback.LOAD.invoker().accept(world, pos);
+    private void method_17227(ChunkHolder holder, Chunk chunk, CallbackInfoReturnable<Chunk> ci) {
+        ChunkLoadCallback.LOAD.invoker().accept(world, holder.getPos());
     }
 
     @Inject(
@@ -58,7 +59,7 @@ public class ThreadedAnvilChunkStorageMixin {
         ),
         method = "method_18843(JLnet/minecraft/server/world/ChunkHolder;Lnet/minecraft/world/chunk/Chunk;)V"
     )
-    private void method_18843(long pos, ChunkHolder chunkHolder, Chunk chunk, CallbackInfo ci) {
-        ChunkLoadCallback.UNLOAD.invoker().accept(world, chunk.getPos());
+    private void method_18843(ChunkHolder chunkHolder, CompletableFuture future, long pos, Chunk chunk, CallbackInfo ci) {
+        ChunkLoadCallback.UNLOAD.invoker().accept(world, chunkHolder.getPos());
     }
 }

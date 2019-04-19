@@ -1,12 +1,21 @@
 package com.jamieswhiteshirt.clotheslinefabric.client.render;
 
-import com.jamieswhiteshirt.clotheslinefabric.client.event.BakedModelManagerCallback;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourceReloadListenerKeys;
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.BakedModelManager;
 import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+
+import java.util.Collection;
+import java.util.Collections;
 
 @Environment(EnvType.CLIENT)
 public class BakedModels {
@@ -24,10 +33,24 @@ public class BakedModels {
             out.accept(PULLEY_WHEEL_ROPE);
         });
 
-        BakedModelManagerCallback.GET_MODELS.register(bakedModelManager -> {
-            crank = bakedModelManager.getModel(CRANK);
-            pulleyWheel = bakedModelManager.getModel(PULLEY_WHEEL);
-            pulleyWheelRope = bakedModelManager.getModel(PULLEY_WHEEL_ROPE);
+        ResourceManagerHelper.get(ResourceType.ASSETS).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
+            @Override
+            public Identifier getFabricId() {
+                return new Identifier("clothesline-fabric", "models");
+            }
+
+            @Override
+            public Collection<Identifier> getFabricDependencies() {
+                return Collections.singleton(ResourceReloadListenerKeys.MODELS);
+            }
+
+            @Override
+            public void apply(ResourceManager var1) {
+                BakedModelManager bakedModelManager = MinecraftClient.getInstance().getBakedModelManager();
+                crank = bakedModelManager.getModel(CRANK);
+                pulleyWheel = bakedModelManager.getModel(PULLEY_WHEEL);
+                pulleyWheelRope = bakedModelManager.getModel(PULLEY_WHEEL_ROPE);
+            }
         });
     }
 }
