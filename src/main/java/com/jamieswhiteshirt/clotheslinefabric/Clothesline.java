@@ -16,10 +16,8 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.world.WorldTickCallback;
 import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.Hand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,23 +43,11 @@ public class Clothesline implements ModInitializer {
         });
     }
 
-    public static Hand getUsageHand(ItemUsageContext ctx) {
-        PlayerEntity player = ctx.getPlayer();
-        if (player == null) return null;
-
-        for (Hand hand : Hand.values()) {
-            if (player.getStackInHand(hand) == ctx.getItemStack()) {
-                return hand;
-            }
-        }
-        return null;
-    }
-
     public static CustomPayloadS2CPacket createConnectorStatePacket(ItemUsageContext ctx, Entity entity) {
         if (ctx != null) {
             return MessageChannels.SET_CONNECTOR_STATE.createClientboundPacket(new SetConnectorStateMessage(
                 entity.getEntityId(),
-                getUsageHand(ctx),
+                ctx.getHand(),
                 new BlockHitResult(ctx.getPos(), ctx.getFacing(), ctx.getBlockPos(), ctx.method_17699())
             ));
         } else {

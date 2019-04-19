@@ -62,7 +62,7 @@ public class ConnectorItem extends Item {
         if (player == null) return ActionResult.PASS;
 
         if (behavior.canConnectFrom(ctx)) {
-            Hand hand = Clothesline.getUsageHand(ctx);
+            Hand hand = ctx.getHand();
             ctx.getPlayer().setCurrentHand(hand);
             applyConnectorState((ConnectorHolder) player, ctx.getWorld(), player, ctx);
             return ActionResult.SUCCESS;
