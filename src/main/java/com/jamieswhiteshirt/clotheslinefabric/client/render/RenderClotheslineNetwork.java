@@ -28,6 +28,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.AbsoluteHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BoundingBox;
@@ -304,9 +305,9 @@ public final class RenderClotheslineNetwork {
         if (from != null) {
             float pitch = (float) Math.toRadians(MathHelper.lerp(delta, player.prevPitch, player.pitch));
             float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-            int k = player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1;
+            int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN ? 1 : -1);
             double f10 = client.options.fov / 100.0D;
-            Vec3d vecB = new Vec3d(x, y, z).add(new Vec3d(k * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
+            Vec3d vecB = new Vec3d(x, y, z).add(new Vec3d(handedOffset * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
 
             renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
         }
@@ -321,13 +322,13 @@ public final class RenderClotheslineNetwork {
             double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
 
             float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-            int k = player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1;
+            int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN ? 1 : -1);
             double d0 = MathHelper.sin(yaw) * 0.35D;
             double d1 = MathHelper.cos(yaw) * 0.35D;
             Vec3d vecB = new Vec3d(
-                posX - d0 - d1 * k,
+                posX - d0 - d1 * handedOffset,
                 posY + (player.isSneaking() ? 0.4D : 0.9D),
-                posZ - d0 * k + d1
+                posZ - d0 * handedOffset + d1
             );
 
             renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
