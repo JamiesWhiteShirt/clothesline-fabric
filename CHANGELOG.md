@@ -1,3 +1,8 @@
+# 0.0.15
+
+- Fixed Clotheslines rendering in hand when not active
+- Made it possible to place Clothesline Anchors on fences as intended
+
 # 0.0.14
 
 - Updated to Minecraft 1.14 Pre-Release 5 - [#4](https://github.com/JamiesWhiteShirt/clothesline-fabric/pull/4) by asiekierka
