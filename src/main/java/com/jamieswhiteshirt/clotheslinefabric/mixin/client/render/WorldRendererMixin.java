@@ -3,6 +3,7 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.client.render;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManager;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
+import com.jamieswhiteshirt.clotheslinefabric.common.item.ClotheslineItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.VisibleRegion;
@@ -47,7 +48,10 @@ public class WorldRendererMixin {
         // If not third person
         Entity entity = MinecraftClient.getInstance().getCameraEntity();
         if (client.options.perspective <= 0 && entity instanceof PlayerEntity) {
-            renderClotheslineNetwork.renderFirstPersonPlayerHeldClothesline((PlayerEntity) entity, x, y, z, delta);
+            PlayerEntity playerEntity = (PlayerEntity) entity;
+            if (playerEntity.getActiveItem().getItem() == ClotheslineItems.CLOTHESLINE) {
+                renderClotheslineNetwork.renderFirstPersonPlayerHeldClothesline((PlayerEntity) entity, x, y, z, delta);
+            }
         }
     }
 }

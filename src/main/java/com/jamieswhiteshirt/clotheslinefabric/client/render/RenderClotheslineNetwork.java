@@ -302,37 +302,37 @@ public final class RenderClotheslineNetwork {
     public void renderFirstPersonPlayerHeldClothesline(PlayerEntity player, double x, double y, double z, float delta) {
         ConnectorHolder connector = (ConnectorHolder) player;
         ItemUsageContext from = connector.getFrom();
-        if (from != null) {
-            float pitch = (float) Math.toRadians(MathHelper.lerp(delta, player.prevPitch, player.pitch));
-            float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-            int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN ? 1 : -1);
-            double f10 = client.options.fov / 100.0D;
-            Vec3d vecB = new Vec3d(x, y, z).add(new Vec3d(handedOffset * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
+        if (from == null) return;
 
-            renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
-        }
+        float pitch = (float) Math.toRadians(MathHelper.lerp(delta, player.prevPitch, player.pitch));
+        float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
+        int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN ? 1 : -1);
+        double f10 = client.options.fov / 100.0D;
+        Vec3d vecB = new Vec3d(x, y, z).add(new Vec3d(handedOffset * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
+
+        renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
     }
 
     public void renderThirdPersonPlayerHeldClothesline(PlayerEntity player, double x, double y, double z, float delta) {
         ConnectorHolder connector = (ConnectorHolder) player;
         ItemUsageContext from = connector.getFrom();
-        if (from != null) {
-            double posX = MathHelper.lerp(delta, player.prevRenderX, player.x);
-            double posY = MathHelper.lerp(delta, player.prevRenderY, player.y);
-            double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
+        if (from == null) return;
 
-            float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-            int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN ? 1 : -1);
-            double d0 = MathHelper.sin(yaw) * 0.35D;
-            double d1 = MathHelper.cos(yaw) * 0.35D;
-            Vec3d vecB = new Vec3d(
-                posX - d0 - d1 * handedOffset,
-                posY + (player.isSneaking() ? 0.4D : 0.9D),
-                posZ - d0 * handedOffset + d1
-            );
+        double posX = MathHelper.lerp(delta, player.prevRenderX, player.x);
+        double posY = MathHelper.lerp(delta, player.prevRenderY, player.y);
+        double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
 
-            renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
-        }
+        float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
+        int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN ? 1 : -1);
+        double d0 = MathHelper.sin(yaw) * 0.35D;
+        double d1 = MathHelper.cos(yaw) * 0.35D;
+        Vec3d vecB = new Vec3d(
+            posX - d0 - d1 * handedOffset,
+            posY + (player.isSneaking() ? 0.4D : 0.9D),
+            posZ - d0 * handedOffset + d1
+        );
+
+        renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
     }
 
     private void renderHeldClothesline(BlockPos posA, Vec3d vecB, ExtendedBlockView world, double x, double y, double z) {

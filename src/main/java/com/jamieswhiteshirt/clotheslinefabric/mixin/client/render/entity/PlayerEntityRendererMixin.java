@@ -1,6 +1,7 @@
 package com.jamieswhiteshirt.clotheslinefabric.mixin.client.render.entity;
 
 import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
+import com.jamieswhiteshirt.clotheslinefabric.common.item.ClotheslineItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -26,6 +27,8 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         method = "method_4215(Lnet/minecraft/client/network/AbstractClientPlayerEntity;DDDFF)V"
     )
     private void render(AbstractClientPlayerEntity player, double x, double y, double z, float float_1, float delta, CallbackInfo ci) {
+        if (player.getActiveItem().getItem() != ClotheslineItems.CLOTHESLINE) return;
+
         double posX = MathHelper.lerp(delta, player.prevRenderX, player.x);
         double posY = MathHelper.lerp(delta, player.prevRenderY, player.y);
         double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
