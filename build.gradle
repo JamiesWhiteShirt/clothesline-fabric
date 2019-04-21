@@ -43,7 +43,7 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modCompile "net.fabricmc:fabric:0.2.7+build.123"
-    // modCompile "com.jamieswhiteshirt:developer-mode:1.0.10"
+    modCompile "com.jamieswhiteshirt:developer-mode:1.0.11"
 
     compile "com.jamieswhiteshirt:rtree-3i-lite:0.1-SNAPSHOT"
     contained "com.jamieswhiteshirt:rtree-3i-lite:0.1-SNAPSHOT"
