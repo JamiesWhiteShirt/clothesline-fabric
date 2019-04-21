@@ -28,6 +28,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.ViewableWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -53,6 +54,17 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
         builder.with(FACE, FACING, WATERLOGGED, CRANK);
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState state, ViewableWorld world, BlockPos pos) {
+        Direction direction = getDirection(state);
+        BlockPos neighborPos = pos.offset(direction.getOpposite());
+        if (direction.getAxis() == Direction.Axis.Y) {
+            return Block.isSolidSmallSquare(world, neighborPos, direction);
+        } else {
+            return Block.isSolidFullSquare(world.getBlockState(neighborPos), world, neighborPos, direction);
+        }
     }
 
     @SuppressWarnings("deprecation")
