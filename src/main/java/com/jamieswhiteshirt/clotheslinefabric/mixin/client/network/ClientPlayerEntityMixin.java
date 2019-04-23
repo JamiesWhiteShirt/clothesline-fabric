@@ -16,7 +16,7 @@ public abstract class ClientPlayerEntityMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"
         ),
-        method = "updateMovement()V"
+        method = "updateState()V"
     )
     private boolean redirectIsUsingItem(ClientPlayerEntity clientPlayerEntity) {
         return clientPlayerEntity.isUsingItem() && !(clientPlayerEntity.getActiveItem().getItem() instanceof ConnectorItem);
