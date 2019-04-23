@@ -19,7 +19,8 @@
   },
   "requires": {
     "fabricloader": ">=0.4.1",
-    "fabric": ">=0.2.7"
+    "fabric": ">=0.2.7",
+    "rtree-3i-lite-fabric": ">=0.2.0"
   },
   "mixins": [
     "mixins.clothesline-fabric.client.json",

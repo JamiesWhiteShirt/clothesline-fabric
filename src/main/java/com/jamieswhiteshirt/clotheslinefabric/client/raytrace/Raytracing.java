@@ -38,7 +38,7 @@ public class Raytracing {
         );
 
         NetworkRaytraceHit hit = null;
-        List<NetworkEdge> edges = manager.getNetworks().getEdges().values(box::intersects).collect(Collectors.toList());
+        List<NetworkEdge> edges = manager.getNetworks().getEdges().values(box::intersectsClosed).collect(Collectors.toList());
         for (NetworkEdge edge : edges) {
             NetworkRaytraceHit hitCandidate = raytraceEdge(ray, edge, maxDistanceSq, delta);
             if (hitCandidate != null && hitCandidate.distanceSq < maxDistanceSq) {

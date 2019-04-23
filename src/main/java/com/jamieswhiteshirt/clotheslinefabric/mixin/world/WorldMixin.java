@@ -26,7 +26,7 @@ public abstract class WorldMixin implements ViewableWorld, NetworkManagerProvide
                     MathHelper.ceil(bb.maxX), MathHelper.ceil(bb.maxY), MathHelper.ceil(bb.maxZ)
                 );
                 boolean intersects = getNetworkManager().getNetworks().getEdges()
-                    .values(box::intersects)
+                    .values(box::intersectsClosed)
                     .anyMatch(edge -> {
                         Line line = edge.getPathEdge().getLine();
                         return shape.rayTrace(line.getFromVec(), line.getToVec(), pos) != null;

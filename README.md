@@ -4,7 +4,7 @@
 
 A seamless laundry experience that is definitely not an item transport mod for [Fabric](https://fabricmc.net/).
 
-- [rtree-3i-lite](https://github.com/JamiesWhiteShirt/rtree-3i-lite): Spatial indexing library used by Clothesline Fabric.
+- [rtree-3i-lite-fabric](https://github.com/JamiesWhiteShirt/rtree-3i-lite-fabric): Provides a spatial indexing library used by Clothesline Fabric.
 
 ## Developing Clothesline Fabric
 
@@ -16,7 +16,6 @@ To use this mod in your workspace, add the following to your `build.gradle`:
 
 ```groovy
 repositories {
-    maven {url "https://oss.sonatype.org/content/repositories/snapshots"}
     maven {url "https://maven.jamieswhiteshirt.com/libs-release/"}
 }
 
