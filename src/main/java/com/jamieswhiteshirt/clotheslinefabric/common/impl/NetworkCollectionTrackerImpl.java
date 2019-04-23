@@ -1,6 +1,8 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.impl;
 
-import com.jamieswhiteshirt.clotheslinefabric.api.*;
+import com.jamieswhiteshirt.clotheslinefabric.api.Network;
+import com.jamieswhiteshirt.clotheslinefabric.api.NetworkCollection;
+import com.jamieswhiteshirt.clotheslinefabric.api.NetworkCollectionListener;
 import com.jamieswhiteshirt.clotheslinefabric.internal.NetworkCollectionTracker;
 import com.jamieswhiteshirt.clotheslinefabric.internal.NetworkMessenger;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;

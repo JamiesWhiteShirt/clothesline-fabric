@@ -13,7 +13,6 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkManager;
 import net.minecraft.world.chunk.ChunkPos;

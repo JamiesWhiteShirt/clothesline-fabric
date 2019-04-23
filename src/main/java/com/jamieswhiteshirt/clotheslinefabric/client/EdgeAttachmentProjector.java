@@ -1,8 +1,8 @@
 package com.jamieswhiteshirt.clotheslinefabric.client;
 
+import com.jamieswhiteshirt.clotheslinefabric.api.AttachmentUnit;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkEdge;
 import com.jamieswhiteshirt.clotheslinefabric.api.Path;
-import com.jamieswhiteshirt.clotheslinefabric.api.AttachmentUnit;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.math.BlockPos;

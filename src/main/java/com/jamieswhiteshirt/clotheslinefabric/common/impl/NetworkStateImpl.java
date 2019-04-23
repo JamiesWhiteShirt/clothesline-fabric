@@ -1,7 +1,7 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.impl;
 
-import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkState;
+import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 import com.jamieswhiteshirt.clotheslinefabric.api.Tree;
 import com.jamieswhiteshirt.clotheslinefabric.api.util.MathUtil;
 import com.jamieswhiteshirt.clotheslinefabric.api.util.MutableSortedIntMap;

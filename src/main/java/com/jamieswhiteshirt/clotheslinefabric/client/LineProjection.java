@@ -1,7 +1,7 @@
 package com.jamieswhiteshirt.clotheslinefabric.client;
 
-import com.jamieswhiteshirt.clotheslinefabric.api.NetworkEdge;
 import com.jamieswhiteshirt.clotheslinefabric.api.Line;
+import com.jamieswhiteshirt.clotheslinefabric.api.NetworkEdge;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.math.Vec3d;

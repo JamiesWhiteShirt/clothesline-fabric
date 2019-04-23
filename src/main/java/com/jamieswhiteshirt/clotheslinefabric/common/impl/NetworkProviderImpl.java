@@ -4,8 +4,8 @@ import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.SetMultimap;
 import com.jamieswhiteshirt.clotheslinefabric.api.Network;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkCollection;
-import com.jamieswhiteshirt.clotheslinefabric.internal.PersistentNetwork;
 import com.jamieswhiteshirt.clotheslinefabric.internal.NetworkProvider;
+import com.jamieswhiteshirt.clotheslinefabric.internal.PersistentNetwork;
 import net.minecraft.world.chunk.ChunkPos;
 
 import java.util.Collection;

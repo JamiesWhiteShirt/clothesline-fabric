@@ -3,7 +3,9 @@ package com.jamieswhiteshirt.clotheslinefabric.common.util;
 import com.jamieswhiteshirt.clotheslinefabric.api.Tree;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**

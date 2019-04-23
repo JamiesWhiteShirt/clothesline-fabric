@@ -2,8 +2,8 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.client.render;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManager;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
-import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHitEntity;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit;
+import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHitEntity;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Ray;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Raytracing;
 import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;

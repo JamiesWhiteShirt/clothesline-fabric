@@ -1,8 +1,8 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.impl;
 
-import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 import com.jamieswhiteshirt.clotheslinefabric.api.Network;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkNode;
+import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 
 import java.util.Objects;
 

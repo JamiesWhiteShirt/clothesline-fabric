@@ -1,6 +1,8 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.impl;
 
-import com.jamieswhiteshirt.clotheslinefabric.api.*;
+import com.jamieswhiteshirt.clotheslinefabric.api.Network;
+import com.jamieswhiteshirt.clotheslinefabric.api.NetworkListener;
+import com.jamieswhiteshirt.clotheslinefabric.api.NetworkState;
 import com.jamieswhiteshirt.clotheslinefabric.internal.PersistentNetwork;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,7 +12,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.*;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.UUID;
 
 public final class NetworkImpl implements Network {
     private final int id;

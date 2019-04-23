@@ -1,6 +1,9 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.util;
 
-import com.jamieswhiteshirt.clotheslinefabric.api.*;
+import com.jamieswhiteshirt.clotheslinefabric.api.DeltaComparator;
+import com.jamieswhiteshirt.clotheslinefabric.api.Line;
+import com.jamieswhiteshirt.clotheslinefabric.api.Path;
+import com.jamieswhiteshirt.clotheslinefabric.api.Tree;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;

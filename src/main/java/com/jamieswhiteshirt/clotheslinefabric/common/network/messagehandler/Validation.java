@@ -1,7 +1,7 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.network.messagehandler;
 
-import com.jamieswhiteshirt.clotheslinefabric.api.NetworkState;
 import com.jamieswhiteshirt.clotheslinefabric.api.Network;
+import com.jamieswhiteshirt.clotheslinefabric.api.NetworkState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 

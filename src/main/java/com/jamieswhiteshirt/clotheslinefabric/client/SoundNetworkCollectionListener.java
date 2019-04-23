@@ -9,7 +9,8 @@ import net.minecraft.client.audio.SoundInstance;
 import net.minecraft.client.audio.SoundManager;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class SoundNetworkCollectionListener implements NetworkCollectionListener {

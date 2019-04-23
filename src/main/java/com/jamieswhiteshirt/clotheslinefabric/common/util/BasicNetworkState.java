@@ -2,9 +2,9 @@ package com.jamieswhiteshirt.clotheslinefabric.common.util;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkState;
 import com.jamieswhiteshirt.clotheslinefabric.api.Path;
-import com.jamieswhiteshirt.clotheslinefabric.common.impl.NetworkStateImpl;
 import com.jamieswhiteshirt.clotheslinefabric.api.Tree;
 import com.jamieswhiteshirt.clotheslinefabric.api.util.MutableSortedIntMap;
+import com.jamieswhiteshirt.clotheslinefabric.common.impl.NetworkStateImpl;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.item.ItemStack;
 

@@ -2,7 +2,9 @@ package com.jamieswhiteshirt.clotheslinefabric.api;
 
 import net.minecraft.util.math.BlockPos;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Immutable data structure of a network as a tree. Values are absolute.

@@ -1,6 +1,8 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.util;
 
-import com.jamieswhiteshirt.clotheslinefabric.api.*;
+import com.jamieswhiteshirt.clotheslinefabric.api.AttachmentUnit;
+import com.jamieswhiteshirt.clotheslinefabric.api.DeltaComparator;
+import com.jamieswhiteshirt.clotheslinefabric.api.Tree;
 import com.jamieswhiteshirt.clotheslinefabric.api.util.MutableSortedIntMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
