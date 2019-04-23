@@ -2,11 +2,13 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.server.world;
 
 import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkLoadCallback;
 import com.jamieswhiteshirt.clotheslinefabric.common.event.ChunkWatchCallback;
+import com.mojang.datafixers.DataFixer;
 import net.minecraft.network.Packet;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.server.world.ThreadedAnvilChunkStorage;
+import net.minecraft.world.VersionedChunkStorage;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPos;
 import org.spongepowered.asm.mixin.Final;
@@ -17,11 +19,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
 @Mixin(ThreadedAnvilChunkStorage.class)
-public class ThreadedAnvilChunkStorageMixin {
+public class ThreadedAnvilChunkStorageMixin extends VersionedChunkStorage {
     @Shadow @Final private ServerWorld world;
+
+    public ThreadedAnvilChunkStorageMixin(File file_1, DataFixer dataFixer_1) {
+        super(file_1, dataFixer_1);
+    }
 
     @Inject(
         at = @At("RETURN"),
