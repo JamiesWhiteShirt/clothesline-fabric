@@ -1,3 +1,7 @@
+# 0.0.16
+
+- Switched to rtree-3i-lite-fabric as an included dependency instead of shading rtree-3i-lite
+
 # 0.0.15
 
 - Fixed Clotheslines rendering in hand when not active
