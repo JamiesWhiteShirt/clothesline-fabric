@@ -1,9 +1,12 @@
 {
   "schemaVersion": 1,
   "id": "clothesline-fabric",
+  "version": "0.0.16",
   "name": "Clothesline",
   "description": "A seamless laundry experience that is definitely not an item transport mod.",
-  "version": "0.0.16",
+  "authors": [
+    "JamiesWhiteShirt"
+  ],
   "icon": "assets/clothesline-fabric/icon.png",
   "contact": {
     "issues": "http://github.com/JamiesWhiteShirt/clothesline-fabric/issues",
