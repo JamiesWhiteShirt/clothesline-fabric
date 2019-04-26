@@ -8,7 +8,7 @@
     "world.WorldMixin",
     "server.world.ThreadedAnvilChunkStorageMixin",
     "server.network.ServerPlayerEntityMixin",
-    "item.ItemMixin"
+    "item.ItemAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
