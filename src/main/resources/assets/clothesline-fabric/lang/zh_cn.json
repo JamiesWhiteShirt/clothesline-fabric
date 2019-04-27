@@ -1,8 +1,9 @@
 {
   "item.clothesline-fabric.clothesline": "晾衣绳",
   "item.clothesline-fabric.crank": "曲柄",
-  "item.clothesline-fabric.spinner": "纺线器",
+  "block.clothesline-fabric.spinner": "纺线器",
   "block.clothesline-fabric.clothesline_anchor": "晾衣绳轴",
+  "container.clothesline-fabric.spinner": "纺线器",
   "subtitles.block.clothesline-fabric.clothesline_anchor.squeak": "滑轮：吱扭",
   "subtitles.block.clothesline-fabric.clothesline_anchor.rope": "晾衣绳：拉动",
   "itemGroup.clothesline-fabric.items": "晾衣绳"

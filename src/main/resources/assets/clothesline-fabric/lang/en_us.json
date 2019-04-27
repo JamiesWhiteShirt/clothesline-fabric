@@ -1,8 +1,9 @@
 {
   "item.clothesline-fabric.clothesline": "Clothesline",
   "item.clothesline-fabric.crank": "Crank",
-  "item.clothesline-fabric.spinner": "Spinner",
+  "block.clothesline-fabric.spinner": "Spinner",
   "block.clothesline-fabric.clothesline_anchor": "Clothesline Anchor",
+  "container.clothesline-fabric.spinner": "Spinner",
   "subtitles.block.clothesline-fabric.clothesline_anchor.squeak": "Pulley squeaks",
   "subtitles.block.clothesline-fabric.clothesline_anchor.rope": "Clothesline runs",
   "itemGroup.clothesline-fabric.items": "Clothesline"

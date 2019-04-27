@@ -50,7 +50,7 @@ public class ClotheslineItems {
         }
     }));
     public static final Item CRANK = register("crank", new CrankItem(new Item.Settings().itemGroup(ClotheslineItemGroups.ITEMS)));
-    public static final Item SPINNER = register("spinner", new SpinnerItem(new Item.Settings().itemGroup(ClotheslineItemGroups.ITEMS)));
+    public static final Item SPINNER = registerBlock(ClotheslineBlocks.SPINNER, ClotheslineItemGroups.ITEMS);
 
     private static Item registerBlock(Block block) {
         return register(new BlockItem(block, new Item.Settings()));

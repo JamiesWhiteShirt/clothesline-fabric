@@ -1,15 +1,8 @@
 {
-  "type": "crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "minecraft:wool"
-    },
-    {
-      "item": "clothesline-fabric:spinner"
-    }
-  ],
-  "result": {
-    "item": "clothesline-fabric:clothesline",
-    "count": 16
-  }
+  "type": "clothesline-fabric:spinner",
+  "ingredient": {
+    "tag": "minecraft:wool"
+  },
+  "result": "clothesline-fabric:clothesline",
+  "count": 16
 }

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "clothesline-fabric:block/spinner" },
+    "facing=east":  { "model": "clothesline-fabric:block/spinner", "y": 90 },
+    "facing=south": { "model": "clothesline-fabric:block/spinner", "y": 180 },
+    "facing=west":  { "model": "clothesline-fabric:block/spinner", "y": 270 }
+  }
+}
