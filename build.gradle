@@ -122,7 +122,7 @@ curseforge {
         changelogType = "markdown"
         changelog = file("CHANGELOG.md")
         releaseType = "beta"
-        addGameVersion "1.14-Snapshot"
+        addGameVersion "1.14"
         mainArtifact(jar) {
             displayName = "Clothesline $project.version"
             relations {
