@@ -63,6 +63,6 @@ public class EdgeRaytraceHit extends NetworkRaytraceHit {
 
     @Override
     public String getDebugString() {
-        return "Position: " + offset;
+        return "Position: " + Math.round(offset);
     }
 }
