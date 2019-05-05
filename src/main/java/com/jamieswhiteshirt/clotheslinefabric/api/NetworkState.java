@@ -25,7 +25,7 @@ public interface NetworkState {
     Tree getTree();
 
     /**
-     * Returns the path through the structure of the clothesline network. This structure is not canonical, it derived
+     * Returns the path through the structure of the clothesline network. This structure is not canonical, but derived
      * from the tree.
      * @return the path through the structure of the clothesline network
      */
