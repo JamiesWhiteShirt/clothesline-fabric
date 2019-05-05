@@ -270,6 +270,7 @@ public final class RenderClotheslineNetwork {
     }
 
     private void debugRenderText(String msg, double x, double y, double z, float yaw, float pitch, TextRenderer textRenderer) {
+        if (x * x + y * y + z * z > 10.0D * 10.0D) return;
         GameRenderer.renderFloatingText(textRenderer, msg, (float)x, (float)y, (float)z, 0, yaw, pitch, false);
     }
 
