@@ -191,7 +191,7 @@ public final class TreeBuilder {
         if (rerooted != null) {
             return rerooted;
         } else {
-            throw new IllegalArgumentException("Position is not in TreeBuilder");
+            throw new IllegalStateException("Position is not in TreeBuilder");
         }
     }
 
@@ -229,7 +229,7 @@ public final class TreeBuilder {
                 return new SplitResult(edgeTree, Arrays.asList(restTree, pastEdgeTree));
             }
         }
-        throw new IllegalArgumentException("Position is not in TreeBuilder");
+        throw new IllegalStateException("Position is not in TreeBuilder");
     }
 
     public Tree build(List<MutableSortedIntMap<ItemStack>> stacksList, int fromOffset) {
