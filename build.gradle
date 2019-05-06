@@ -24,8 +24,8 @@ minecraft {
 
 dependencies {
     minecraft "com.mojang:minecraft:1.14"
-    mappings "net.fabricmc:yarn:1.14+build.1"
-    modCompile "net.fabricmc:fabric-loader:0.4.2+build.132"
+    mappings "net.fabricmc:yarn:1.14+build.9"
+    modCompile "net.fabricmc:fabric-loader:0.4.6+build.141"
 
     include "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
 

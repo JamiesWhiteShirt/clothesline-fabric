@@ -307,7 +307,7 @@ public final class RenderClotheslineNetwork {
 
         float pitch = (float) Math.toRadians(MathHelper.lerp(delta, player.prevPitch, player.pitch));
         float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-        int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN ? 1 : -1);
+        int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
         double f10 = client.options.fov / 100.0D;
         Vec3d vecB = new Vec3d(x, y, z).add(new Vec3d(handedOffset * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
 
@@ -324,7 +324,7 @@ public final class RenderClotheslineNetwork {
         double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
 
         float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-        int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN ? 1 : -1);
+        int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
         double d0 = MathHelper.sin(yaw) * 0.35D;
         double d1 = MathHelper.cos(yaw) * 0.35D;
         Vec3d vecB = new Vec3d(

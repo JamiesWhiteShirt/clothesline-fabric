@@ -9,7 +9,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.VerticalEntityPosition;
+import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -53,7 +53,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
-        builder.with(FACE, FACING, WATERLOGGED, CRANK);
+        builder.add(FACE, FACING, WATERLOGGED, CRANK);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @SuppressWarnings("deprecation")
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, VerticalEntityPosition verticalEntityPosition) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext verticalEntityPosition) {
         switch (state.get(FACE)) {
             case FLOOR:
                 return DOWN;
