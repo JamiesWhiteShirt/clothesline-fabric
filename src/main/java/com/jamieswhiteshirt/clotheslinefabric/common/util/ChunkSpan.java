@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.longs.LongArraySet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.longs.LongSets;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.chunk.ChunkPos;
+import net.minecraft.util.math.ChunkPos;
 
 public class ChunkSpan {
     public static LongSet ofPath(Path path) {

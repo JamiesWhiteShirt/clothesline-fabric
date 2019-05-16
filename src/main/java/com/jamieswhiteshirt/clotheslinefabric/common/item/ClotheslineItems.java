@@ -36,7 +36,7 @@ public class ClotheslineItems {
                 Vec3d fromVec = Utility.midVec(from.getBlockPos());
                 Vec3d toVec = Utility.midVec(to.getBlockPos());
                 BlockHitResult hitResult = world.rayTrace(new RayTraceContext(fromVec, toVec, RayTraceContext.ShapeType.COLLIDER, RayTraceContext.FluidHandling.NONE, to.getPlayer()));
-                if (hitResult.getType() == HitResult.Type.NONE) {
+                if (hitResult.getType() == HitResult.Type.MISS) {
                     if (manager.connect(from.getBlockPos(), to.getBlockPos())) {
                         if (!Util.isCreativePlayer(to.getPlayer())) {
                             to.getItemStack().subtractAmount(1);

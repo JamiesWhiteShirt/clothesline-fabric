@@ -33,7 +33,7 @@ public interface NetworkState {
 
     /**
      * Returns the span of chunks covered by the clothesline network. Values are chunk positions encoded with
-     * {@link net.minecraft.world.chunk.ChunkPos#toLong(int, int)}. This set must not be modified.
+     * {@link net.minecraft.util.math.ChunkPos#toLong(int, int)}. This set must not be modified.
      * @return the span of chunks covered by the clothesline network
      */
     LongSet getChunkSpan();

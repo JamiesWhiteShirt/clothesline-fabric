@@ -5,8 +5,8 @@ import com.jamieswhiteshirt.clotheslinefabric.client.audio.ClotheslineRopeSoundI
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.audio.SoundInstance;
-import net.minecraft.client.audio.SoundManager;
+import net.minecraft.client.sound.SoundInstance;
+import net.minecraft.client.sound.SoundManager;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.HashMap;

@@ -33,7 +33,7 @@ public class BakedModels {
             out.accept(PULLEY_WHEEL_ROPE);
         });
 
-        ResourceManagerHelper.get(ResourceType.ASSETS).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
+        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             @Override
             public Identifier getFabricId() {
                 return new Identifier("clothesline-fabric", "models");

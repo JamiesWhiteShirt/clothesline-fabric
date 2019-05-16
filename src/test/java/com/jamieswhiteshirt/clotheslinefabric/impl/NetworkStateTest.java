@@ -27,7 +27,7 @@ class NetworkStateTest {
 
     NetworkState state;
 
-    // @BeforeEach
+    @BeforeEach
     void resetState() {
         BlockPos from = new BlockPos(0, 0, 0);
         BlockPos to = new BlockPos(1, 0, 0);
@@ -51,7 +51,7 @@ class NetworkStateTest {
         Assertions.assertTrue(ItemStack.areEqual(expected, actual));
     }
 
-    // @Test
+    @Test
     void unsetItemsAreEmpty() {
         assertItemStacksEqual(state.getAttachment(0), ItemStack.EMPTY);
     }

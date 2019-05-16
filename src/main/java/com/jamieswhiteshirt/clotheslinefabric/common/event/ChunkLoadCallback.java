@@ -3,7 +3,7 @@ package com.jamieswhiteshirt.clotheslinefabric.common.event;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.ChunkPos;
+import net.minecraft.util.math.ChunkPos;
 
 @FunctionalInterface
 public interface ChunkLoadCallback {

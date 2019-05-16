@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkManager;
-import net.minecraft.world.chunk.ChunkPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.level.LevelInfo;

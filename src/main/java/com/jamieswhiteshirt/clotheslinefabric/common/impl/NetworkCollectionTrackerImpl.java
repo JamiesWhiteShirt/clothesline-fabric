@@ -8,7 +8,7 @@ import com.jamieswhiteshirt.clotheslinefabric.internal.NetworkMessenger;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.chunk.ChunkPos;
+import net.minecraft.util.math.ChunkPos;
 
 import java.util.Collection;
 import java.util.function.Function;

@@ -5,8 +5,8 @@ import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 import com.jamieswhiteshirt.clotheslinefabric.common.sound.ClotheslineSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.audio.AbstractSoundInstance;
-import net.minecraft.client.audio.TickableSoundInstance;
+import net.minecraft.client.sound.AbstractSoundInstance;
+import net.minecraft.client.sound.TickableSoundInstance;
 import net.minecraft.sound.SoundCategory;
 
 @Environment(EnvType.CLIENT)

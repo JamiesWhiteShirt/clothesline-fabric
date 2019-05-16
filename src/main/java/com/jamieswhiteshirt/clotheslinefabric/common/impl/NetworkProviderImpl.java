@@ -6,7 +6,7 @@ import com.jamieswhiteshirt.clotheslinefabric.api.Network;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkCollection;
 import com.jamieswhiteshirt.clotheslinefabric.internal.NetworkProvider;
 import com.jamieswhiteshirt.clotheslinefabric.internal.PersistentNetwork;
-import net.minecraft.world.chunk.ChunkPos;
+import net.minecraft.util.math.ChunkPos;
 
 import java.util.Collection;
 import java.util.HashMap;

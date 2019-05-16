@@ -1,6 +1,6 @@
 package com.jamieswhiteshirt.clotheslinefabric.internal;
 
-import net.minecraft.world.chunk.ChunkPos;
+import net.minecraft.util.math.ChunkPos;
 
 import java.util.Collection;
 import java.util.UUID;

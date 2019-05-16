@@ -12,7 +12,7 @@ import com.jamieswhiteshirt.clotheslinefabric.common.util.NetworkStateBuilder;
 import com.jamieswhiteshirt.clotheslinefabric.internal.NetworkCollectionTracker;
 import com.jamieswhiteshirt.clotheslinefabric.internal.NetworkMessenger;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.chunk.ChunkPos;
+import net.minecraft.util.math.ChunkPos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
