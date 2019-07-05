@@ -67,7 +67,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @Deprecated
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext verticalEntityPosition) {
         switch (state.get(FACE)) {
@@ -96,7 +96,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         return BlockRenderLayer.CUTOUT;
     }
 
-    @SuppressWarnings("deprecation")
+    @Deprecated
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean boolean_1) {
         if (oldState.getBlock() != state.getBlock()) {
@@ -105,7 +105,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @Deprecated
     @Override
     public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean boolean_1) {
         if (state.getBlock() != newState.getBlock()) {
@@ -126,7 +126,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         return null;
     }
 
-    @SuppressWarnings("deprecation")
+    @Deprecated
     @Override
     public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
         if (state.get(CRANK)) {
@@ -144,7 +144,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         super.onBreak(world, pos, state, player);
     }
 
-    @SuppressWarnings("deprecation")
+    @Deprecated
     @Override
     public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
         if (player.getStackInHand(hand).getItem() == ClotheslineItems.CLOTHESLINE) return false;
@@ -179,7 +179,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         return new ClotheslineAnchorInventory(((NetworkManagerProvider) world).getNetworkManager(), pos);
     }
 
-    @SuppressWarnings("deprecation")
+    @Deprecated
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
