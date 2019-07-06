@@ -1,4 +1,4 @@
-package com.jamieswhiteshirt.clotheslinefabric.api.util;
+package com.jamieswhiteshirt.clotheslinefabric.common.util;
 
 public final class MathUtil {
     public static double floorMod(double x, double y) {
