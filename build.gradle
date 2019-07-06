@@ -143,10 +143,10 @@ curseforge {
         relations {
             requiredDependency "fabric-api"
         }
+        mainArtifact(remapBundleJar.output) {
+            displayName = "Clothesline $project.version"
+        }
         afterEvaluate {
-            mainArtifact(remapBundleJar.output) {
-                displayName = "Clothesline $project.version"
-            }
             uploadTask.dependsOn(remapBundleJar)
         }
     }
