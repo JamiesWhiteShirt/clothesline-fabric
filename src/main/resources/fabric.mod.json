@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "clothesline-fabric",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "name": "Clothesline",
   "description": "A seamless laundry experience that is definitely not an item transport mod.",
   "authors": [
@@ -23,7 +23,7 @@
   "depends": {
     "fabricloader": ">=0.4.1",
     "fabric": ">=0.2.7",
-    "rtree-3i-lite-fabric": ">=0.2.0"
+    "rtree-3i-lite-fabric": ">=0.3.0"
   },
   "mixins": [
     "mixins.clothesline-fabric.client.json",
