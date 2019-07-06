@@ -1,3 +1,12 @@
+# 0.1.0
+
+- Updated to Minecraft 1.14.3
+- Added rounding of numbers displayed in debug info
+- Disabled rendering of debug text that is more than 10 blocks away
+- API: Fixed docs in NetworkState
+- API (BREAKING): Updated to rtree-3i-lite-fabric 0.3.0
+- API (BREAKING): Moved MathUtil out of API
+
 # 0.0.16
 
 - Switched to rtree-3i-lite-fabric as an included dependency instead of shading rtree-3i-lite

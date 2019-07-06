@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "clothesline-fabric",
-  "version": "0.0.17",
+  "version": "0.1.0",
   "name": "Clothesline",
   "description": "A seamless laundry experience that is definitely not an item transport mod.",
   "authors": [
