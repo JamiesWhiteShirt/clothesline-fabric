@@ -20,14 +20,14 @@ import org.mockito.Mockito;
 import java.util.UUID;
 
 class NetworkTest {
-    // @BeforeAll
+    @BeforeAll
     static void bootstrap() {
         Bootstrap.initialize();
     }
 
     NetworkImpl network;
     Identifier eventListenerKey = new Identifier("test", "test");
-    // @BeforeEach
+    @BeforeEach
     void resetNetwork() {
         BlockPos posA = new BlockPos(0, 0, 0);
         BlockPos posB = new BlockPos(1, 0, 0);
@@ -40,7 +40,7 @@ class NetworkTest {
         Assertions.assertTrue(ItemStack.areEqualIgnoreDamage(expected, actual));
     }
 
-    // @Test
+    @Test
     void maxStackSizeIsZero() {
         ItemStack stack = new ItemStack(Items.STICK, 3);
         assertItemStacksEqual(new ItemStack(Items.STICK, 2), network.insertItem(0, stack, false));
@@ -48,7 +48,7 @@ class NetworkTest {
         assertItemStacksEqual(stack, network.insertItem(0, stack, false));
     }
 
-    // @Test
+    @Test
     void simulationDoesNotChangeState() {
         ItemStack stack = new ItemStack(Items.STICK);
         assertItemStacksEqual(ItemStack.EMPTY, network.insertItem(0, stack, true));
@@ -60,7 +60,7 @@ class NetworkTest {
         assertItemStacksEqual(stack, network.getAttachment(0));
     }
 
-    // @Test
+    @Test
     void simulationDoesNotFireEvents() {
         network.insertItem(1, new ItemStack(Items.STICK), false);
 
@@ -77,7 +77,7 @@ class NetworkTest {
         return actual -> ItemStack.areEqualIgnoreDamage(actual, expected);
     }
 
-    // @Test
+    @Test
     void firesEventForAttachmentChange() {
         NetworkListener eventListener = Mockito.mock(NetworkListener.class);
         network.addEventListener(eventListenerKey, eventListener);
