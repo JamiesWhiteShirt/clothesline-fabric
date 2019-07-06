@@ -27,7 +27,7 @@ public final class BasicAttachment {
         if (o == null || getClass() != o.getClass()) return false;
         BasicAttachment that = (BasicAttachment) o;
         return key == that.key &&
-            ItemStack.areEqual(stack, that.stack);
+            ItemStack.areEqualIgnoreDamage(stack, that.stack);
     }
 
     @Override

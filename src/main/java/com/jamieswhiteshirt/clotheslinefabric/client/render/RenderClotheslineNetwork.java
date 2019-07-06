@@ -27,11 +27,11 @@ import net.minecraft.client.util.GlAllocationUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.util.AbsoluteHand;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BoundingBox;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.ExtendedBlockView;
@@ -143,7 +143,7 @@ public final class RenderClotheslineNetwork {
 
         // Select all entries in the node map intersecting with the camera frustum
         Selection<NetworkNode> nodes = nodesMap
-            .values(box -> visibleRegion.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
+            .values(box -> visibleRegion.intersects(new Box(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
 
         client.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
         client.getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX).pushFilter(false, false);
@@ -198,7 +198,7 @@ public final class RenderClotheslineNetwork {
 
         // Select all entries in the edge map intersecting with the camera frustum
         Selection<NetworkEdge> edges = edgesMap
-            .values(box -> visibleRegion.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
+            .values(box -> visibleRegion.intersects(new Box(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
 
         // Draw the rope for all edges
         buildAndDrawEdgeQuads(bufferBuilder -> edges.forEach(edge -> renderEdge(world, edge, x, y, z, bufferBuilder, delta)));
@@ -287,7 +287,7 @@ public final class RenderClotheslineNetwork {
 
         // Select all edges in the edges map intersecting with the camera frustum
         Selection<NetworkEdge> edges = edgesMap
-            .values(box -> visibleRegion.intersects(new BoundingBox(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
+            .values(box -> visibleRegion.intersects(new Box(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
 
         edges.forEach(edge -> {
             Path.Edge pathEdge = edge.getPathEdge();
@@ -307,7 +307,7 @@ public final class RenderClotheslineNetwork {
 
         float pitch = (float) Math.toRadians(MathHelper.lerp(delta, player.prevPitch, player.pitch));
         float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-        int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
+        int handedOffset = (player.getMainArm() == Arm.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
         double f10 = client.options.fov / 100.0D;
         Vec3d vecB = new Vec3d(x, y, z).add(new Vec3d(handedOffset * -0.36D * f10, -0.045D * f10, 0.4D).rotateX(-pitch).rotateY(-yaw));
 
@@ -324,7 +324,7 @@ public final class RenderClotheslineNetwork {
         double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
 
         float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
-        int handedOffset = (player.getMainHand() == AbsoluteHand.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
+        int handedOffset = (player.getMainArm() == Arm.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
         double d0 = MathHelper.sin(yaw) * 0.35D;
         double d1 = MathHelper.cos(yaw) * 0.35D;
         Vec3d vecB = new Vec3d(

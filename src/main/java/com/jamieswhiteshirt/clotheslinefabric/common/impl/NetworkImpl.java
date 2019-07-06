@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 
 import java.util.Map;
@@ -66,7 +67,7 @@ public final class NetworkImpl implements Network {
         if (!stack.isEmpty()) {
             setAttachment(attachmentKey, ItemStack.EMPTY);
             World world = player.world;
-            if (!world.isClient && world.getGameRules().getBoolean("doTileDrops")) {
+            if (!world.isClient && world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)) {
                 Vec3d pos = state.getPath().getPositionForOffset(state.attachmentKeyToOffset(attachmentKey));
                 ItemEntity itemEntity = new ItemEntity(world, pos.x, pos.y - 0.5D, pos.z, stack);
                 itemEntity.setToDefaultPickupDelay();
@@ -80,12 +81,12 @@ public final class NetworkImpl implements Network {
         if (!stack.isEmpty() && state.getAttachment(attachmentKey).isEmpty()) {
             if (!simulate) {
                 ItemStack insertedItem = stack.copy();
-                insertedItem.setAmount(1);
+                insertedItem.setCount(1);
                 setAttachment(attachmentKey, insertedItem);
             }
 
             ItemStack returnedStack = stack.copy();
-            returnedStack.subtractAmount(1);
+            returnedStack.decrement(1);
             return returnedStack;
         }
         return stack;

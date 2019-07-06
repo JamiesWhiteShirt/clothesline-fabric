@@ -1,5 +1,5 @@
 plugins {
-    id "fabric-loom" version "0.2.2-SNAPSHOT"
+    id "fabric-loom" version "0.2.4-SNAPSHOT"
     id "jacoco"
     id "com.matthewprenger.cursegradle" version "1.1.2"
     id "maven-publish"
@@ -23,15 +23,15 @@ minecraft {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.14.2 Pre-Release 1"
-    mappings "net.fabricmc:yarn:1.14.2 Pre-Release 1+build.1"
-    modCompile "net.fabricmc:fabric-loader:0.4.6+build.141"
+    minecraft "com.mojang:minecraft:1.14.3"
+    mappings "net.fabricmc:yarn:1.14.3+build.12"
+    modCompile "net.fabricmc:fabric-loader:0.4.8+build.155"
 
     include "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
 
-    modCompile "net.fabricmc:fabric:0.2.7+build.127"
-    modCompile "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
-    modCompile "com.jamieswhiteshirt:developer-mode:1.0.11"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.3.0+build.188"
+    modApi "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
+    modRuntime "com.jamieswhiteshirt:developer-mode:1.0.12"
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.2.+"
@@ -47,17 +47,22 @@ processResources {
     exclude "**/*.psd"
 }
 
-jar {
+afterEvaluate {
+    remapJar {
+        addNestedDependencies = false
+    }
+}
+
+task bundleJar(type: Jar) {
+    from sourceSets.main.output
     classifier = "all"
 }
 
-task mavenJar(type: Jar) {
-    from sourceSets.main.output
-}
-
-task remapMavenJar(type: net.fabricmc.loom.task.RemapJar, dependsOn: mavenJar) {
-    jar = mavenJar.archivePath
-    nestJar = false
+task remapBundleJar(type: net.fabricmc.loom.task.RemapJarTask, dependsOn: bundleJar) {
+    output = bundleJar.archivePath
+    bundleJar.classifier = "all-dev"
+    input = bundleJar.archivePath
+    addNestedDependencies = true
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -65,22 +70,34 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-tasks.assemble.dependsOn tasks.remapJar
-tasks.assemble.dependsOn tasks.remapMavenJar
+artifacts {
+    archives(sourcesJar) {
+        builtBy remapSourcesJar
+    }
+    archives(remapBundleJar.output) {
+        builtBy remapBundleJar
+    }
+    afterEvaluate {
+        archives(remapJar.output) {
+            builtBy remapJar
+        }
+    }
+}
 
 project.ext.isReleaseVersion = !version.endsWith("-SNAPSHOT")
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact(mavenJar) {
-                builtBy remapMavenJar
-            }
             artifact(sourcesJar) {
                 builtBy remapSourcesJar
             }
 
             afterEvaluate {
+                artifact(remapJar.output) {
+                    builtBy remapJar
+                }
+
                 pom.withXml {
                     NodeList dependencies = asNode().dependencies
 
@@ -122,22 +139,18 @@ curseforge {
         changelogType = "markdown"
         changelog = file("CHANGELOG.md")
         releaseType = "beta"
-        addGameVersion "1.14"
-        addGameVersion "1.14.1"
-        mainArtifact(jar) {
-            displayName = "Clothesline $project.version"
-            relations {
-                requiredDependency "fabric"
+        addGameVersion "1.14.3"
+        relations {
+            requiredDependency "fabric"
+        }
+        afterEvaluate {
+            mainArtifact(remapBundleJar.output) {
+                displayName = "Clothesline $project.version"
             }
+            uploadTask.dependsOn(remapBundleJar)
         }
     }
     options {
         forgeGradleIntegration = false
     }
-}
-
-afterEvaluate {
-    // CurseGradle generates tasks in afterEvaluate for each project
-    // There isn't really any other way to make it depend on a task unless it is an AbstractArchiveTask
-    tasks.curseforge310078.dependsOn remapJar
 }

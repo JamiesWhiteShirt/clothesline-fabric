@@ -2,11 +2,9 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.world;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.Line;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
-import com.jamieswhiteshirt.rtree3i.Box;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BoundingBox;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.ViewableWorld;
@@ -20,8 +18,8 @@ public abstract class WorldMixin implements ViewableWorld, NetworkManagerProvide
         if (ViewableWorld.super.canPlace(state, pos, entityContext)) {
             VoxelShape shape = state.getCollisionShape(this, pos);
             if (!shape.isEmpty()) {
-                BoundingBox bb = shape.offset(pos.getX(), pos.getY(), pos.getZ()).getBoundingBox();
-                Box box = Box.create(
+                net.minecraft.util.math.Box bb = shape.offset(pos.getX(), pos.getY(), pos.getZ()).getBoundingBox();
+                com.jamieswhiteshirt.rtree3i.Box box = com.jamieswhiteshirt.rtree3i.Box.create(
                     MathHelper.floor(bb.minX), MathHelper.floor(bb.minY), MathHelper.floor(bb.minZ),
                     MathHelper.ceil(bb.maxX), MathHelper.ceil(bb.maxY), MathHelper.ceil(bb.maxZ)
                 );

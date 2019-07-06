@@ -48,7 +48,7 @@ class NetworkStateTest {
     }
 
     void assertItemStacksEqual(ItemStack expected, ItemStack actual) {
-        Assertions.assertTrue(ItemStack.areEqual(expected, actual));
+        Assertions.assertTrue(ItemStack.areEqualIgnoreDamage(expected, actual));
     }
 
     @Test

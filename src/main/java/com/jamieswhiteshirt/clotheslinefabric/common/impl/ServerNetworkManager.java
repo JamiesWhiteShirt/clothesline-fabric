@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.GameRules;
 
 import java.util.UUID;
 
@@ -54,7 +55,7 @@ public final class ServerNetworkManager extends CommonNetworkManager {
 
     @Override
     protected void dropItems(NetworkState state, boolean dropClotheslines) {
-        if (world.getGameRules().getBoolean("doTileDrops")) {
+        if (world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)) {
             for (MutableSortedIntMap.Entry<ItemStack> entry : state.getAttachments().entries()) {
                 dropAttachment(state, entry.getValue(), entry.getKey());
             }

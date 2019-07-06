@@ -6,7 +6,7 @@ import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.DebugHud;
-import net.minecraft.ChatFormat;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import org.spongepowered.asm.mixin.Final;
@@ -36,7 +36,7 @@ public class DebugHudMixin extends DrawableHelper {
                 Network network = edge.getNetwork();
                 cir.getReturnValue().addAll(Arrays.asList(
                     "",
-                    ChatFormat.UNDERLINE + "Targeted Clothesline",
+                    Formatting.UNDERLINE + "Targeted Clothesline",
                     "Edge ID: " + edge.getIndex() + "@" + network.getId(),
                     "Span: " + edge.getPathEdge().getFromOffset() + " to " + edge.getPathEdge().getToOffset(),
                     hit.getDebugString()
@@ -48,7 +48,7 @@ public class DebugHudMixin extends DrawableHelper {
                 if (node != null) {
                     cir.getReturnValue().addAll(Arrays.asList(
                         "",
-                        ChatFormat.UNDERLINE + "Targeted Clothesline Anchor",
+                        Formatting.UNDERLINE + "Targeted Clothesline Anchor",
                         "Network ID: " + node.getNetwork().getId()
                     ));
                 }

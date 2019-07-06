@@ -44,7 +44,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     private static final VoxelShape EAST  = Block.createCuboidShape(0.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D);
 
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static final Property<Boolean> CRANK = BooleanProperty.create("crank");
+    public static final Property<Boolean> CRANK = BooleanProperty.of("crank");
 
     public ClotheslineAnchorBlock(Settings settings) {
         super(settings);

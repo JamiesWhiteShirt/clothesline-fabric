@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.entity.EntityPickInteractionAware;
 import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCategory;
-import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public final class NetworkRaytraceHitEntity extends Entity implements EntityPickInteractionAware {
-    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.<NetworkRaytraceHitEntity>create(EntityCategory.MISC, NetworkRaytraceHitEntity::new).size(EntitySize.resizeable(0.25F, 0.25F)).build();
+    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.<NetworkRaytraceHitEntity>create(EntityCategory.MISC, NetworkRaytraceHitEntity::new).size(EntityDimensions.changing(0.25F, 0.25F)).build();
 
     private NetworkRaytraceHit hit;
 
@@ -41,7 +41,7 @@ public final class NetworkRaytraceHitEntity extends Entity implements EntityPick
     protected void writeCustomDataToTag(CompoundTag var1) { }
 
     @Override
-    public boolean handlePlayerAttack(Entity entity) {
+    public boolean handleAttack(Entity entity) {
         return hit.hitByEntity((PlayerEntity) entity);
     }
 

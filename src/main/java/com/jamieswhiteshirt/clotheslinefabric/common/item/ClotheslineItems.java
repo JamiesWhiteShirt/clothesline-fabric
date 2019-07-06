@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class ClotheslineItems {
     public static final Item CLOTHESLINE_ANCHOR = registerBlock(ClotheslineBlocks.CLOTHESLINE_ANCHOR, ClotheslineItemGroups.ITEMS);
-    public static final Item CLOTHESLINE = register("clothesline", new ConnectorItem(new Item.Settings().itemGroup(ClotheslineItemGroups.ITEMS), new ConnectorItem.ConnectorBehavior() {
+    public static final Item CLOTHESLINE = register("clothesline", new ConnectorItem(new Item.Settings().group(ClotheslineItemGroups.ITEMS), new ConnectorItem.ConnectorBehavior() {
         @Override
         public boolean canConnectFrom(ItemUsageContext from) {
             return from.getWorld().getBlockState(from.getBlockPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR;
@@ -39,7 +39,7 @@ public class ClotheslineItems {
                 if (hitResult.getType() == HitResult.Type.MISS) {
                     if (manager.connect(from.getBlockPos(), to.getBlockPos())) {
                         if (!Util.isCreativePlayer(to.getPlayer())) {
-                            to.getItemStack().subtractAmount(1);
+                            to.getStack().decrement(1);
                         }
                         world.playSound(to.getPlayer(), to.getBlockPos(), SoundEvents.ENTITY_LEASH_KNOT_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
                         return true;
@@ -49,15 +49,15 @@ public class ClotheslineItems {
             return false;
         }
     }));
-    public static final Item CRANK = register("crank", new CrankItem(new Item.Settings().itemGroup(ClotheslineItemGroups.ITEMS)));
-    public static final Item SPINNER = register("spinner", new SpinnerItem(new Item.Settings().itemGroup(ClotheslineItemGroups.ITEMS)));
+    public static final Item CRANK = register("crank", new CrankItem(new Item.Settings().group(ClotheslineItemGroups.ITEMS)));
+    public static final Item SPINNER = register("spinner", new SpinnerItem(new Item.Settings().group(ClotheslineItemGroups.ITEMS)));
 
     private static Item registerBlock(Block block) {
         return register(new BlockItem(block, new Item.Settings()));
     }
 
     private static Item registerBlock(Block block, ItemGroup itemGroup) {
-        return register(new BlockItem(block, (new Item.Settings()).itemGroup(itemGroup)));
+        return register(new BlockItem(block, (new Item.Settings()).group(itemGroup)));
     }
 
     private static Item register(BlockItem item) {
@@ -74,7 +74,7 @@ public class ClotheslineItems {
 
     private static Item register(Identifier id, Item item) {
         if (item instanceof BlockItem) {
-            ((BlockItem)item).registerBlockItemMap(Item.BLOCK_ITEM_MAP, item);
+            ((BlockItem)item).appendBlocks(Item.BLOCK_ITEMS, item);
         }
 
         return Registry.register(Registry.ITEM, id, item);

@@ -9,11 +9,9 @@ import com.jamieswhiteshirt.clotheslinefabric.client.EdgeAttachmentProjector;
 import com.jamieswhiteshirt.clotheslinefabric.client.LineProjection;
 import com.jamieswhiteshirt.clotheslinefabric.client.Mat4f;
 import com.jamieswhiteshirt.clotheslinefabric.client.Vec4f;
-import com.jamieswhiteshirt.rtree3i.Box;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BoundingBox;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -24,11 +22,11 @@ import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
 public class Raytracing {
-    private static final BoundingBox ATTACHMENT_BOX = new BoundingBox(-0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D);
+    private static final net.minecraft.util.math.Box ATTACHMENT_BOX = new net.minecraft.util.math.Box(-0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D);
 
     @Nullable
     public static NetworkRaytraceHit raytraceNetworks(NetworkManager manager, Ray ray, double maxDistanceSq, float delta) {
-        Box box = Box.create(
+        com.jamieswhiteshirt.rtree3i.Box box = com.jamieswhiteshirt.rtree3i.Box.create(
             (int) Math.floor(Math.min(ray.from.x, ray.to.x) - 0.5D),
             (int) Math.floor(Math.min(ray.from.y, ray.to.y) - 0.5D),
             (int) Math.floor(Math.min(ray.from.z, ray.to.z) - 0.5D),

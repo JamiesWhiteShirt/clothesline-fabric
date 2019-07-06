@@ -15,7 +15,7 @@ import net.minecraft.client.util.GlAllocationUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BoundingBox;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
@@ -23,7 +23,7 @@ import java.nio.FloatBuffer;
 
 @Environment(EnvType.CLIENT)
 public class AttachmentRaytraceHit extends NetworkRaytraceHit {
-    private static final VoxelShape attachmentBox = VoxelShapes.cuboid(new BoundingBox(-0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D));
+    private static final VoxelShape attachmentBox = VoxelShapes.cuboid(new Box(-0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D));
     public final int attachmentKey;
     private final Mat4f l2w;
 

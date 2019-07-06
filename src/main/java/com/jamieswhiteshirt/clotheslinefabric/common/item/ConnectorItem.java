@@ -34,7 +34,7 @@ public class ConnectorItem extends Item {
     }
 
     @Override
-    public void onItemStopUsing(ItemStack stack, World world, LivingEntity entity, int timeLeft) {
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity entity, int timeLeft) {
         ConnectorHolder connectorHolder = entity instanceof ConnectorHolder ? (ConnectorHolder)entity : null;
         if (connectorHolder != null) {
             ItemUsageContext from = connectorHolder.getFrom();
