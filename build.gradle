@@ -141,7 +141,7 @@ curseforge {
         releaseType = "beta"
         addGameVersion "1.14.3"
         relations {
-            requiredDependency "fabric"
+            requiredDependency "fabric-api"
         }
         afterEvaluate {
             mainArtifact(remapBundleJar.output) {
