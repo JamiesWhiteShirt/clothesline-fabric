@@ -59,7 +59,7 @@ public class ThreadedAnvilChunkStorageMixin extends VersionedChunkStorage {
 
     @Inject(
         at = @At(
-            value = "RETURN",
+            value = "INVOKE",
             target = "Lnet/minecraft/world/chunk/WorldChunk;setLoadedToWorld(Z)V",
             shift = At.Shift.AFTER
         ),
