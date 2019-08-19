@@ -94,6 +94,7 @@ publishing {
                     builtBy remapJar
                 }
                 artifact(remapSourcesJar.output) {
+                    classifier = "sources"
                     builtBy remapSourcesJar
                 }
 
