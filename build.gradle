@@ -89,13 +89,12 @@ project.ext.isReleaseVersion = !version.endsWith("-SNAPSHOT")
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-
             afterEvaluate {
                 artifact(remapJar.output) {
                     builtBy remapJar
+                }
+                artifact(remapSourcesJar.output) {
+                    builtBy remapSourcesJar
                 }
 
                 pom.withXml {
