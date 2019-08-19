@@ -66,6 +66,6 @@ public class ItemModelRenderer {
     }
 
     private static boolean isInverted(Transformation transformation) {
-        return transformation.scale.x() < 0.0F ^ transformation.scale.y() < 0.0F ^ transformation.scale.z() < 0.0F;
+        return transformation.scale.getX() < 0.0F ^ transformation.scale.getY() < 0.0F ^ transformation.scale.getZ() < 0.0F;
     }
 }
