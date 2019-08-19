@@ -1,6 +1,6 @@
 {
   "block.clothesline_anchor.squeak": {
-    "subtitle": "subtitles.block.clothesline.clothesline_anchor.squeak",
+    "subtitle": "subtitles.block.clothesline-fabric.clothesline_anchor.squeak",
     "sounds": [
       "clothesline-fabric:random/squeak_1",
       "clothesline-fabric:random/squeak_2",
@@ -9,7 +9,7 @@
     ]
   },
   "block.clothesline_anchor.rope": {
-    "subtitle": "subtitles.block.clothesline.clothesline_anchor.rope",
+    "subtitle": "subtitles.block.clothesline-fabric.clothesline_anchor.rope",
     "sounds": [
       "clothesline-fabric:random/rope_1"
     ]
