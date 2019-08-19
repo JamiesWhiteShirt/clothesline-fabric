@@ -1,7 +1,7 @@
 plugins {
     id "fabric-loom" version "0.2.4-SNAPSHOT"
     id "jacoco"
-    id "com.matthewprenger.cursegradle" version "1.1.2"
+    id "com.matthewprenger.cursegradle" version "1.4.0"
     id "maven-publish"
     id "signing"
 }
@@ -138,7 +138,8 @@ curseforge {
         changelogType = "markdown"
         changelog = file("CHANGELOG.md")
         releaseType = "beta"
-        addGameVersion "1.14.3"
+        addGameVersion "1.14.4"
+        addGameVersion "Fabric"
         relations {
             requiredDependency "fabric-api"
         }
