@@ -1,3 +1,7 @@
+# 0.1.2
+
+- Fixed items on clothesline networks rendering with incorrect lighting
+
 # 0.1.1
 
 - Fixed clothesline networks not unloading properly in unloaded chunks
