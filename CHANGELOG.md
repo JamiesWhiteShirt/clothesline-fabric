@@ -1,3 +1,8 @@
+# 0.1.1
+
+- Fixed clothesline networks not unloading properly in unloaded chunks
+- Fixed closed captions for clothesline running
+
 # 0.1.0
 
 - Updated to Minecraft 1.14.3
