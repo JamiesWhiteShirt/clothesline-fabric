@@ -24,6 +24,7 @@ import java.nio.FloatBuffer;
 @Environment(EnvType.CLIENT)
 public class AttachmentRaytraceHit extends NetworkRaytraceHit {
     private static final VoxelShape attachmentBox = VoxelShapes.cuboid(new Box(-0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D));
+    private static final FloatBuffer l2wBuffer = GlAllocationUtils.allocateFloatBuffer(16);
     public final int attachmentKey;
     private final Mat4f l2w;
 
@@ -50,7 +51,6 @@ public class AttachmentRaytraceHit extends NetworkRaytraceHit {
 
     @Override
     public void renderHighlight(RenderClotheslineNetwork renderClotheslineNetwork, float delta, double x, double y, double z, float r, float g, float b, float a) {
-        FloatBuffer l2wBuffer = GlAllocationUtils.allocateFloatBuffer(16);
         l2w.putIntoBuffer(l2wBuffer); // store in buffer
         l2wBuffer.flip();
 

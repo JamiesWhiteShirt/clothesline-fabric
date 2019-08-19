@@ -53,6 +53,7 @@ public final class RenderClotheslineNetwork {
     private static final double[] UP_MULTIPLIERS = new double[] { -1.0D, 1.0D, 1.0D, -1.0D, -1.0D };
     private static final double[] NORMAL_RIGHT_MULTIPLIERS = new double[] { -1.0D, 0.0D, 1.0D, 0.0D };
     private static final double[] NORMAL_UP_MULTIPLIERS = new double[] { 0.0D, 1.0D, 0.0D, -1.0D };
+    private final FloatBuffer l2wBuffer = GlAllocationUtils.allocateFloatBuffer(16);
 
     private final MinecraftClient client;
 
@@ -212,7 +213,6 @@ public final class RenderClotheslineNetwork {
         // World position of attachment item
         Vec4f wPos = new Vec4f();
         // Buffer for local space to world space matrix to upload to GL
-        FloatBuffer l2wBuffer = GlAllocationUtils.allocateFloatBuffer(16);
 
         edges.forEach(edge -> {
             Path.Edge pathEdge = edge.getPathEdge();
@@ -232,7 +232,9 @@ public final class RenderClotheslineNetwork {
                     // Create world position of attachment for lighting calculation
                     wPos.set(0.0F, 0.0F, 0.0F, 1.0F);
                     wPos.multiply(l2w);
-                    int light = world.getLightmapIndex(new BlockPos(MathHelper.floor(wPos.getV1()), MathHelper.floor(wPos.getV2()), MathHelper.floor(wPos.getV3())), 0);
+                    BlockPos pos = new BlockPos(MathHelper.floor(wPos.getV0()), MathHelper.floor(wPos.getV1()), MathHelper.floor(wPos.getV2()));
+                    int light = world.getLightmapIndex(pos, 0);
+                    // int light = world.getLightmapIndex(pathEdge.getLine().getFromPos(), 0);
                     GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float)(light & 0xFFFF), (float)((light >> 16) & 0xFFFF));
 
                     // Store and flip to be ready for read
