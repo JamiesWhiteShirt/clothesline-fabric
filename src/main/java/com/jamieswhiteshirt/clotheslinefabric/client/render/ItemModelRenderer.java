@@ -1,68 +1,57 @@
 package com.jamieswhiteshirt.clotheslinefabric.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.render.*;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.render.model.json.Transformation;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3i;
 
 import java.util.List;
 import java.util.Random;
 
 public class ItemModelRenderer {
-    public static void renderModel(BakedModel bakedModel, ModelTransformation.Type modelTransformationType) {
+    public static void renderModel(BakedModel bakedModel, ModelTransformation.Type modelTransformationType, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         if (bakedModel.isBuiltin()) return;
 
-        GlStateManager.pushMatrix();
+        RenderSystem.pushMatrix();
         ModelTransformation modelTransformation = bakedModel.getTransformation();
-        ModelTransformation.applyGl(modelTransformation.getTransformation(modelTransformationType), false);
-        if (isInverted(modelTransformation.getTransformation(modelTransformationType))) {
-            GlStateManager.cullFace(GlStateManager.FaceSides.FRONT);
-        }
+        modelTransformation.getTransformation(modelTransformationType).apply(false, matrices);
+        matrices.translate(-0.5F, -0.5F, -0.5F);
+        // TODO: What to do with this?
+        /* if (isInverted(modelTransformation.getTransformation(modelTransformationType))) {
+            RenderSystem.cullFace(GlStateManager.FaceSides.FRONT);
+        } */
 
-        GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
-        renderModelColored(bakedModel, 0xFFFFFFFF);
-        GlStateManager.cullFace(GlStateManager.FaceSides.BACK);
-        GlStateManager.popMatrix();
+        RenderLayer renderLayer = TexturedRenderLayers.getEntityTranslucent();
+        VertexConsumer vertices = ItemRenderer.getArmorVertexConsumer(vertexConsumers, renderLayer, true, false);
+        renderModelColored(bakedModel, light, overlay, matrices, vertices);
+        matrices.pop();
     }
 
-    private static void renderModelColored(BakedModel bakedModel, int color) {
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBufferBuilder();
-        bufferBuilder.begin(7, VertexFormats.POSITION_COLOR_UV_NORMAL);
+    private static void renderModelColored(BakedModel bakedModel, int light, int overlay, MatrixStack matrices, VertexConsumer vertices) {
         Random random = new Random();
         long seed = 42L;
         Direction[] directions = Direction.values();
-        int length = directions.length;
 
         for (Direction direction_1 : directions) {
             random.setSeed(seed);
-            renderQuadsColored(bufferBuilder, bakedModel.getQuads(null, direction_1, random), color);
+            renderQuadsColored(matrices, vertices, bakedModel.getQuads(null, direction_1, random), light, overlay);
         }
 
         random.setSeed(seed);
-        renderQuadsColored(bufferBuilder, bakedModel.getQuads(null, null, random), color);
-        tessellator.draw();
+        renderQuadsColored(matrices, vertices, bakedModel.getQuads(null, null, random), light, overlay);
     }
 
-    private static void renderQuadsColored(BufferBuilder bufferBuilder_1, List<BakedQuad> list_1, int color) {
-        int i = 0;
-        for(int size = list_1.size(); i < size; ++i) {
-            BakedQuad bakedQuad = list_1.get(i);
-            renderQuadColored(bufferBuilder_1, bakedQuad, color);
+    private static void renderQuadsColored(MatrixStack matrices, VertexConsumer vertices, List<BakedQuad> quads, int light, int overlay) {
+        MatrixStack.Entry entry = matrices.peek();
+        for (BakedQuad bakedQuad : quads) {
+            vertices.quad(entry, bakedQuad, 1.0F, 1.0F, 1.0F, light, overlay);
         }
-    }
-
-    private static void renderQuadColored(BufferBuilder bufferBuilder, BakedQuad bakedQuad, int color) {
-        bufferBuilder.putVertexData(bakedQuad.getVertexData());
-        bufferBuilder.setQuadColor(color);
-        Vec3i vec3i_1 = bakedQuad.getFace().getVector();
-        bufferBuilder.postNormal((float)vec3i_1.getX(), (float)vec3i_1.getY(), (float)vec3i_1.getZ());
     }
 
     private static boolean isInverted(Transformation transformation) {

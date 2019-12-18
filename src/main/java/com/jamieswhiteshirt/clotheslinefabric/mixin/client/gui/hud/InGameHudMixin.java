@@ -32,12 +32,12 @@ public abstract class InGameHudMixin extends DrawableHelper {
         float vScale = 1.0F / vSize;
         float uScale = 1.0F / uSize;
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBufferBuilder();
-        bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV);
-        bufferBuilder.vertex((double)x, (double)(y + height), 0.0D).texture((double)(uMin * vScale), (double)((vMin + (float)height) * uScale)).next();
-        bufferBuilder.vertex((double)(x + width), (double)(y + height), 0.0D).texture((double)((uMin + (float)width) * vScale), (double)((vMin + (float)height) * uScale)).next();
-        bufferBuilder.vertex((double)(x + width), (double)y, 0.0D).texture((double)((uMin + (float)width) * vScale), (double)(vMin * uScale)).next();
-        bufferBuilder.vertex((double)x, (double)y, 0.0D).texture((double)(uMin * vScale), (double)(vMin * uScale)).next();
+        BufferBuilder bufferBuilder = tessellator.getBuffer();
+        bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_TEXTURE);
+        bufferBuilder.vertex(x, y + height, 0.0D).texture(uMin * vScale, (vMin + height) * uScale).next();
+        bufferBuilder.vertex(x + width, y + height, 0.0D).texture((uMin + width) * vScale, (vMin + height) * uScale).next();
+        bufferBuilder.vertex(x + width, y, 0.0D).texture((uMin + width) * vScale, vMin * uScale).next();
+        bufferBuilder.vertex(x, y, 0.0D).texture(uMin * vScale, vMin * uScale).next();
         tessellator.draw();
     }
 
@@ -57,7 +57,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
     )
     private void renderCrosshair(CallbackInfo ci) {
         PlayerEntity player = getCameraPlayer();
-        HitResult hitResult = client.hitResult;
+        HitResult hitResult = client.crosshairTarget;
         if (player != null && hitResult != null) {
             if (hitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos pos = ((BlockHitResult) hitResult).getBlockPos();

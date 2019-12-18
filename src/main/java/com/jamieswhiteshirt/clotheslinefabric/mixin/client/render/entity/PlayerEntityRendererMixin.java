@@ -4,10 +4,12 @@ import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNet
 import com.jamieswhiteshirt.clotheslinefabric.common.item.ClotheslineItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,14 +26,16 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
     @Inject(
         at = @At("RETURN"),
-        method = "method_4215(Lnet/minecraft/client/network/AbstractClientPlayerEntity;DDDFF)V"
+        method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"
     )
-    private void render(AbstractClientPlayerEntity player, double x, double y, double z, float float_1, float delta, CallbackInfo ci) {
-        if (player.getActiveItem().getItem() != ClotheslineItems.CLOTHESLINE) return;
+    private void render(AbstractClientPlayerEntity entity, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int overlay, CallbackInfo ci) {
+        if (entity.getActiveItem().getItem() != ClotheslineItems.CLOTHESLINE) return;
 
-        double posX = MathHelper.lerp(delta, player.prevRenderX, player.x);
-        double posY = MathHelper.lerp(delta, player.prevRenderY, player.y);
-        double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
-        renderClotheslineNetwork.renderThirdPersonPlayerHeldClothesline(player, posX - x, posY - y, posZ - z, delta);
+        // TODO: How to deal with this
+        /* double posX = MathHelper.lerp(tickDelta, entity.lastRenderX, entity.getX());
+        double posY = MathHelper.lerp(tickDelta, entity.lastRenderY, entity.getY());
+        double posZ = MathHelper.lerp(tickDelta, entity.lastRenderZ, entity.getZ()); */
+
+        renderClotheslineNetwork.renderThirdPersonPlayerHeldClothesline(entity, 0.0D, 0.0D, 0.0D, tickDelta);
     }
 }

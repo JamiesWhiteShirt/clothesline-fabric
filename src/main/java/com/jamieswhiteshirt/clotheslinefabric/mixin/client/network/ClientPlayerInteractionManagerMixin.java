@@ -27,7 +27,7 @@ public class ClientPlayerInteractionManagerMixin {
         cancellable = true
     )
     private void stopUsingItem(PlayerEntity var1, CallbackInfo info) {
-        HitResult hitResult = MinecraftClient.getInstance().hitResult;
+        HitResult hitResult = MinecraftClient.getInstance().crosshairTarget;
         ClientWorld world = MinecraftClient.getInstance().world;
         if (hitResult != null && world != null && hitResult.getType() == HitResult.Type.BLOCK) {
             ClientPlayerEntity player = MinecraftClient.getInstance().player;

@@ -11,6 +11,8 @@ import com.jamieswhiteshirt.clotheslinefabric.common.network.message.TryUseItemO
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -52,8 +54,8 @@ public class EdgeRaytraceHit extends NetworkRaytraceHit {
     }
 
     @Override
-    public void renderHighlight(RenderClotheslineNetwork renderClotheslineNetwork, float delta, double x, double y, double z, float r, float g, float b, float a) {
-        renderClotheslineNetwork.renderOutline(LineProjection.create(edge), x, y, z, r, g, b, a);
+    public void renderHighlight(RenderClotheslineNetwork renderClotheslineNetwork, MatrixStack matrices, VertexConsumer vertices, float tickDelta, double x, double y, double z, float r, float g, float b, float a) {
+        renderClotheslineNetwork.renderOutline(matrices, vertices, LineProjection.create(edge), x, y, z, r, g, b, a);
     }
 
     @Override

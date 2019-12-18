@@ -17,10 +17,11 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.state.StateFactory;
+import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -28,8 +29,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.ViewableWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -48,20 +49,20 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     public ClotheslineAnchorBlock(Settings settings) {
         super(settings);
-        setDefaultState(stateFactory.getDefaultState().with(FACE, WallMountLocation.WALL).with(FACING, Direction.NORTH).with(WATERLOGGED, false).with(CRANK, false));
+        setDefaultState(stateManager.getDefaultState().with(FACE, WallMountLocation.WALL).with(FACING, Direction.NORTH).with(WATERLOGGED, false).with(CRANK, false));
     }
 
     @Override
-    protected void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACE, FACING, WATERLOGGED, CRANK);
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, ViewableWorld world, BlockPos pos) {
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         Direction direction = getDirection(state);
         BlockPos neighborPos = pos.offset(direction.getOpposite());
         if (direction.getAxis() == Direction.Axis.Y) {
-            return Block.isSolidSmallSquare(world, neighborPos, direction);
+            return Block.sideCoversSmallSquare(world, neighborPos, direction);
         } else {
             return Block.isSideSolidFullSquare(world.getBlockState(neighborPos), world, neighborPos, direction);
         }
@@ -69,7 +70,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @Deprecated
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext verticalEntityPosition) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext ctx) {
         switch (state.get(FACE)) {
             case FLOOR:
                 return DOWN;
@@ -91,14 +92,9 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
     }
 
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
-
     @Deprecated
     @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean boolean_1) {
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean moved) {
         if (oldState.getBlock() != state.getBlock()) {
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
             manager.createNode(pos);
@@ -107,11 +103,11 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @Deprecated
     @Override
-    public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean boolean_1) {
+    public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
             manager.breakNode(null, pos);
-            super.onBlockRemoved(state, world, pos, newState, boolean_1);
+            super.onBlockRemoved(state, world, pos, newState, moved);
         }
     }
 
@@ -146,8 +142,8 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @Deprecated
     @Override
-    public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
-        if (player.getStackInHand(hand).getItem() == ClotheslineItems.CLOTHESLINE) return false;
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
+        if (player.getStackInHand(hand).getItem() == ClotheslineItems.CLOTHESLINE) return ActionResult.PASS;
 
         if (state.get(CRANK)) {
             NetworkNode node = getNode(world, pos);
@@ -156,9 +152,9 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
                 NetworkState networkState = node.getNetwork().getState();
                 networkState.setMomentum(networkState.getMomentum() + momentumDelta);
             }
-            return true;
+            return ActionResult.SUCCESS;
         }
-        return super.activate(state, world, pos, player, hand, hitResult);
+        return super.onUse(state, world, pos, player, hand, hitResult);
     }
 
     @Override
@@ -201,18 +197,18 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     public static int getCrankMultiplier(BlockPos pos, double hitX, double hitZ, PlayerEntity player) {
         // Distance vector from the player to the center of the block
-        double dxCenter = 0.5D + pos.getX() - player.x;
-        double dzCenter = 0.5D + pos.getZ() - player.z;
+        double dxCenter = 0.5D + pos.getX() - player.getX();
+        double dzCenter = 0.5D + pos.getZ() - player.getZ();
         // Distance vector from the player to the hit
-        double dxHit = hitX - player.x;
-        double dzHit = hitZ - player.z;
+        double dxHit = hitX - player.getX();
+        double dzHit = hitZ - player.getZ();
         // Y component the cross product of the two vectors
         // The sign of the Y component indicates which "side" of the anchor is hit, which determines which way to crank
         double y = dzCenter * dxHit - dxCenter * dzHit;
         return (int) Math.signum(y);
     }
 
-    private class ClotheslineAnchorInventory implements SidedInventory {
+    private static class ClotheslineAnchorInventory implements SidedInventory {
         private final NetworkManager manager;
         private final BlockPos pos;
 

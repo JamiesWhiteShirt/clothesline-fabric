@@ -8,9 +8,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.server.world.ThreadedAnvilChunkStorage;
-import net.minecraft.world.VersionedChunkStorage;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.storage.VersionedChunkStorage;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,8 +26,8 @@ import java.util.concurrent.CompletableFuture;
 public class ThreadedAnvilChunkStorageMixin extends VersionedChunkStorage {
     @Shadow @Final private ServerWorld world;
 
-    public ThreadedAnvilChunkStorageMixin(File file_1, DataFixer dataFixer_1) {
-        super(file_1, dataFixer_1);
+    public ThreadedAnvilChunkStorageMixin(File file, DataFixer dataFixer) {
+        super(file, dataFixer);
     }
 
     @Inject(

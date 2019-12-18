@@ -13,6 +13,7 @@ import com.jamieswhiteshirt.rtree3i.RTreeMap;
 import com.jamieswhiteshirt.rtree3i.Selection;
 import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -24,6 +25,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.GlAllocationUtils;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -34,7 +37,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.ExtendedBlockView;
+import net.minecraft.world.BlockRenderView;
 import org.lwjgl.opengl.GL11;
 
 import java.nio.FloatBuffer;
@@ -47,8 +50,8 @@ public final class RenderClotheslineNetwork {
     private static final VertexFormat VERTEX_FORMAT = new VertexFormat()
         .add(VertexFormats.POSITION_ELEMENT)
         .add(VertexFormats.NORMAL_ELEMENT)
-        .add(VertexFormats.UV_ELEMENT)
-        .add(VertexFormats.LMAP_ELEMENT);
+        .add(VertexFormats.TEXTURE_ELEMENT)
+        .add(VertexFormats.LIGHT_ELEMENT);
     private static final double[] RIGHT_MULTIPLIERS = new double[] { -1.0D, -1.0D, 1.0D, 1.0D, -1.0D };
     private static final double[] UP_MULTIPLIERS = new double[] { -1.0D, 1.0D, 1.0D, -1.0D, -1.0D };
     private static final double[] NORMAL_RIGHT_MULTIPLIERS = new double[] { -1.0D, 0.0D, 1.0D, 0.0D };
@@ -61,24 +64,21 @@ public final class RenderClotheslineNetwork {
         this.client = client;
     }
 
-    private static BufferBuilder pos(BufferBuilder bufferBuilder, Vec3d pos) {
-        return bufferBuilder.vertex(pos.x, pos.y, pos.z);
+    private static VertexConsumer pos(VertexConsumer vertices, Vec3d pos) {
+        return vertices.vertex(pos.x, pos.y, pos.z);
     }
 
-    private static BufferBuilder posNormal(BufferBuilder bufferBuilder, Vec3d pos, Vec3d normal) {
-        // Why are we calling vertex twice...?
-        // Calling normal will round the components toward zero.
-        // The buffer builder doesn't care what the current vertex format element represents, so it works!
-        return bufferBuilder.vertex(pos.x, pos.y, pos.z).vertex(normal.x * 127, normal.y * 127, normal.z * 127);
+    private static VertexConsumer posNormal(VertexConsumer vertices, Vec3d pos, Vec3d normal) {
+        return vertices.vertex(pos.x, pos.y, pos.z).normal((float) normal.x, (float) normal.y, (float) normal.z);
     }
 
-    public void renderEdge(double fromOffset, double toOffset, int combinedLightFrom, int combinedLightTo, LineProjection p, BufferBuilder bufferBuilder, double x, double y, double z) {
+    public void renderEdge(float fromOffset, float toOffset, int combinedLightFrom, int combinedLightTo, LineProjection p, VertexConsumer vertices, double x, double y, double z) {
         int lightFrom1 = combinedLightFrom >> 16 & 0xFFFF;
         int lightFrom2 = combinedLightFrom & 0xFFFF;
         int lightTo1 = combinedLightTo >> 16 & 0xFFFF;
         int lightTo2 = combinedLightTo & 0xFFFF;
-        double vFrom = fromOffset / AttachmentUnit.UNITS_PER_BLOCK;
-        double vTo = toOffset / AttachmentUnit.UNITS_PER_BLOCK;
+        float vFrom = fromOffset / AttachmentUnit.UNITS_PER_BLOCK;
+        float vTo = toOffset / AttachmentUnit.UNITS_PER_BLOCK;
 
         for (int j = 0; j < 4; j++) {
             double r1 = RIGHT_MULTIPLIERS[j];
@@ -88,26 +88,26 @@ public final class RenderClotheslineNetwork {
             double nr = NORMAL_RIGHT_MULTIPLIERS[j];
             double nu = NORMAL_UP_MULTIPLIERS[j];
 
-            double uFrom = (4.0D - j) / 4.0D;
-            double uTo = (3.0D - j) / 4.0D;
+            float uFrom = (4.0F - j) / 4.0F;
+            float uTo = (3.0F - j) / 4.0F;
 
             Vec3d normal = p.projectTangentRU(nr, nu);
-            posNormal(bufferBuilder, p.projectRUF(
+            posNormal(vertices, p.projectRUF(
                 (r1 - 4.0D) / 32.0D,
                 u1 / 32.0D,
                 0.0D
             ).subtract(x, y, z), normal).texture(uFrom, vFrom).texture(lightFrom1, lightFrom2).next();
-            posNormal(bufferBuilder, p.projectRUF(
+            posNormal(vertices, p.projectRUF(
                 (r2 - 4.0D) / 32.0D,
                 u2 / 32.0D,
                 0.0D
             ).subtract(x, y, z), normal).texture(uTo, vFrom).texture(lightFrom1, lightFrom2).next();
-            posNormal(bufferBuilder, p.projectRUF(
+            posNormal(vertices, p.projectRUF(
                 (r2 - 4.0D) / 32.0D,
                 u2 / 32.0D,
                 1.0D
             ).subtract(x, y, z), normal).texture(uTo, vTo).texture(lightTo1, lightTo2).next();
-            posNormal(bufferBuilder, p.projectRUF(
+            posNormal(vertices, p.projectRUF(
                 (r1 - 4.0D) / 32.0D,
                 u1 / 32.0D,
                 1.0D
@@ -115,31 +115,31 @@ public final class RenderClotheslineNetwork {
         }
     }
 
-    private void renderEdge(ExtendedBlockView world, NetworkEdge edge, double x, double y, double z, BufferBuilder bufferBuilder, float delta) {
+    private void renderEdge(BlockRenderView world, NetworkEdge edge, double x, double y, double z, VertexConsumer vertexConsumer, float delta) {
         Path.Edge ge = edge.getPathEdge();
         Line line = ge.getLine();
-        int combinedLightFrom = world.getLightmapIndex(line.getFromPos(), 0);
-        int combinedLightTo = world.getLightmapIndex(line.getToPos(), 0);
-        double shift = edge.getNetwork().getState().getShift(delta);
-        renderEdge(ge.getFromOffset() - shift, ge.getToOffset() - shift, combinedLightFrom, combinedLightTo, LineProjection.create(edge), bufferBuilder, x, y, z);
+        int combinedLightFrom = world.getBaseLightLevel(line.getFromPos(), 0);
+        int combinedLightTo = world.getBaseLightLevel(line.getToPos(), 0);
+        float shift = (float) edge.getNetwork().getState().getShift(delta);
+        renderEdge(ge.getFromOffset() - shift, ge.getToOffset() - shift, combinedLightFrom, combinedLightTo, LineProjection.create(edge), vertexConsumer, x, y, z);
     }
 
-    public void buildAndDrawEdgeQuads(Consumer<BufferBuilder> consumer) {
+    public void buildAndDrawEdgeQuads(Consumer<VertexConsumer> consumer) {
         client.getTextureManager().bindTexture(TEXTURE);
-        GuiLighting.enable();
-        client.gameRenderer.enableLightmap();
-        GlStateManager.enableCull();
+        DiffuseLighting.enable();
+        client.gameRenderer.getLightmapTextureManager().enable();
+        RenderSystem.enableCull();
 
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBufferBuilder();
+        BufferBuilder bufferBuilder = tessellator.getBuffer();
 
         bufferBuilder.begin(GL11.GL_QUADS, VERTEX_FORMAT);
         consumer.accept(bufferBuilder);
         tessellator.draw();
-        GlStateManager.disableCull();
+        RenderSystem.disableCull();
     }
 
-    public void render(ExtendedBlockView world, RTreeMap<BlockPos, NetworkNode> nodesMap, RTreeMap<Line, NetworkEdge> edgesMap, VisibleRegion visibleRegion, double x, double y, double z, float delta) {
+    public void render(BlockRenderView world, RTreeMap<BlockPos, NetworkNode> nodesMap, RTreeMap<Line, NetworkEdge> edgesMap, VisibleRegion visibleRegion, double x, double y, double z, float delta, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
         Vec3d viewPos = new Vec3d(x, y, z);
 
         // Select all entries in the node map intersecting with the camera frustum
@@ -147,53 +147,52 @@ public final class RenderClotheslineNetwork {
             .values(box -> visibleRegion.intersects(new Box(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
 
         client.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
-        client.getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX).pushFilter(false, false);
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.alphaFunc(516, 0.1F);
-        GlStateManager.enableBlend();
-        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        client.getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX).setFilter(false, false);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableRescaleNormal();
+        RenderSystem.defaultAlphaFunc();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
 
         nodes.forEach(node -> {
             BlockPos pos = node.getPathNode().getPos();
             BlockState state = world.getBlockState(pos);
             if (state.getBlock() != ClotheslineBlocks.CLOTHESLINE_ANCHOR) return;
 
-            int light = world.getLightmapIndex(pos, 0);
-            GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float)(light & 0xFFFF), (float)((light >> 16) & 0xFFFF));
+            int light = world.getBaseLightLevel(pos, 0);
 
             Network network = node.getNetwork();
             float shift = network.getState().getShift() * delta + network.getState().getPreviousShift() * (1.0F - delta);
             float crankRotation = -(node.getPathNode().getBaseRotation() + shift) * 360.0F / AttachmentUnit.UNITS_PER_BLOCK;
 
-            GlStateManager.pushMatrix();
-            GlStateManager.translated(pos.getX() - x + 0.5D, pos.getY() - y + 0.5D, pos.getZ() - z + 0.5D);
+            matrices.push();
+            matrices.translate(pos.getX() - x + 0.5D, pos.getY() - y + 0.5D, pos.getZ() - z + 0.5D);
             if (state.get(ClotheslineAnchorBlock.FACE) == WallMountLocation.CEILING) {
-                GlStateManager.rotatef(180.0F, 1.0F, 0.0F, 0.0F);
+                RenderSystem.rotatef(180.0F, 1.0F, 0.0F, 0.0F);
                 crankRotation = -crankRotation;
             }
-            GlStateManager.rotatef(crankRotation, 0.0F, 1.0F, 0.0F);
+            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(crankRotation));
 
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(2.0F, 2.0F, 2.0F);
-            ItemModelRenderer.renderModel(BakedModels.pulleyWheel, ModelTransformation.Type.FIXED);
+            matrices.push();
+            matrices.scale(2.0F, 2.0F, 2.0F);
+            ItemModelRenderer.renderModel(BakedModels.pulleyWheel, ModelTransformation.Type.FIXED, matrices, vertexConsumers, light, 0);
             if (!node.getNetwork().getState().getTree().isEmpty()) {
-                ItemModelRenderer.renderModel(BakedModels.pulleyWheelRope, ModelTransformation.Type.FIXED);
+                ItemModelRenderer.renderModel(BakedModels.pulleyWheelRope, ModelTransformation.Type.FIXED, matrices, vertexConsumers, light, 0);
             }
-            GlStateManager.popMatrix();
+            matrices.pop();
 
             if (state.get(ClotheslineAnchorBlock.CRANK)) {
-                GlStateManager.pushMatrix();
-                GlStateManager.translatef(0.0F, 4.0F / 16.0F, 0.0F);
-                ItemModelRenderer.renderModel(BakedModels.crank, ModelTransformation.Type.FIXED);
-                GlStateManager.popMatrix();
+                matrices.push();
+                matrices.translate(0.0F, 4.0F / 16.0F, 0.0F);
+                ItemModelRenderer.renderModel(BakedModels.crank, ModelTransformation.Type.FIXED, matrices, vertexConsumers, light, 0);
+                matrices.pop();
             }
 
-            GlStateManager.popMatrix();
+            matrices.pop();
         });
 
-        GlStateManager.disableRescaleNormal();
-        GlStateManager.disableBlend();
+        RenderSystem.disableRescaleNormal();
+        RenderSystem.disableBlend();
         client.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
         client.getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX).popFilter();
 
@@ -204,11 +203,11 @@ public final class RenderClotheslineNetwork {
         // Draw the rope for all edges
         buildAndDrawEdgeQuads(bufferBuilder -> edges.forEach(edge -> renderEdge(world, edge, x, y, z, bufferBuilder, delta)));
 
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
-        GlStateManager.enableBlend();
-        GuiLighting.enable();
-        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        RenderSystem.enableRescaleNormal();
+        RenderSystem.defaultAlphaFunc();
+        RenderSystem.enableBlend();
+        DiffuseLighting.enable();
+        RenderSystem.defaultBlendFunc();
 
         // World position of attachment item
         Vec4f wPos = new Vec4f();
@@ -233,26 +232,24 @@ public final class RenderClotheslineNetwork {
                     wPos.set(0.0F, 0.0F, 0.0F, 1.0F);
                     wPos.multiply(l2w);
                     BlockPos pos = new BlockPos(MathHelper.floor(wPos.getV0()), MathHelper.floor(wPos.getV1()), MathHelper.floor(wPos.getV2()));
-                    int light = world.getLightmapIndex(pos, 0);
-                    // int light = world.getLightmapIndex(pathEdge.getLine().getFromPos(), 0);
-                    GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, (float)(light & 0xFFFF), (float)((light >> 16) & 0xFFFF));
+                    int light = world.getBaseLightLevel(pos, 0);
 
                     // Store and flip to be ready for read
                     l2w.putIntoBuffer(l2wBuffer);
                     l2wBuffer.flip();
 
-                    GlStateManager.pushMatrix();
-                    GlStateManager.translated(-viewPos.x, -viewPos.y, -viewPos.z);
-                    GlStateManager.multMatrix(l2wBuffer);
-                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Type.FIXED);
-                    GlStateManager.popMatrix();
+                    matrices.push();
+                    matrices.translate(-viewPos.x, -viewPos.y, -viewPos.z);
+                    RenderSystem.multMatrix(l2wBuffer);
+                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Type.FIXED, light, 0, matrices, vertexConsumers);
+                    matrices.pop();
 
                     l2wBuffer.clear();
                 }
             }
         });
 
-        GlStateManager.disableRescaleNormal();
+        RenderSystem.disableRescaleNormal();
     }
 
     public void renderOutline(LineProjection p, double x, double y, double z, float r, float g, float b, float a) {
@@ -321,9 +318,9 @@ public final class RenderClotheslineNetwork {
         ItemUsageContext from = connector.getFrom();
         if (from == null) return;
 
-        double posX = MathHelper.lerp(delta, player.prevRenderX, player.x);
-        double posY = MathHelper.lerp(delta, player.prevRenderY, player.y);
-        double posZ = MathHelper.lerp(delta, player.prevRenderZ, player.z);
+        double posX = MathHelper.lerp(delta, player.lastRenderX, player.getX());
+        double posY = MathHelper.lerp(delta, player.lastRenderY, player.getY());
+        double posZ = MathHelper.lerp(delta, player.lastRenderZ, player.getZ());
 
         float yaw = (float) Math.toRadians(MathHelper.lerp(delta, player.prevYaw, player.yaw));
         int handedOffset = (player.getMainArm() == Arm.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
@@ -338,16 +335,16 @@ public final class RenderClotheslineNetwork {
         renderHeldClothesline(from.getBlockPos(), vecB, player.world, x, y, z);
     }
 
-    private void renderHeldClothesline(BlockPos posA, Vec3d vecB, ExtendedBlockView world, double x, double y, double z) {
+    private void renderHeldClothesline(BlockPos posA, Vec3d vecB, BlockRenderView world, double x, double y, double z) {
         Vec3d vecA = Utility.midVec(posA);
         BlockPos posB = new BlockPos(vecB);
-        int combinedLightA = world.getLightmapIndex(posA, 0);
-        int combinedLightB = world.getLightmapIndex(posB, 0);
-        double length = AttachmentUnit.UNITS_PER_BLOCK * vecB.distanceTo(vecA);
+        int combinedLightA = world.getBaseLightLevel(posA, 0);
+        int combinedLightB = world.getBaseLightLevel(posB, 0);
+        float length = AttachmentUnit.UNITS_PER_BLOCK * (float) vecB.distanceTo(vecA);
 
-        buildAndDrawEdgeQuads(bufferBuilder -> {
-            renderEdge(0.0D, length, combinedLightA, combinedLightB, LineProjection.create(vecA, vecB), bufferBuilder, x, y, z);
-            renderEdge(-length, 0.0D, combinedLightB, combinedLightA, LineProjection.create(vecB, vecA), bufferBuilder, x, y, z);
+        buildAndDrawEdgeQuads(vertices -> {
+            renderEdge(0.0F, length, combinedLightA, combinedLightB, LineProjection.create(vecA, vecB), vertices, x, y, z);
+            renderEdge(-length, 0.0F, combinedLightB, combinedLightA, LineProjection.create(vecB, vecA), vertices, x, y, z);
         });
     }
 }

@@ -12,7 +12,7 @@ public class Validation {
     }
 
     public static boolean canReachPos(PlayerEntity player, Vec3d pos) {
-        Vec3d delta = pos.subtract(player.x, player.y + 1.5D, player.z);
+        Vec3d delta = pos.subtract(player.getX(), player.getY() + 1.5D, player.getZ());
         return delta.lengthSquared() < 64.0D;
     }
 }

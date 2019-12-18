@@ -26,7 +26,7 @@ public class NetworkProviderPersistentState extends PersistentState {
     @Override
     public void fromTag(CompoundTag tag) {
         int version;
-        if (!tag.containsKey("Version", NbtType.INT)) {
+        if (!tag.contains("Version", NbtType.INT)) {
             Clothesline.LOGGER.warn("Invalid save data. Expected a Version, found no Version. Assuming Version 0.");
             version = 0;
         } else {
@@ -38,7 +38,7 @@ public class NetworkProviderPersistentState extends PersistentState {
             return;
         }
 
-        if (!tag.containsKey("Networks", NbtType.LIST)) {
+        if (!tag.contains("Networks", NbtType.LIST)) {
             Clothesline.LOGGER.error("Invalid save data. Expected list of Networks, found none. Discarding save data.");
             return;
         }

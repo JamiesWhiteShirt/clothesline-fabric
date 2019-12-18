@@ -1,5 +1,5 @@
 plugins {
-    id "fabric-loom" version "0.2.4-SNAPSHOT"
+    id "fabric-loom" version "0.2.6-SNAPSHOT"
     id "jacoco"
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "maven-publish"
@@ -23,15 +23,17 @@ minecraft {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.14.4"
-    mappings "net.fabricmc:yarn:1.14.4+build.9"
-    modCompile "net.fabricmc:fabric-loader:0.4.8+build.159"
+    minecraft "com.mojang:minecraft:1.15"
+    mappings "net.fabricmc:yarn:1.15+build.2:v2"
+    modCompile "net.fabricmc:fabric-loader:0.7.2+build.174"
 
     include "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.3.1+build.208"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.4.9+build.258-1.15"
     modApi "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
-    modRuntime "com.jamieswhiteshirt:developer-mode:1.0.14"
+    modRuntime("com.jamieswhiteshirt:developer-mode:1.0.15") {
+        exclude group: "net.fabricmc.fabric-api"
+    }
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.2.+"
@@ -55,33 +57,18 @@ afterEvaluate {
 
 task bundleJar(type: Jar) {
     from sourceSets.main.output
-    classifier = "all"
+    archiveClassifier = "all-dev"
 }
 
 task remapBundleJar(type: net.fabricmc.loom.task.RemapJarTask, dependsOn: bundleJar) {
-    output = bundleJar.archivePath
-    bundleJar.classifier = "all-dev"
-    input = bundleJar.archivePath
+    input = bundleJar.archiveFile
     addNestedDependencies = true
+    archiveClassifier = "all"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
-}
-
-artifacts {
-    archives(sourcesJar) {
-        builtBy remapSourcesJar
-    }
-    archives(remapBundleJar.output) {
-        builtBy remapBundleJar
-    }
-    afterEvaluate {
-        archives(remapJar.output) {
-            builtBy remapJar
-        }
-    }
 }
 
 project.ext.isReleaseVersion = !version.endsWith("-SNAPSHOT")
@@ -90,9 +77,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             afterEvaluate {
-                artifact(remapJar.output) {
-                    builtBy remapJar
-                }
+                artifact remapJar
                 artifact(remapSourcesJar.output) {
                     classifier = "sources"
                     builtBy remapSourcesJar
@@ -144,11 +129,8 @@ curseforge {
         relations {
             requiredDependency "fabric-api"
         }
-        mainArtifact(remapBundleJar.output) {
+        mainArtifact(remapBundleJar) {
             displayName = "Clothesline $project.version"
-        }
-        afterEvaluate {
-            uploadTask.dependsOn(remapBundleJar)
         }
     }
     options {

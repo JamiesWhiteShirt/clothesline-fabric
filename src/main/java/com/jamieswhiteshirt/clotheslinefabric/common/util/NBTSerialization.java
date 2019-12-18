@@ -21,7 +21,7 @@ public class NBTSerialization {
     public static List<BasicPersistentNetwork> readPersistentNetworks(ListTag nbt) {
         BasicPersistentNetwork[] networks = new BasicPersistentNetwork[nbt.size()];
         for (int i = 0; i < nbt.size(); i++) {
-            networks[i] = readPersistentNetwork(nbt.getCompoundTag(i));
+            networks[i] = readPersistentNetwork(nbt.getCompound(i));
         }
         return Arrays.asList(networks);
     }
@@ -91,7 +91,7 @@ public class NBTSerialization {
     public static List<BasicTree.Edge> readBasicTreeEdges(ListTag nbt) {
         BasicTree.Edge[] edges = new BasicTree.Edge[nbt.size()];
         for (int i = 0; i < nbt.size(); i++) {
-            edges[i] = readBasicTreeEdge(nbt.getCompoundTag(i));
+            edges[i] = readBasicTreeEdge(nbt.getCompound(i));
         }
         return Arrays.asList(edges);
     }
@@ -121,7 +121,7 @@ public class NBTSerialization {
     public static List<BasicAttachment> readAttachments(ListTag nbt) {
         BasicAttachment[] attachments = new BasicAttachment[nbt.size()];
         for (int i = 0; i < nbt.size(); i++) {
-            attachments[i] = readAttachment(nbt.getCompoundTag(i));
+            attachments[i] = readAttachment(nbt.getCompound(i));
         }
         return Arrays.asList(attachments);
     }

@@ -10,8 +10,10 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.GlAllocationUtils;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -50,15 +52,16 @@ public class AttachmentRaytraceHit extends NetworkRaytraceHit {
     }
 
     @Override
-    public void renderHighlight(RenderClotheslineNetwork renderClotheslineNetwork, float delta, double x, double y, double z, float r, float g, float b, float a) {
+    public void renderHighlight(RenderClotheslineNetwork renderClotheslineNetwork, MatrixStack matrices, VertexConsumer vertices, float tickDelta, double x, double y, double z, float r, float g, float b, float a) {
         l2w.putIntoBuffer(l2wBuffer); // store in buffer
         l2wBuffer.flip();
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translated(-x, -y, -z);
+        matrices.push();
+        matrices.translate(-x, -y, -z);
+        // TODO: How?
         GlStateManager.multMatrix(l2wBuffer);
-        WorldRenderer.drawShapeOutline(attachmentBox, 0.0D, 0.0D, 0.0D, r, g, b, a);
-        GlStateManager.popMatrix();
+        WorldRenderer.drawBox(matrices, vertices, -0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D, r, g, b, a);
+        matrices.pop();
     }
 
     @Override
