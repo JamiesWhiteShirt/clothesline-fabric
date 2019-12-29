@@ -8,8 +8,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.server.world.ThreadedAnvilChunkStorage;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.VersionedChunkStorage;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -65,7 +65,7 @@ public class ThreadedAnvilChunkStorageMixin extends VersionedChunkStorage {
         ),
         method = "method_18843(Lnet/minecraft/server/world/ChunkHolder;Ljava/util/concurrent/CompletableFuture;JLnet/minecraft/world/chunk/Chunk;)V"
     )
-    private void method_18843(ChunkHolder chunkHolder, CompletableFuture future, long pos, Chunk chunk, CallbackInfo ci) {
+    private void method_18843(ChunkHolder chunkHolder, CompletableFuture<Chunk> future, long pos, Chunk chunk, CallbackInfo ci) {
         ChunkLoadCallback.UNLOAD.invoker().accept(world, chunkHolder.getPos());
     }
 }

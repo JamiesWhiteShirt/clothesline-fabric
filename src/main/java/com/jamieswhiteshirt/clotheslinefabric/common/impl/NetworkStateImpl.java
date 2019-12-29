@@ -3,8 +3,8 @@ package com.jamieswhiteshirt.clotheslinefabric.common.impl;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkState;
 import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 import com.jamieswhiteshirt.clotheslinefabric.api.Tree;
-import com.jamieswhiteshirt.clotheslinefabric.common.util.MathUtil;
 import com.jamieswhiteshirt.clotheslinefabric.api.util.MutableSortedIntMap;
+import com.jamieswhiteshirt.clotheslinefabric.common.util.MathUtil;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.item.ItemStack;
 
@@ -16,7 +16,6 @@ import java.util.List;
  * Performant for manipulation of attachments on the network.
  */
 public final class NetworkStateImpl implements NetworkState {
-
     private int previousShift;
     private int shift;
     private int previousMomentum;
@@ -116,8 +115,8 @@ public final class NetworkStateImpl implements NetworkState {
     }
 
     @Override
-    public double getShift(float delta) {
-        return previousShift + (shift - previousShift) * delta;
+    public float getShift(float tickDelta) {
+        return previousShift + (shift - previousShift) * tickDelta;
     }
 
     @Override
@@ -136,8 +135,8 @@ public final class NetworkStateImpl implements NetworkState {
     }
 
     @Override
-    public double getMomentum(float delta) {
-        return previousMomentum + (momentum - previousMomentum) * delta;
+    public float getMomentum(float tickDelta) {
+        return previousMomentum + (momentum - previousMomentum) * tickDelta;
     }
 
     @Override
@@ -151,8 +150,8 @@ public final class NetworkStateImpl implements NetworkState {
     }
 
     @Override
-    public double offsetToAttachmentKey(double offset, float delta) {
-        return MathUtil.floorMod(offset - getShift(delta), getPathLength());
+    public float offsetToAttachmentKey(float offset, float tickDelta) {
+        return MathUtil.floorMod(offset - getShift(tickDelta), getPathLength());
     }
 
     @Override
@@ -161,7 +160,7 @@ public final class NetworkStateImpl implements NetworkState {
     }
 
     @Override
-    public double attachmentKeyToOffset(double attachmentKey, float delta) {
-        return MathUtil.floorMod(attachmentKey + getShift(delta), getPathLength());
+    public float attachmentKeyToOffset(float attachmentKey, float tickDelta) {
+        return MathUtil.floorMod(attachmentKey + getShift(tickDelta), getPathLength());
     }
 }

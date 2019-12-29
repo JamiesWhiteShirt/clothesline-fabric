@@ -2,8 +2,7 @@ package com.jamieswhiteshirt.clotheslinefabric.client.raytrace;
 
 import com.jamieswhiteshirt.clotheslinefabric.api.Network;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkEdge;
-import com.jamieswhiteshirt.clotheslinefabric.client.LineProjection;
-import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
+import com.jamieswhiteshirt.clotheslinefabric.client.render.ClotheslineRenderer;
 import com.jamieswhiteshirt.clotheslinefabric.common.item.ClotheslineItems;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.MessageChannels;
 import com.jamieswhiteshirt.clotheslinefabric.common.network.message.HitNetworkMessage;
@@ -54,8 +53,8 @@ public class EdgeRaytraceHit extends NetworkRaytraceHit {
     }
 
     @Override
-    public void renderHighlight(RenderClotheslineNetwork renderClotheslineNetwork, MatrixStack matrices, VertexConsumer vertices, float tickDelta, double x, double y, double z, float r, float g, float b, float a) {
-        renderClotheslineNetwork.renderOutline(matrices, vertices, LineProjection.create(edge), x, y, z, r, g, b, a);
+    public void renderHighlight(ClotheslineRenderer clotheslineRenderer, MatrixStack matrices, VertexConsumer vertices, float r, float g, float b, float a) {
+        clotheslineRenderer.renderOutline(matrices, vertices, edge, r, g, b, a);
     }
 
     @Override

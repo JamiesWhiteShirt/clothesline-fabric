@@ -33,7 +33,7 @@ public class NetworkProviderPersistentState extends PersistentState {
             version = tag.getInt("Version");
         }
 
-        if (version < 0 || version > 0) {
+        if (version != 0) {
             Clothesline.LOGGER.error("Invalid save data. Expected Version <= 0, found " + version + ". Discarding save data.");
             return;
         }

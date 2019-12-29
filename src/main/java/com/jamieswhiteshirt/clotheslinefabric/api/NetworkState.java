@@ -91,10 +91,10 @@ public interface NetworkState {
 
     /**
      * Returns the interpolated rotational offset of the clothesline network in attachment units.
-     * @param delta the interpolation parameter
+     * @param tickDelta the interpolation parameter
      * @return the interpolated rotational offset of the clothesline network in attachment units
      */
-    double getShift(float delta);
+    float getShift(float tickDelta);
 
     /**
      * Returns the current rotational momentum of the clothesline network in attachment units per tick.
@@ -116,10 +116,10 @@ public interface NetworkState {
 
     /**
      * Returns the interpolated rotational momentum of the clothesline network in attachment units per tick.
-     * @param delta the interpolation parameter
+     * @param tickDelta the interpolation parameter
      * @return the interpolated rotational momentum of the clothesline network in attachment units per tick
      */
-    double getMomentum(float delta);
+    float getMomentum(float tickDelta);
 
     /**
      * Returns the length of the path in attachment units.
@@ -138,10 +138,10 @@ public interface NetworkState {
      * Returns the interpolated attachment slot of the interpolated traversal position based on the interpolated shift
      * of the clothesline network.
      * @param offset the interpolated traversal position
-     * @param delta the interpolation parameter
+     * @param tickDelta the interpolation parameter
      * @return the interpolated attachment slot
      */
-    double offsetToAttachmentKey(double offset, float delta);
+    float offsetToAttachmentKey(float offset, float tickDelta);
 
     /**
      * Returns the traversal position of the attachment slot based on the current shift of the clothesline network.
@@ -154,8 +154,8 @@ public interface NetworkState {
      * Returns the interpolated traversal position of the interpolated attachment slot based on the interpolated shift
      * of the clothesline network.
      * @param attachmentKey the interpolated attachment slot
-     * @param delta the interpolation parameter
+     * @param tickDelta the interpolation parameter
      * @return the interpolated traversal position
      */
-    double attachmentKeyToOffset(double attachmentKey, float delta);
+    float attachmentKeyToOffset(float attachmentKey, float tickDelta);
 }

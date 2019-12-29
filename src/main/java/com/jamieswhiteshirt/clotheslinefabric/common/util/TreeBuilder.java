@@ -89,8 +89,6 @@ public final class TreeBuilder {
     }
 
     public static TreeBuilder fromAbsolute(Tree tree, MutableSortedIntMap<ItemStack> attachments, int shift) {
-        ArrayList<TreeBuilder.Edge> edges = new ArrayList<>(tree.getEdges().size());
-        edges.sort((a, b) -> DeltaComparator.getInstance().compare(a.delta, b.delta));
         return new TreeBuilder(
             tree.getPos(),
             tree.getEdges().stream()

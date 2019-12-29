@@ -1,9 +1,6 @@
 package com.jamieswhiteshirt.clotheslinefabric.client.render;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.render.*;
-import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -15,10 +12,10 @@ import java.util.List;
 import java.util.Random;
 
 public class ItemModelRenderer {
-    public static void renderModel(BakedModel bakedModel, ModelTransformation.Type modelTransformationType, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public static void renderModel(BakedModel bakedModel, ModelTransformation.Type modelTransformationType, MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
         if (bakedModel.isBuiltin()) return;
 
-        RenderSystem.pushMatrix();
+        matrices.push();
         ModelTransformation modelTransformation = bakedModel.getTransformation();
         modelTransformation.getTransformation(modelTransformationType).apply(false, matrices);
         matrices.translate(-0.5F, -0.5F, -0.5F);
@@ -27,8 +24,6 @@ public class ItemModelRenderer {
             RenderSystem.cullFace(GlStateManager.FaceSides.FRONT);
         } */
 
-        RenderLayer renderLayer = TexturedRenderLayers.getEntityTranslucent();
-        VertexConsumer vertices = ItemRenderer.getArmorVertexConsumer(vertexConsumers, renderLayer, true, false);
         renderModelColored(bakedModel, light, overlay, matrices, vertices);
         matrices.pop();
     }

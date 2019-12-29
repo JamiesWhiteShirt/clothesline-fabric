@@ -4,11 +4,11 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "entity.player.PlayerEntityMixin",
-    "server.world.ServerWorldMixin",
-    "world.WorldMixin",
-    "server.world.ThreadedAnvilChunkStorageMixin",
+    "item.ItemAccessor",
     "server.network.ServerPlayerEntityMixin",
-    "item.ItemAccessor"
+    "server.world.ServerWorldMixin",
+    "server.world.ThreadedAnvilChunkStorageMixin",
+    "world.WorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1

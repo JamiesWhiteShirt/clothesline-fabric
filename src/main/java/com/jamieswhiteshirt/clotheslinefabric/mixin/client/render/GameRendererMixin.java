@@ -6,7 +6,6 @@ import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHit
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.NetworkRaytraceHitEntity;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Ray;
 import com.jamieswhiteshirt.clotheslinefabric.client.raytrace.Raytracing;
-import com.jamieswhiteshirt.clotheslinefabric.client.render.RenderClotheslineNetwork;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
@@ -32,18 +31,18 @@ public class GameRendererMixin {
         ),
         method = "updateTargetedEntity(F)V"
     )
-    private void updateTargetedEntity(float delta, CallbackInfo ci) {
+    private void updateTargetedEntity(float tickDelta, CallbackInfo ci) {
         World world = client.world;
         Entity cameraEntity = client.getCameraEntity();
         HitResult hitResult = client.crosshairTarget;
         if (hitResult != null) {
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
-            Vec3d rayFrom = cameraEntity.getCameraPosVec(delta);
+            Vec3d rayFrom = cameraEntity.getCameraPosVec(tickDelta);
             Vec3d rayTo = hitResult.getPos();
 
             Ray ray = new Ray(rayFrom, rayTo);
 
-            NetworkRaytraceHit hit = Raytracing.raytraceNetworks(manager, ray, ray.lengthSq, delta);
+            NetworkRaytraceHit hit = Raytracing.raytraceNetworks(manager, ray, ray.lengthSq, tickDelta);
             if (hit != null) {
                 NetworkRaytraceHitEntity hitResultEntity = new NetworkRaytraceHitEntity(world, hit);
                 client.crosshairTarget = new EntityHitResult(hitResultEntity);

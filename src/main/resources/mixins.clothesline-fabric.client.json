@@ -3,14 +3,17 @@
   "package": "com.jamieswhiteshirt.clotheslinefabric.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "client.network.ClientPlayerInteractionManagerMixin",
-    "client.world.ClientWorldMixin",
-    "client.render.WorldRendererMixin",
-    "client.render.GameRendererMixin",
-    "client.network.ClientPlayerEntityMixin",
-    "client.render.entity.PlayerEntityRendererMixin",
+    "client.gui.hud.DebugHudMixin",
     "client.gui.hud.InGameHudMixin",
-    "client.gui.hud.DebugHudMixin"
+    "client.network.ClientPlayerEntityMixin",
+    "client.network.ClientPlayerInteractionManagerMixin",
+    "client.render.BufferBuilderStorageMixin",
+    "client.render.GameRendererMixin",
+    "client.render.WorldRendererMixin",
+    "client.render.entity.PlayerEntityRendererMixin",
+    "client.util.math.Matrix3fMixin",
+    "client.util.math.Matrix4fMixin",
+    "client.world.ClientWorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1

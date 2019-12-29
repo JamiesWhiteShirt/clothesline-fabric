@@ -29,7 +29,7 @@ dependencies {
 
     include "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.4.9+build.258-1.15"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.4.19+build.272-1.15"
     modApi "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
     modRuntime("com.jamieswhiteshirt:developer-mode:1.0.15") {
         exclude group: "net.fabricmc.fabric-api"
