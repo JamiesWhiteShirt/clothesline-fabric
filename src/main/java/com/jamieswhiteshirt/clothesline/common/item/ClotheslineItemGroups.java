@@ -6,5 +6,5 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 public class ClotheslineItemGroups {
-    public static final ItemGroup ITEMS = FabricItemGroupBuilder.build(new Identifier("clothesline-fabric", "items"), () -> new ItemStack(ClotheslineItems.CLOTHESLINE));
+    public static final ItemGroup ITEMS = FabricItemGroupBuilder.build(new Identifier("clothesline", "items"), () -> new ItemStack(ClotheslineItems.CLOTHESLINE));
 }

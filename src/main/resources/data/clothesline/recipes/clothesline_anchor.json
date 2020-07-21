@@ -1,7 +1,8 @@
 {
   "type": "crafting_shaped",
   "pattern": [
-    "SIS"
+    "I",
+    "S"
   ],
   "key": {
     "I": {
@@ -12,6 +13,7 @@
     }
   },
   "result": {
-    "item": "clothesline-fabric:crank"
+    "item": "clothesline:clothesline_anchor",
+    "count": 4
   }
 }

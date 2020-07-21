@@ -19,9 +19,9 @@ import java.util.Collections;
 
 @Environment(EnvType.CLIENT)
 public class BakedModels {
-    private static final ModelIdentifier CRANK = new ModelIdentifier(new Identifier("clothesline-fabric", "crank"), "inventory");
-    private static final ModelIdentifier PULLEY_WHEEL = new ModelIdentifier(new Identifier("clothesline-fabric", "pulley_wheel"), "inventory");
-    private static final ModelIdentifier PULLEY_WHEEL_ROPE = new ModelIdentifier(new Identifier("clothesline-fabric", "pulley_wheel_rope"), "inventory");
+    private static final ModelIdentifier CRANK = new ModelIdentifier(new Identifier("clothesline", "crank"), "inventory");
+    private static final ModelIdentifier PULLEY_WHEEL = new ModelIdentifier(new Identifier("clothesline", "pulley_wheel"), "inventory");
+    private static final ModelIdentifier PULLEY_WHEEL_ROPE = new ModelIdentifier(new Identifier("clothesline", "pulley_wheel_rope"), "inventory");
 
     public static BakedModel crank;
     public static BakedModel pulleyWheel;
@@ -36,7 +36,7 @@ public class BakedModels {
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             @Override
             public Identifier getFabricId() {
-                return new Identifier("clothesline-fabric", "models");
+                return new Identifier("clothesline", "models");
             }
 
             @Override

@@ -69,7 +69,7 @@ public class ClotheslineItems {
     }
 
     private static Item register(String id, Item item) {
-        return register(new Identifier("clothesline-fabric", id), item);
+        return register(new Identifier("clothesline", id), item);
     }
 
     private static Item register(Identifier id, Item item) {

@@ -1,0 +1,9 @@
+{
+  "item.clothesline.clothesline": "Clothesline",
+  "item.clothesline.crank": "Crank",
+  "item.clothesline.spinner": "Spinner",
+  "block.clothesline.clothesline_anchor": "Clothesline Anchor",
+  "subtitles.block.clothesline.clothesline_anchor.squeak": "Pulley squeaks",
+  "subtitles.block.clothesline.clothesline_anchor.rope": "Clothesline runs",
+  "itemGroup.clothesline.items": "Clothesline"
+}

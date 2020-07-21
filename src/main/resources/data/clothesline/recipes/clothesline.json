@@ -5,11 +5,11 @@
       "tag": "minecraft:wool"
     },
     {
-      "item": "clothesline-fabric:spinner"
+      "item": "clothesline:spinner"
     }
   ],
   "result": {
-    "item": "clothesline-fabric:clothesline",
+    "item": "clothesline:clothesline",
     "count": 16
   }
 }

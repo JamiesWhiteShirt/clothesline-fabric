@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin extends DrawableHelper {
-    private static final Identifier CLOTHESLINE_GUI_ICONS = new Identifier("clothesline-fabric", "textures/gui/icons.png");
+    private static final Identifier CLOTHESLINE_GUI_ICONS = new Identifier("clothesline", "textures/gui/icons.png");
     private static final int CLOTHESLINE_ICONS_WIDTH = 32, CLOTHESLINE_ICONS_HEIGHT = 16;
 
     private static void drawTexture(MatrixStack matrices, float x, float y, float u, float v, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {

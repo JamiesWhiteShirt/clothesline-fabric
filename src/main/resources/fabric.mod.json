@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "clothesline-fabric",
+  "id": "clothesline",
   "version": "0.1.2",
   "name": "Clothesline",
   "description": "A seamless laundry experience that is definitely not an item transport mod.",
   "authors": [
     "JamiesWhiteShirt"
   ],
-  "icon": "assets/clothesline-fabric/icon.png",
+  "icon": "assets/clothesline/icon.png",
   "contact": {
     "issues": "http://github.com/JamiesWhiteShirt/clothesline-fabric/issues",
     "sources": "http://github.com/JamiesWhiteShirt/clothesline-fabric"
@@ -26,7 +26,7 @@
     "rtree-3i-lite-fabric": ">=0.3.0"
   },
   "mixins": [
-    "mixins.clothesline-fabric.client.json",
-    "mixins.clothesline-fabric.common.json"
+    "mixins.clothesline.client.json",
+    "mixins.clothesline.common.json"
   ]
 }

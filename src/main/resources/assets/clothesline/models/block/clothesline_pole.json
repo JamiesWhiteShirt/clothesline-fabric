@@ -1,9 +1,9 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "clothesline-fabric:blocks/clothesline_pole",
-        "pole": "clothesline-fabric:blocks/clothesline_pole",
-        "pole_bare": "clothesline-fabric:blocks/clothesline_pole_bare"
+        "particle": "clothesline:blocks/clothesline_pole",
+        "pole": "clothesline:blocks/clothesline_pole",
+        "pole_bare": "clothesline:blocks/clothesline_pole_bare"
     },
     "elements": [
         {   "from": [ 7, 0, 7 ],

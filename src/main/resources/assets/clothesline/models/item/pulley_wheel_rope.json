@@ -1,7 +1,7 @@
 {
     "parent": "block/block",
     "textures": {
-        "wheel": "clothesline-fabric:items/pulley_wheel"
+        "wheel": "clothesline:items/pulley_wheel"
     },
     "elements": [
         {   "from": [ 5.5, 7.5, 5.5 ],

@@ -1,0 +1,17 @@
+{
+  "block.clothesline_anchor.squeak": {
+    "subtitle": "subtitles.block.clothesline.clothesline_anchor.squeak",
+    "sounds": [
+      "clothesline:random/squeak_1",
+      "clothesline:random/squeak_2",
+      "clothesline:random/squeak_3",
+      "clothesline:random/squeak_4"
+    ]
+  },
+  "block.clothesline_anchor.rope": {
+    "subtitle": "subtitles.block.clothesline.clothesline_anchor.rope",
+    "sounds": [
+      "clothesline:random/rope_1"
+    ]
+  }
+}

@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 
 @Mixin(ClientWorld.class)
 public abstract class ClientWorldMixin extends World implements NetworkManagerProvider, WorldExtension {
-    private static final Identifier SOUND_KEY = new Identifier("clothesline-fabric", "sound");
+    private static final Identifier SOUND_KEY = new Identifier("clothesline", "sound");
 
     private final NetworkCollection networkCollection = new NetworkCollectionImpl();
     private final NetworkManager networkManager = new ClientNetworkManager((ClientWorld)(Object) this, networkCollection);

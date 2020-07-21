@@ -1,11 +1,11 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "clothesline-fabric:blocks/clothesline_pole",
-        "hook_left": "clothesline-fabric:blocks/clothesline_hook_left",
-        "hook_right": "clothesline-fabric:blocks/clothesline_hook_right",
-        "pole": "clothesline-fabric:blocks/clothesline_pole",
-        "pole_bare": "clothesline-fabric:blocks/clothesline_pole_bare"
+        "particle": "clothesline:blocks/clothesline_pole",
+        "hook_left": "clothesline:blocks/clothesline_hook_left",
+        "hook_right": "clothesline:blocks/clothesline_hook_right",
+        "pole": "clothesline:blocks/clothesline_pole",
+        "pole_bare": "clothesline:blocks/clothesline_pole_bare"
     },
     "elements": [
         {   "from": [ 7, 5, 7 ],

@@ -18,7 +18,7 @@ public class ClotheslineRenderLayers extends RenderLayer {
         .build()
     );
 
-    private static final Identifier CLOTHESLINE_TEXTURE = new Identifier("clothesline-fabric", "textures/misc/clothesline.png");
+    private static final Identifier CLOTHESLINE_TEXTURE = new Identifier("clothesline", "textures/misc/clothesline.png");
     // TODO: What is a reasonable default buffer size?
     private static final RenderLayer CLOTHESLINE = RenderLayer.of("clothesline", CLOTHESLINE_VERTEX_FORMAT, GL11.GL_QUADS, 256, RenderLayer.MultiPhaseParameters.builder()
         .texture(new RenderPhase.Texture(CLOTHESLINE_TEXTURE, false, false))

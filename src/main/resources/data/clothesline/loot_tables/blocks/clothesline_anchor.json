@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "clothesline-fabric:clothesline_anchor"
+          "name": "clothesline:clothesline_anchor"
         }
       ],
       "conditions": [

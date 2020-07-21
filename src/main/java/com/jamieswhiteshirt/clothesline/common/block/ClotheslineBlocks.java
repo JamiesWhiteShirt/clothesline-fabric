@@ -9,7 +9,7 @@ public class ClotheslineBlocks {
     public static final Block CLOTHESLINE_ANCHOR = register("clothesline_anchor", new ClotheslineAnchorBlock(Block.Settings.copy(Blocks.LEVER)));
 
     private static Block register(String id, Block block) {
-        return Registry.register(Registry.BLOCK, new Identifier("clothesline-fabric", id), block);
+        return Registry.register(Registry.BLOCK, new Identifier("clothesline", id), block);
     }
 
     public static void init() { }
