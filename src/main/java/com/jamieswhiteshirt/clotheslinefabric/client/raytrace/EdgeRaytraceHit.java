@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
@@ -42,7 +43,7 @@ public class EdgeRaytraceHit extends NetworkRaytraceHit {
     }
 
     @Override
-    public boolean useItem(PlayerEntity player, Hand hand) {
+    public ActionResult useItem(PlayerEntity player, Hand hand) {
         int offset = (int) Math.round(this.offset);
         Network network = edge.getNetwork();
         int attachmentKey = network.getState().offsetToAttachmentKey(offset);

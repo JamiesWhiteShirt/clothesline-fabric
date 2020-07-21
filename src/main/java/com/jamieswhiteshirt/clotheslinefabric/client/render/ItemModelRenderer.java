@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ItemModelRenderer {
-    public static void renderModel(BakedModel bakedModel, ModelTransformation.Type modelTransformationType, MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
+    public static void renderModel(BakedModel bakedModel, ModelTransformation.Mode modelTransformationType, MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
         if (bakedModel.isBuiltin()) return;
 
         matrices.push();

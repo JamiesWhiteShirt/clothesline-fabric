@@ -1,7 +1,7 @@
 package com.jamieswhiteshirt.clotheslinefabric.mixin.client.util.math;
 
 import com.jamieswhiteshirt.clotheslinefabric.client.Matrix3fExtension;
-import net.minecraft.client.util.math.Matrix3f;
+import net.minecraft.util.math.Matrix3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 

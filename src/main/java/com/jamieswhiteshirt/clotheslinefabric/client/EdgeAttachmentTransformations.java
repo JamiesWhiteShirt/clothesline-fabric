@@ -5,11 +5,11 @@ import com.jamieswhiteshirt.clotheslinefabric.api.NetworkEdge;
 import com.jamieswhiteshirt.clotheslinefabric.api.Path;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.util.math.Matrix3f;
-import net.minecraft.client.util.math.Matrix4f;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Matrix3f;
+import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
 
@@ -103,10 +103,10 @@ public final class EdgeAttachmentTransformations {
         Quaternion rotation = Vector3f.POSITIVE_Y.getDegreesQuaternion(-angleY);
         rotation.hamiltonProduct(Vector3f.POSITIVE_X.getDegreesQuaternion(swingAngle));
 
-        Matrix4f model = Matrix4f.method_24021((float) pos.x, (float) pos.y, (float) pos.z); // translate
-        model.multiply(Matrix4f.method_24019(0.5F, 0.5F, 0.5F)); // scale
+        Matrix4f model = Matrix4f.translate((float) pos.x, (float) pos.y, (float) pos.z);
+        model.multiply(Matrix4f.scale(0.5F, 0.5F, 0.5F));
         model.multiply(rotation);
-        model.multiply(Matrix4f.method_24021(0.0F, -0.5F, 0.0F)); // translate
+        model.multiply(Matrix4f.translate(0.0F, -0.5F, 0.0F));
         return model;
     }
 
@@ -118,10 +118,10 @@ public final class EdgeAttachmentTransformations {
         Quaternion rotation = Vector3f.POSITIVE_X.getDegreesQuaternion(-swingAngle);
         rotation.hamiltonProduct(Vector3f.POSITIVE_Y.getDegreesQuaternion(angleY));
 
-        Matrix4f model = Matrix4f.method_24021(0.0F, 0.5F, 0.0F); // translate
+        Matrix4f model = Matrix4f.translate(0.0F, 0.5F, 0.0F);
         model.multiply(rotation);
-        model.multiply(Matrix4f.method_24019(2.0F, 2.0F, 2.0F)); // scale
-        model.multiply(Matrix4f.method_24021((float) -pos.x, (float) -pos.y, (float) -pos.z)); // translate
+        model.multiply(Matrix4f.scale(2.0F, 2.0F, 2.0F));
+        model.multiply(Matrix4f.translate((float) -pos.x, (float) -pos.y, (float) -pos.z));
         return model;
     }
 
@@ -133,10 +133,10 @@ public final class EdgeAttachmentTransformations {
         Quaternion rotation = Vector3f.POSITIVE_Y.getDegreesQuaternion(-angleY);
         rotation.hamiltonProduct(Vector3f.POSITIVE_X.getDegreesQuaternion(swingAngle));
 
-        Matrix4f model = Matrix4f.method_24021((float) pos.x, (float) pos.y, (float) pos.z); // translate
-        model.multiply(Matrix4f.method_24019(0.5F, 0.5F, 0.5F)); // scale
+        Matrix4f model = Matrix4f.translate((float) pos.x, (float) pos.y, (float) pos.z);
+        model.multiply(Matrix4f.scale(0.5F, 0.5F, 0.5F));
         model.multiply(rotation);
-        model.multiply(Matrix4f.method_24021(0.0F, -0.5F, 0.0F)); // translate
+        model.multiply(Matrix4f.translate(0.0F, -0.5F, 0.0F));
         Matrix3f normal = new Matrix3f(rotation);
         return new Transformation(model, normal);
     }
@@ -149,10 +149,10 @@ public final class EdgeAttachmentTransformations {
         Quaternion rotation = Vector3f.POSITIVE_X.getDegreesQuaternion(-swingAngle);
         rotation.hamiltonProduct(Vector3f.POSITIVE_Y.getDegreesQuaternion(angleY));
 
-        Matrix4f model = Matrix4f.method_24021(0.0F, 0.5F, 0.0F); // translate
+        Matrix4f model = Matrix4f.translate(0.0F, 0.5F, 0.0F);
         model.multiply(rotation);
-        model.multiply(Matrix4f.method_24019(2.0F, 2.0F, 2.0F)); // scale
-        model.multiply(Matrix4f.method_24021((float) -pos.x, (float) -pos.y, (float) -pos.z)); // translate
+        model.multiply(Matrix4f.scale(2.0F, 2.0F, 2.0F));
+        model.multiply(Matrix4f.translate((float) -pos.x, (float) -pos.y, (float) -pos.z));
         Matrix3f normal = new Matrix3f(rotation);
         return new Transformation(model, normal);
     }

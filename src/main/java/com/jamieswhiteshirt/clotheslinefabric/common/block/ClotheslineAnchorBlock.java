@@ -9,7 +9,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -28,8 +27,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
 import javax.annotation.Nullable;
@@ -70,7 +69,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @Deprecated
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext ctx) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ctx) {
         switch (state.get(FACE)) {
             case FLOOR:
                 return DOWN;
@@ -103,11 +102,11 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @Deprecated
     @Override
-    public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
             NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
             manager.breakNode(null, pos);
-            super.onBlockRemoved(state, world, pos, newState, moved);
+            super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
 
@@ -171,7 +170,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     }
 
     @Override
-    public SidedInventory getInventory(BlockState state, IWorld world, BlockPos pos) {
+    public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos) {
         return new ClotheslineAnchorInventory(((NetworkManagerProvider) world).getNetworkManager(), pos);
     }
 
@@ -182,7 +181,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos) {
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
             world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
@@ -223,7 +222,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
 
         @Override
-        public int[] getInvAvailableSlots(Direction direction) {
+        public int[] getAvailableSlots(Direction direction) {
             NetworkNode node = getNetworkNode();
             if (node != null && !node.getNetwork().getState().getPath().isEmpty()) {
                 int attachmentKey = node.getNetwork().getState().offsetToAttachmentKey(node.getPathNode().getOffsetForDelta(direction.getVector()));
@@ -242,7 +241,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
 
         @Override
-        public boolean canInsertInvStack(int slot, ItemStack stack, @Nullable Direction direction) {
+        public boolean canInsert(int slot, ItemStack stack, @Nullable Direction direction) {
             NetworkNode node = getNetworkNode();
             if (node != null) {
                 return node.getNetwork().insertItem(slot, stack, true).isEmpty();
@@ -251,12 +250,12 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
 
         @Override
-        public boolean canExtractInvStack(int slot, ItemStack stack, Direction direction) {
+        public boolean canExtract(int slot, ItemStack stack, Direction direction) {
             return getNetworkNode() != null;
         }
 
         @Override
-        public int getInvSize() {
+        public int size() {
             NetworkNode node = getNetworkNode();
             if (node != null) {
                 return node.getNetwork().getState().getPathLength();
@@ -265,7 +264,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
 
         @Override
-        public boolean isInvEmpty() {
+        public boolean isEmpty() {
             NetworkNode node = getNetworkNode();
             if (node != null) {
                 return node.getNetwork().getState().getAttachments().size() > 0;
@@ -274,7 +273,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
 
         @Override
-        public ItemStack getInvStack(int slot) {
+        public ItemStack getStack(int slot) {
             NetworkNode node = getNetworkNode();
             if (node != null) {
                 return node.getNetwork().getAttachment(slot);
@@ -283,12 +282,12 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
 
         @Override
-        public ItemStack takeInvStack(int slot, int amount) {
-            return removeInvStack(slot);
+        public ItemStack removeStack(int slot, int amount) {
+            return removeStack(slot);
         }
 
         @Override
-        public ItemStack removeInvStack(int slot) {
+        public ItemStack removeStack(int slot) {
             NetworkNode node = getNetworkNode();
             if (node != null) {
                 return node.getNetwork().extractItem(slot, false);
@@ -297,7 +296,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
 
         @Override
-        public void setInvStack(int slot, ItemStack stack) {
+        public void setStack(int slot, ItemStack stack) {
             NetworkNode node = getNetworkNode();
             if (node != null) {
                 node.getNetwork().insertItem(slot, stack, false);
@@ -308,7 +307,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         public void markDirty() { }
 
         @Override
-        public boolean canPlayerUseInv(PlayerEntity var1) {
+        public boolean canPlayerUse(PlayerEntity var1) {
             return false;
         }
 
@@ -318,7 +317,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         }
 
         @Override
-        public int getInvMaxStackAmount() {
+        public int getMaxCountPerStack() {
             return 1;
         }
     }

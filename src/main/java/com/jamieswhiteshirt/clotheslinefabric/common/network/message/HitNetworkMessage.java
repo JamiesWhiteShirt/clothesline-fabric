@@ -1,7 +1,7 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.network.message;
 
 import com.jamieswhiteshirt.clotheslinefabric.common.util.PacketByteBufSerialization;
-import net.minecraft.util.PacketByteBuf;
+import net.minecraft.network.PacketByteBuf;
 
 public class HitNetworkMessage {
     public final int networkId;

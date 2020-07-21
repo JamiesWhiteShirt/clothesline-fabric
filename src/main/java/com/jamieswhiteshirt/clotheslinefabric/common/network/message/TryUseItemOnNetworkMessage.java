@@ -1,8 +1,8 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.network.message;
 
 import com.jamieswhiteshirt.clotheslinefabric.common.util.PacketByteBufSerialization;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Hand;
-import net.minecraft.util.PacketByteBuf;
 
 public class TryUseItemOnNetworkMessage {
     public final Hand hand;

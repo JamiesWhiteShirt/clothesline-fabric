@@ -3,7 +3,7 @@ package com.jamieswhiteshirt.clotheslinefabric.mixin.world;
 import com.jamieswhiteshirt.clotheslinefabric.api.Line;
 import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityContext;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
@@ -14,14 +14,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(World.class)
 public abstract class WorldMixin implements CollisionView, NetworkManagerProvider {
     @Override
-    public boolean canPlace(BlockState state, BlockPos pos, EntityContext entityContext) {
-        if (CollisionView.super.canPlace(state, pos, entityContext)) {
+    public boolean canPlace(BlockState state, BlockPos pos, ShapeContext shapeContext) {
+        if (CollisionView.super.canPlace(state, pos, shapeContext)) {
             VoxelShape shape = state.getCollisionShape(this, pos);
             if (!shape.isEmpty()) {
                 net.minecraft.util.math.Box bb = shape.offset(pos.getX(), pos.getY(), pos.getZ()).getBoundingBox();
                 com.jamieswhiteshirt.rtree3i.Box box = com.jamieswhiteshirt.rtree3i.Box.create(
-                    MathHelper.floor(bb.x1), MathHelper.floor(bb.y1), MathHelper.floor(bb.z1),
-                    MathHelper.ceil(bb.x2), MathHelper.ceil(bb.y2), MathHelper.ceil(bb.z2)
+                    MathHelper.floor(bb.minX), MathHelper.floor(bb.minY), MathHelper.floor(bb.minZ),
+                    MathHelper.ceil(bb.maxX), MathHelper.ceil(bb.maxY), MathHelper.ceil(bb.maxZ)
                 );
                 boolean intersects = getNetworkManager().getNetworks().getEdges()
                     .values(box::intersectsClosed)

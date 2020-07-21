@@ -88,7 +88,7 @@ public final class ClotheslineRenderer {
         // Select all entries in the node map intersecting with the camera frustum
         Selection<NetworkNode> nodes = nodesMap
             .values(box -> frustum.isVisible(new Box(box.x1(), box.y1(), box.z1(), box.x2(), box.y2(), box.z2())));
-        VertexConsumer anchorVertices = vertexConsumers.getBuffer(TexturedRenderLayers.getEntityTranslucent());
+        VertexConsumer anchorVertices = vertexConsumers.getBuffer(TexturedRenderLayers.getEntityTranslucentCull());
 
         nodes.forEach(node -> {
             BlockPos pos = node.getPathNode().getPos();
@@ -111,16 +111,16 @@ public final class ClotheslineRenderer {
 
             matrices.push();
             matrices.scale(2.0F, 2.0F, 2.0F);
-            ItemModelRenderer.renderModel(BakedModels.pulleyWheel, ModelTransformation.Type.FIXED, matrices, anchorVertices, light, OverlayTexture.DEFAULT_UV);
+            ItemModelRenderer.renderModel(BakedModels.pulleyWheel, ModelTransformation.Mode.FIXED, matrices, anchorVertices, light, OverlayTexture.DEFAULT_UV);
             if (!node.getNetwork().getState().getTree().isEmpty()) {
-                ItemModelRenderer.renderModel(BakedModels.pulleyWheelRope, ModelTransformation.Type.FIXED, matrices, anchorVertices, light, OverlayTexture.DEFAULT_UV);
+                ItemModelRenderer.renderModel(BakedModels.pulleyWheelRope, ModelTransformation.Mode.FIXED, matrices, anchorVertices, light, OverlayTexture.DEFAULT_UV);
             }
             matrices.pop();
 
             if (state.get(ClotheslineAnchorBlock.CRANK)) {
                 matrices.push();
                 matrices.translate(0.0F, 4.0F / 16.0F, 0.0F);
-                ItemModelRenderer.renderModel(BakedModels.crank, ModelTransformation.Type.FIXED, matrices, anchorVertices, light, OverlayTexture.DEFAULT_UV);
+                ItemModelRenderer.renderModel(BakedModels.crank, ModelTransformation.Mode.FIXED, matrices, anchorVertices, light, OverlayTexture.DEFAULT_UV);
                 matrices.pop();
             }
 
@@ -170,7 +170,7 @@ public final class ClotheslineRenderer {
 
                     matrices.push();
                     l2w.apply(matrices);
-                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Type.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
                     matrices.pop();
                 }
             }
@@ -196,7 +196,7 @@ public final class ClotheslineRenderer {
         matrices.multiply(rotation);
         matrices.scale(-0.025F, -0.025F, 0.025F);
 
-        float x = -textRenderer.getStringWidth(msg) / 2.0F;
+        float x = -textRenderer.getWidth(msg) / 2.0F;
         float y = 0.0F;
         float textBackgroundOpacity = MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25F);
         int color = 0x20FFFFFF;

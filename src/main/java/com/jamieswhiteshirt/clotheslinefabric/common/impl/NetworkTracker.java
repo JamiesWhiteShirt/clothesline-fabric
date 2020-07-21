@@ -23,7 +23,7 @@ public final class NetworkTracker<T> implements NetworkListener {
 
     @Override
     public void onAttachmentChanged(Network network, int attachmentKey, ItemStack previousStack, ItemStack newStack) {
-        if (!ItemStack.areEqualIgnoreDamage(previousStack, newStack)) {
+        if (!ItemStack.areEqual(previousStack, newStack)) {
             for (T watcher : watchers.elementSet()) {
                 messenger.setAttachment(watcher, network, attachmentKey, newStack);
             }

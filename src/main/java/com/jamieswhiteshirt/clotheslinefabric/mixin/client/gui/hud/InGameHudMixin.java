@@ -9,11 +9,13 @@ import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
@@ -28,16 +30,17 @@ public abstract class InGameHudMixin extends DrawableHelper {
     private static final Identifier CLOTHESLINE_GUI_ICONS = new Identifier("clothesline-fabric", "textures/gui/icons.png");
     private static final int CLOTHESLINE_ICONS_WIDTH = 32, CLOTHESLINE_ICONS_HEIGHT = 16;
 
-    private static void drawTexturedRect(float x, float y, float uMin, float vMin, int width, int height, float vSize, float uSize) {
-        float vScale = 1.0F / vSize;
-        float uScale = 1.0F / uSize;
+    private static void drawTexture(MatrixStack matrices, float x, float y, float u, float v, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
+        Matrix4f matrix = matrices.peek().getModel();
+        float uScale = 1.0F / textureWidth;
+        float vScale = 1.0F / textureHeight;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_TEXTURE);
-        bufferBuilder.vertex(x, y + height, 0.0D).texture(uMin * vScale, (vMin + height) * uScale).next();
-        bufferBuilder.vertex(x + width, y + height, 0.0D).texture((uMin + width) * vScale, (vMin + height) * uScale).next();
-        bufferBuilder.vertex(x + width, y, 0.0D).texture((uMin + width) * vScale, vMin * uScale).next();
-        bufferBuilder.vertex(x, y, 0.0D).texture(uMin * vScale, vMin * uScale).next();
+        bufferBuilder.vertex(matrix, x, y + regionHeight, 0.0F).texture(u * uScale, (v + regionHeight) * vScale).next();
+        bufferBuilder.vertex(matrix, x + regionWidth, y + regionHeight, 0.0F).texture((u + regionWidth) * uScale, (v + regionHeight) * vScale).next();
+        bufferBuilder.vertex(matrix, x + regionWidth, y, 0.0F).texture((u + regionWidth) * uScale, v * vScale).next();
+        bufferBuilder.vertex(matrix, x, y, 0.0F).texture(u * uScale, v * vScale).next();
         tessellator.draw();
     }
 
@@ -50,12 +53,12 @@ public abstract class InGameHudMixin extends DrawableHelper {
     @Inject(
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/hud/InGameHud;blit(IIIIII)V",
+            target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V",
             ordinal = 0
         ),
-        method = "renderCrosshair()V"
+        method = "renderCrosshair(Lnet/minecraft/client/util/math/MatrixStack;)V"
     )
-    private void renderCrosshair(CallbackInfo ci) {
+    private void renderCrosshair(MatrixStack matrices, CallbackInfo ci) {
         PlayerEntity player = getCameraPlayer();
         HitResult hitResult = client.crosshairTarget;
         if (player != null && hitResult != null) {
@@ -66,8 +69,8 @@ public abstract class InGameHudMixin extends DrawableHelper {
                     Vec3d hitVec = hitResult.getPos();
                     int offset = ClotheslineAnchorBlock.getCrankMultiplier(pos, hitVec.x, hitVec.z, player) * -8;
                     client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
-                    drawTexturedRect(scaledWidth / 2.0F - 7.5F + offset, scaledHeight / 2.0F - 7.5F, 8 + offset, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
-                    client.getTextureManager().bindTexture(GUI_ICONS_LOCATION);
+                    drawTexture(matrices, scaledWidth / 2.0F - 7.5F + offset, scaledHeight / 2.0F - 7.5F, 8 + offset, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
+                    client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
                 }
             }
         }

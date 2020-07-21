@@ -3,7 +3,7 @@ package com.jamieswhiteshirt.clotheslinefabric.util;
 import com.jamieswhiteshirt.clotheslinefabric.common.util.BasicNetwork;
 import com.jamieswhiteshirt.clotheslinefabric.common.util.PacketByteBufSerialization;
 import io.netty.buffer.Unpooled;
-import net.minecraft.util.PacketByteBuf;
+import net.minecraft.network.PacketByteBuf;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

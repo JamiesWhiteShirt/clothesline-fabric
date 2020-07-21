@@ -2,6 +2,7 @@ package com.jamieswhiteshirt.clotheslinefabric.api;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 
@@ -56,7 +57,7 @@ public interface Network {
      * @param attachmentKey the attachment key
      * @return true if the interaction should prevent other interactions triggering, otherwise false
      */
-    boolean useItem(PlayerEntity player, Hand hand, int attachmentKey);
+    ActionResult useItem(PlayerEntity player, Hand hand, int attachmentKey);
 
     /**
      * Called when a player punches an attachment at the specified attachment key.

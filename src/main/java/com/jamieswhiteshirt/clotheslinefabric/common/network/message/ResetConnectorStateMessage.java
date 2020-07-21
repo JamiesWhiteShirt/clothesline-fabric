@@ -1,6 +1,6 @@
 package com.jamieswhiteshirt.clotheslinefabric.common.network.message;
 
-import net.minecraft.util.PacketByteBuf;
+import net.minecraft.network.PacketByteBuf;
 
 public class ResetConnectorStateMessage {
     public final int entityId;

@@ -37,7 +37,7 @@ class NetworkTest {
     }
 
     void assertItemStacksEqual(ItemStack expected, ItemStack actual) {
-        Assertions.assertTrue(ItemStack.areEqualIgnoreDamage(expected, actual));
+        Assertions.assertTrue(ItemStack.areEqual(expected, actual));
     }
 
     @Test
@@ -74,7 +74,7 @@ class NetworkTest {
     }
 
     ArgumentMatcher<ItemStack> itemStackEquals(ItemStack expected) {
-        return actual -> ItemStack.areEqualIgnoreDamage(actual, expected);
+        return actual -> ItemStack.areEqual(actual, expected);
     }
 
     @Test

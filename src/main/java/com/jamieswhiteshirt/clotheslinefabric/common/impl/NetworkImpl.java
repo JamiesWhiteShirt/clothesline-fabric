@@ -7,6 +7,7 @@ import com.jamieswhiteshirt.clotheslinefabric.internal.PersistentNetwork;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -50,15 +51,15 @@ public final class NetworkImpl implements Network {
     }
 
     @Override
-    public boolean useItem(PlayerEntity player, Hand hand, int attachmentKey) {
+    public ActionResult useItem(PlayerEntity player, Hand hand, int attachmentKey) {
         ItemStack stack = player.getStackInHand(hand);
         if (!stack.isEmpty()) {
             if (state.getAttachment(attachmentKey).isEmpty()) {
                 player.setStackInHand(hand, insertItem(attachmentKey, stack, false));
-                return true;
+                return ActionResult.success(player.world.isClient);
             }
         }
-        return false;
+        return ActionResult.PASS;
     }
 
     @Override

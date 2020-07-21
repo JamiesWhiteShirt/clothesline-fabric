@@ -14,6 +14,7 @@ import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
 @Environment(EnvType.CLIENT)
@@ -38,8 +39,8 @@ public class AttachmentRaytraceHit extends NetworkRaytraceHit {
     }
 
     @Override
-    public boolean useItem(PlayerEntity player, Hand hand) {
-        return false;
+    public ActionResult useItem(PlayerEntity player, Hand hand) {
+        return ActionResult.PASS;
     }
 
     @Override

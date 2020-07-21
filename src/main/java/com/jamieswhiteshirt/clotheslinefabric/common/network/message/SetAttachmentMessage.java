@@ -2,7 +2,7 @@ package com.jamieswhiteshirt.clotheslinefabric.common.network.message;
 
 import com.jamieswhiteshirt.clotheslinefabric.common.util.BasicAttachment;
 import com.jamieswhiteshirt.clotheslinefabric.common.util.PacketByteBufSerialization;
-import net.minecraft.util.PacketByteBuf;
+import net.minecraft.network.PacketByteBuf;
 
 public class SetAttachmentMessage {
     public final int networkId;
