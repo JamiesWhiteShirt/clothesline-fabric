@@ -14,10 +14,10 @@
   },
   "entrypoints": {
     "main": [
-      "com.jamieswhiteshirt.clotheslinefabric.Clothesline"
+      "com.jamieswhiteshirt.clothesline.Clothesline"
     ],
     "client": [
-      "com.jamieswhiteshirt.clotheslinefabric.client.ClotheslineClient"
+      "com.jamieswhiteshirt.clothesline.client.ClotheslineClient"
     ]
   },
   "depends": {

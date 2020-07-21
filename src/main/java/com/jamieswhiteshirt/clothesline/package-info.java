@@ -1,0 +1,4 @@
+@ParametersAreNonnullByDefault
+package com.jamieswhiteshirt.clothesline;
+
+import javax.annotation.ParametersAreNonnullByDefault;

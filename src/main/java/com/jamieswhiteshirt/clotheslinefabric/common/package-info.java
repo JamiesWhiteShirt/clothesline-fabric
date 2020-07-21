@@ -1,4 +1,0 @@
-@ParametersAreNonnullByDefault
-package com.jamieswhiteshirt.clotheslinefabric.common;
-
-import javax.annotation.ParametersAreNonnullByDefault;

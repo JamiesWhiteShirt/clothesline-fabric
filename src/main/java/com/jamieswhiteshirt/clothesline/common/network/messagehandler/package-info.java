@@ -1,0 +1,4 @@
+@ParametersAreNonnullByDefault
+package com.jamieswhiteshirt.clothesline.common.network.messagehandler;
+
+import javax.annotation.ParametersAreNonnullByDefault;

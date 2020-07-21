@@ -25,14 +25,14 @@ dependencies {
 ```
 
 Clothesline has an API, but it is currently unstable and with limited functionality.
-The API is located in the `com.jamieswhiteshirt.clotheslinefabric.api` package.
+The API is located in the `com.jamieswhiteshirt.clothesline.api` package.
 
 To get started, get the network manager of a World by casting to the `NetworkManagerProvider` interface and call `getNetworkManager`.
 Example:
 
 ```java
-import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManagerProvider;
-import com.jamieswhiteshirt.clotheslinefabric.api.NetworkManager;
+import com.jamieswhiteshirt.clothesline.api.NetworkManagerProvider;
+import com.jamieswhiteshirt.clothesline.api.NetworkManager;
 
 class Example {
     void example(World world) {
