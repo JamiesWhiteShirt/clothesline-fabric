@@ -2,6 +2,14 @@
   "required": true,
   "package": "com.jamieswhiteshirt.clothesline.mixin",
   "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "entity.player.PlayerEntityMixin",
+    "item.ItemAccessor",
+    "server.network.ServerPlayerEntityMixin",
+    "server.world.ServerWorldMixin",
+    "server.world.ThreadedAnvilChunkStorageMixin",
+    "world.WorldMixin"
+  ],
   "client": [
     "client.gui.hud.DebugHudMixin",
     "client.gui.hud.InGameHudMixin",
