@@ -43,6 +43,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    workingDir = "run"
 }
 
 processResources {
