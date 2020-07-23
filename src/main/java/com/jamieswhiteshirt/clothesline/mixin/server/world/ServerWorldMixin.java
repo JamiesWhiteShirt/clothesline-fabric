@@ -64,30 +64,30 @@ public abstract class ServerWorldMixin extends World implements NetworkManagerPr
     }
 
     @Override
-    public void clotheslineTick() {
+    public void clothesline$tick() {
         networkManager.update();
         tracker.update();
     }
 
     @Override
-    public void onPlayerWatchChunk(ChunkPos pos, ServerPlayerEntity player) {
+    public void clothesline$onPlayerWatchChunk(ChunkPos pos, ServerPlayerEntity player) {
         chunkWatchers.put(pos, player);
         tracker.onWatchChunk(player, pos);
     }
 
     @Override
-    public void onPlayerUnWatchChunk(ChunkPos pos, ServerPlayerEntity player) {
+    public void clothesline$onPlayerUnWatchChunk(ChunkPos pos, ServerPlayerEntity player) {
         chunkWatchers.remove(pos, player);
         tracker.onUnWatchChunk(player, pos);
     }
 
     @Override
-    public void onChunkLoaded(ChunkPos pos) {
+    public void clothesline$onChunkLoaded(ChunkPos pos) {
         networkProvider.onChunkLoaded(pos);
     }
 
     @Override
-    public void onChunkUnloaded(ChunkPos pos) {
+    public void clothesline$onChunkUnloaded(ChunkPos pos) {
         networkProvider.onChunkUnloaded(pos);
     }
 }

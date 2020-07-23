@@ -17,7 +17,7 @@ public class ResetConnectorStateMessageHandler implements BiConsumer<PacketConte
         Entity entity = msg.entityId != -1 ? ctx.getPlayer().world.getEntityById(msg.entityId) : null;
         if (entity instanceof PlayerEntity) {
             ConnectorHolder connectorHolder = (ConnectorHolder) entity;
-            connectorHolder.setFrom(null);
+            connectorHolder.clothesline$setFrom(null);
         }
     }
 }

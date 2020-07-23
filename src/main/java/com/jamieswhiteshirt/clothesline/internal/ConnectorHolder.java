@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 public interface ConnectorHolder {
     @Nullable
-    ItemUsageContext getFrom();
+    ItemUsageContext clothesline$getFrom();
 
-    void setFrom(@Nullable ItemUsageContext context);
+    void clothesline$setFrom(@Nullable ItemUsageContext context);
 }

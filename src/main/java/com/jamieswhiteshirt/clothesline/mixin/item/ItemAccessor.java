@@ -14,6 +14,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
  */
 @Mixin(Item.class)
 public interface ItemAccessor {
-    @Accessor
-    void setRecipeRemainder(Item item);
+    @Accessor("recipeRemainder")
+    void clothesline$setRecipeRemainder(Item item);
 }

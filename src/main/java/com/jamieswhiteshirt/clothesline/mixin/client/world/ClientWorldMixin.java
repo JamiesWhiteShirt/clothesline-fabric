@@ -49,7 +49,7 @@ public abstract class ClientWorldMixin extends World implements NetworkManagerPr
     }
 
     @Override
-    public void clotheslineTick() {
+    public void clothesline$tick() {
         networkManager.update();
     }
 }

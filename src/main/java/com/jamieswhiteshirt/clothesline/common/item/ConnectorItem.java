@@ -37,7 +37,7 @@ public class ConnectorItem extends Item {
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity entity, int timeLeft) {
         ConnectorHolder connectorHolder = entity instanceof ConnectorHolder ? (ConnectorHolder)entity : null;
         if (connectorHolder != null) {
-            ItemUsageContext from = connectorHolder.getFrom();
+            ItemUsageContext from = connectorHolder.clothesline$getFrom();
             ItemUsageContext to = toStore.get();
             if (from != null && to != null) {
                 behavior.connect(from, to);
@@ -75,7 +75,7 @@ public class ConnectorItem extends Item {
             Packet<ClientPlayPacketListener> packet = Clothesline.createConnectorStatePacket(ctx, player);
             PlayerStream.watching(player).forEach(watcher -> ((ServerPlayerEntity) watcher).networkHandler.sendPacket(packet));
         }
-        connectorHolder.setFrom(ctx);
+        connectorHolder.clothesline$setFrom(ctx);
     }
 
     public interface ConnectorBehavior {

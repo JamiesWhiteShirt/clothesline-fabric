@@ -6,6 +6,6 @@ import net.minecraft.item.Item;
 public class SpinnerItem extends Item {
     public SpinnerItem(Settings settings) {
         super(settings);
-        ((ItemAccessor) this).setRecipeRemainder(this);
+        ((ItemAccessor) this).clothesline$setRecipeRemainder(this);
     }
 }

@@ -32,7 +32,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
     private void render(AbstractClientPlayerEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int overlay, CallbackInfo ci) {
         if (entity.getActiveItem().getItem() != ClotheslineItems.CLOTHESLINE) return;
         ConnectorHolder connector = (ConnectorHolder) entity;
-        ItemUsageContext from = connector.getFrom();
+        ItemUsageContext from = connector.clothesline$getFrom();
         if (from == null) return;
 
         clotheslineRenderer.renderThirdPersonPlayerHeldClothesline(matrices, vertexConsumers, entity, from.getBlockPos(), tickDelta);

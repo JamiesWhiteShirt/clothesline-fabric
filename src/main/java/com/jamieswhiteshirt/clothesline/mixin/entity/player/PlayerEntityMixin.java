@@ -17,12 +17,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Connecto
     }
 
     @Override
-    public ItemUsageContext getFrom() {
+    public ItemUsageContext clothesline$getFrom() {
         return connectFrom;
     }
 
     @Override
-    public void setFrom(ItemUsageContext context) {
+    public void clothesline$setFrom(ItemUsageContext context) {
         this.connectFrom = context;
     }
 }

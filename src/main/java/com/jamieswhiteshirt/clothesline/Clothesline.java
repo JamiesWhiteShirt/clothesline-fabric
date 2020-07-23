@@ -33,15 +33,15 @@ public class Clothesline implements ModInitializer {
         ClotheslineSoundEvents.init();
         ServerMessageHandling.init();
 
-        ServerTickEvents.END_WORLD_TICK.register(world -> ((WorldExtension) world).clotheslineTick());
-        ClientTickEvents.END_WORLD_TICK.register(world -> ((WorldExtension) world).clotheslineTick());
-        ChunkWatchCallback.WATCH.register((world, pos, playerEntity) -> ((ServerWorldExtension) world).onPlayerWatchChunk(pos, playerEntity));
-        ChunkWatchCallback.UNWATCH.register((world, pos, playerEntity) -> ((ServerWorldExtension) world).onPlayerUnWatchChunk(pos, playerEntity));
-        ServerChunkEvents.CHUNK_LOAD.register((world, chunk) -> ((ServerWorldExtension) world).onChunkLoaded(chunk.getPos()));
-        ServerChunkEvents.CHUNK_UNLOAD.register((world, chunk) -> ((ServerWorldExtension) world).onChunkUnloaded(chunk.getPos()));
+        ServerTickEvents.END_WORLD_TICK.register(world -> ((WorldExtension) world).clothesline$tick());
+        ClientTickEvents.END_WORLD_TICK.register(world -> ((WorldExtension) world).clothesline$tick());
+        ChunkWatchCallback.WATCH.register((world, pos, playerEntity) -> ((ServerWorldExtension) world).clothesline$onPlayerWatchChunk(pos, playerEntity));
+        ChunkWatchCallback.UNWATCH.register((world, pos, playerEntity) -> ((ServerWorldExtension) world).clothesline$onPlayerUnWatchChunk(pos, playerEntity));
+        ServerChunkEvents.CHUNK_LOAD.register((world, chunk) -> ((ServerWorldExtension) world).clothesline$onChunkLoaded(chunk.getPos()));
+        ServerChunkEvents.CHUNK_UNLOAD.register((world, chunk) -> ((ServerWorldExtension) world).clothesline$onChunkUnloaded(chunk.getPos()));
         TrackEntityCallback.START.register((player, entity) -> {
             if (entity instanceof ConnectorHolder) {
-                player.networkHandler.sendPacket(createConnectorStatePacket(((ConnectorHolder) entity).getFrom(), entity));
+                player.networkHandler.sendPacket(createConnectorStatePacket(((ConnectorHolder) entity).clothesline$getFrom(), entity));
             }
         });
     }

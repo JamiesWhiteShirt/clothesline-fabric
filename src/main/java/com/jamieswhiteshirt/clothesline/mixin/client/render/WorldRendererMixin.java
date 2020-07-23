@@ -62,7 +62,7 @@ public class WorldRendererMixin {
             PlayerEntity playerEntity = (PlayerEntity) entity;
             if (playerEntity.getActiveItem().getItem() == ClotheslineItems.CLOTHESLINE) {
                 ConnectorHolder connector = (ConnectorHolder) playerEntity;
-                ItemUsageContext from = connector.getFrom();
+                ItemUsageContext from = connector.clothesline$getFrom();
                 if (from != null) {
                     clotheslineRenderer.renderFirstPersonPlayerHeldClothesline(matrices, immediate, playerEntity, from.getBlockPos(), tickDelta);
                 }
