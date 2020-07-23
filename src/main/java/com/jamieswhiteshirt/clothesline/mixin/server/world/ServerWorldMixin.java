@@ -9,6 +9,7 @@ import com.jamieswhiteshirt.clothesline.common.NetworkProviderPersistentState;
 import com.jamieswhiteshirt.clothesline.common.impl.*;
 import com.jamieswhiteshirt.clothesline.internal.NetworkCollectionTracker;
 import com.jamieswhiteshirt.clothesline.internal.NetworkProvider;
+import com.jamieswhiteshirt.clothesline.internal.ServerWorldExtension;
 import com.jamieswhiteshirt.clothesline.internal.WorldExtension;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
@@ -35,7 +36,7 @@ import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
 @Mixin(ServerWorld.class)
-public abstract class ServerWorldMixin extends World implements NetworkManagerProvider, WorldExtension {
+public abstract class ServerWorldMixin extends World implements NetworkManagerProvider, ServerWorldExtension {
     private static final String PERSISTENT_STATE_KEY = "clothesline_provider";
 
     private final SetMultimap<ChunkPos, ServerPlayerEntity> chunkWatchers = MultimapBuilder.hashKeys().linkedHashSetValues().build();

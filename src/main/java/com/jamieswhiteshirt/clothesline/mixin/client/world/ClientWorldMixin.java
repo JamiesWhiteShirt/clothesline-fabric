@@ -10,7 +10,6 @@ import com.jamieswhiteshirt.clothesline.internal.WorldExtension;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.profiler.Profiler;
@@ -52,21 +51,5 @@ public abstract class ClientWorldMixin extends World implements NetworkManagerPr
     @Override
     public void clotheslineTick() {
         networkManager.update();
-    }
-
-    @Override
-    public void onPlayerWatchChunk(ChunkPos pos, ServerPlayerEntity player) {
-    }
-
-    @Override
-    public void onPlayerUnWatchChunk(ChunkPos pos, ServerPlayerEntity player) {
-    }
-
-    @Override
-    public void onChunkLoaded(ChunkPos pos) {
-    }
-
-    @Override
-    public void onChunkUnloaded(ChunkPos pos) {
     }
 }

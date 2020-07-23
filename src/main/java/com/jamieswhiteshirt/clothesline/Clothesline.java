@@ -10,6 +10,7 @@ import com.jamieswhiteshirt.clothesline.common.network.message.ResetConnectorSta
 import com.jamieswhiteshirt.clothesline.common.network.message.SetConnectorStateMessage;
 import com.jamieswhiteshirt.clothesline.common.sound.ClotheslineSoundEvents;
 import com.jamieswhiteshirt.clothesline.internal.ConnectorHolder;
+import com.jamieswhiteshirt.clothesline.internal.ServerWorldExtension;
 import com.jamieswhiteshirt.clothesline.internal.WorldExtension;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -34,10 +35,10 @@ public class Clothesline implements ModInitializer {
 
         ServerTickEvents.END_WORLD_TICK.register(world -> ((WorldExtension) world).clotheslineTick());
         ClientTickEvents.END_WORLD_TICK.register(world -> ((WorldExtension) world).clotheslineTick());
-        ChunkWatchCallback.WATCH.register((world, pos, playerEntity) -> ((WorldExtension) world).onPlayerWatchChunk(pos, playerEntity));
-        ChunkWatchCallback.UNWATCH.register((world, pos, playerEntity) -> ((WorldExtension) world).onPlayerUnWatchChunk(pos, playerEntity));
-        ServerChunkEvents.CHUNK_LOAD.register((world, chunk) -> ((WorldExtension) world).onChunkLoaded(chunk.getPos()));
-        ServerChunkEvents.CHUNK_UNLOAD.register((world, chunk) -> ((WorldExtension) world).onChunkUnloaded(chunk.getPos()));
+        ChunkWatchCallback.WATCH.register((world, pos, playerEntity) -> ((ServerWorldExtension) world).onPlayerWatchChunk(pos, playerEntity));
+        ChunkWatchCallback.UNWATCH.register((world, pos, playerEntity) -> ((ServerWorldExtension) world).onPlayerUnWatchChunk(pos, playerEntity));
+        ServerChunkEvents.CHUNK_LOAD.register((world, chunk) -> ((ServerWorldExtension) world).onChunkLoaded(chunk.getPos()));
+        ServerChunkEvents.CHUNK_UNLOAD.register((world, chunk) -> ((ServerWorldExtension) world).onChunkUnloaded(chunk.getPos()));
         TrackEntityCallback.START.register((player, entity) -> {
             if (entity instanceof ConnectorHolder) {
                 player.networkHandler.sendPacket(createConnectorStatePacket(((ConnectorHolder) entity).getFrom(), entity));
