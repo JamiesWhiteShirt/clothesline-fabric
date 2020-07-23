@@ -8,7 +8,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
-public class InteractionDisplays implements RichInteractionRegistry.Consumer {
+public class RichInteractions implements RichInteractionRegistry.Consumer {
     @Override
     public void accept(RichInteractionRegistry registry) {
         registry.addBlock(ClotheslineBlocks.CLOTHESLINE_ANCHOR, (state, world, pos, player, hitResult) -> {

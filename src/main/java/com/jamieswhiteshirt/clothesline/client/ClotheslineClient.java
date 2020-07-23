@@ -24,7 +24,7 @@ public class ClotheslineClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ClotheslineBlocks.CLOTHESLINE_ANCHOR, RenderLayer.getCutout());
 
         FabricLoader.getInstance()
-            .getEntrypoints("clothesline:interaction_display", RichInteractionRegistry.Consumer.class)
+            .getEntrypoints("clothesline:rich_interaction", RichInteractionRegistry.Consumer.class)
             .forEach(consumer -> consumer.accept(richInteractionRegistry));
     }
 }
