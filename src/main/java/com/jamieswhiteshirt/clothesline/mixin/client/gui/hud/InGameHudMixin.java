@@ -76,12 +76,12 @@ public abstract class InGameHudMixin extends DrawableHelper {
         switch (richInteractionType) {
             case ROTATE_CLOCKWISE:
                 client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
-                drawTexture(matrices, scaledWidth / 2.0F, scaledHeight / 2.0F - 7.5F, 16.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
+                drawTexture(matrices, scaledWidth / 2.0F - 16F, scaledHeight / 2.0F - 7.5F, 0.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
                 client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
                 break;
             case ROTATE_COUNTER_CLOCKWISE:
                 client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
-                drawTexture(matrices, scaledWidth / 2.0F - 16F, scaledHeight / 2.0F - 7.5F, 0.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
+                drawTexture(matrices, scaledWidth / 2.0F, scaledHeight / 2.0F - 7.5F, 16.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
                 client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
                 break;
         }

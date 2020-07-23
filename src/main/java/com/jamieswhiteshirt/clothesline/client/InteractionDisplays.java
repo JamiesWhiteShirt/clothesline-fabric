@@ -15,9 +15,9 @@ public class InteractionDisplays implements RichInteractionRegistry.Consumer {
             if (state.get(ClotheslineAnchorBlock.CRANK)) {
                 int crankMultiplier = ClotheslineAnchorBlock.getCrankMultiplier(pos, hitResult.getPos().x, hitResult.getPos().z, player);
                 switch (crankMultiplier) {
-                    case -1:
-                        return RichInteractionType.ROTATE_CLOCKWISE;
                     case 1:
+                        return RichInteractionType.ROTATE_CLOCKWISE;
+                    case -1:
                         return RichInteractionType.ROTATE_COUNTER_CLOCKWISE;
                 }
             }
