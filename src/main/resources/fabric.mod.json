@@ -27,5 +27,10 @@
   },
   "mixins": [
     "clothesline.mixins.json"
-  ]
+  ],
+  "custom": {
+    "lithium:options": {
+      "mixin.world.player_chunk_tick": false
+    }
+  }
 }
