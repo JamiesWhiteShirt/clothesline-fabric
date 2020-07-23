@@ -18,6 +18,9 @@
     ],
     "client": [
       "com.jamieswhiteshirt.clothesline.client.ClotheslineClient"
+    ],
+    "clothesline:interaction_display": [
+      "com.jamieswhiteshirt.clothesline.client.InteractionDisplays"
     ]
   },
   "depends": {

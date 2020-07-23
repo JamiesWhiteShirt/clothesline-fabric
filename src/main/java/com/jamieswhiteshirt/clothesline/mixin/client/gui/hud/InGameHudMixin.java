@@ -1,7 +1,8 @@
 package com.jamieswhiteshirt.clothesline.mixin.client.gui.hud;
 
-import com.jamieswhiteshirt.clothesline.common.block.ClotheslineAnchorBlock;
-import com.jamieswhiteshirt.clothesline.common.block.ClotheslineBlocks;
+import com.jamieswhiteshirt.clothesline.api.client.RichBlockInteraction;
+import com.jamieswhiteshirt.clothesline.api.client.RichInteractionType;
+import com.jamieswhiteshirt.clothesline.client.ClotheslineClient;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -16,7 +17,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -61,18 +61,29 @@ public abstract class InGameHudMixin extends DrawableHelper {
     private void renderCrosshair(MatrixStack matrices, CallbackInfo ci) {
         PlayerEntity player = getCameraPlayer();
         HitResult hitResult = client.crosshairTarget;
+        RichInteractionType richInteractionType = RichInteractionType.NONE;
         if (player != null && hitResult != null) {
             if (hitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos pos = ((BlockHitResult) hitResult).getBlockPos();
                 BlockState state = client.world.getBlockState(pos);
-                if (state.getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR && state.get(ClotheslineAnchorBlock.CRANK)) {
-                    Vec3d hitVec = hitResult.getPos();
-                    int offset = ClotheslineAnchorBlock.getCrankMultiplier(pos, hitVec.x, hitVec.z, player) * -8;
-                    client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
-                    drawTexture(matrices, scaledWidth / 2.0F - 7.5F + offset, scaledHeight / 2.0F - 7.5F, 8 + offset, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
-                    client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+                RichBlockInteraction richInteraction = ClotheslineClient.richInteractionRegistry.getBlock(state.getBlock());
+                if (richInteraction != null) {
+                    richInteractionType = richInteraction.getRichInteractionType(state, client.world, pos, player, (BlockHitResult) hitResult);
                 }
             }
+        }
+
+        switch (richInteractionType) {
+            case ROTATE_CLOCKWISE:
+                client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
+                drawTexture(matrices, scaledWidth / 2.0F, scaledHeight / 2.0F - 7.5F, 16.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
+                client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+                break;
+            case ROTATE_COUNTER_CLOCKWISE:
+                client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
+                drawTexture(matrices, scaledWidth / 2.0F - 16F, scaledHeight / 2.0F - 7.5F, 0.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
+                client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+                break;
         }
     }
 }
