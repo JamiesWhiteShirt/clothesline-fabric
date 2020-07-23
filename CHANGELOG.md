@@ -1,3 +1,14 @@
+# 0.2.0
+
+- Updated to Minecraft 1.16.1.
+- Changed the mod ID from "clothesline-fabric" to "clothesline". Worlds using pre-0.2.0 versions of Clothesline will be incompatible with 0.2.0 and later versions of Clothesline.
+- API additions:
+    - Added a client API for rich block interactions as seen on Clothesline Anchors with Cranks.
+- Breaking API changes:
+    - Moved the API from the `com.jamieswhiteshirt.clotheslinefabric.api` package to the `com.jamieswhiteshirt.clothesline.api` package.
+    - Changed the return values of `NetworkState` methods with tickDelta parameters from double to float.
+    
+
 # 0.1.2
 
 - Fixed items on clothesline networks rendering with incorrect lighting
