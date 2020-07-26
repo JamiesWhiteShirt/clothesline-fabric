@@ -34,7 +34,6 @@ public class Clothesline implements ModInitializer {
         ServerMessageHandling.init();
 
         ServerTickEvents.END_WORLD_TICK.register(world -> ((WorldExtension) world).clothesline$tick());
-        ClientTickEvents.END_WORLD_TICK.register(world -> ((WorldExtension) world).clothesline$tick());
         ChunkWatchCallback.WATCH.register((world, pos, playerEntity) -> ((ServerWorldExtension) world).clothesline$onPlayerWatchChunk(pos, playerEntity));
         ChunkWatchCallback.UNWATCH.register((world, pos, playerEntity) -> ((ServerWorldExtension) world).clothesline$onPlayerUnWatchChunk(pos, playerEntity));
         ServerChunkEvents.CHUNK_LOAD.register((world, chunk) -> ((ServerWorldExtension) world).clothesline$onChunkLoaded(chunk.getPos()));
