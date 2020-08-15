@@ -23,6 +23,8 @@ import net.minecraft.util.hit.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
+
 public class Clothesline implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger("clothesline");
 
@@ -45,7 +47,7 @@ public class Clothesline implements ModInitializer {
         });
     }
 
-    public static CustomPayloadS2CPacket createConnectorStatePacket(ItemUsageContext ctx, Entity entity) {
+    public static CustomPayloadS2CPacket createConnectorStatePacket(@Nullable ItemUsageContext ctx, Entity entity) {
         if (ctx != null) {
             return MessageChannels.SET_CONNECTOR_STATE.createClientboundPacket(new SetConnectorStateMessage(
                 entity.getEntityId(),
