@@ -1,3 +1,7 @@
+# 0.2.1
+
+- Updated to Minecraft 1.16.2.
+
 # 0.2.0
 
 - Updated to Minecraft 1.16.1.
