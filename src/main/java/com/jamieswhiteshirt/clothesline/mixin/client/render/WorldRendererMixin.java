@@ -57,8 +57,7 @@ public class WorldRendererMixin {
         }
 
         Entity entity = MinecraftClient.getInstance().getCameraEntity();
-        // If not third person
-        if (client.options.perspective <= 0 && entity instanceof PlayerEntity) {
+        if (client.options.getPerspective().isFirstPerson() && entity instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) entity;
             if (playerEntity.getActiveItem().getItem() == ClotheslineItems.CLOTHESLINE) {
                 ConnectorHolder connector = (ConnectorHolder) playerEntity;

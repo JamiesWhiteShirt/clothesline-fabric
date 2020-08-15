@@ -3,7 +3,7 @@ package com.jamieswhiteshirt.clothesline.client.raytrace;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.entity.EntityPickInteractionAware;
-import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public final class NetworkRaytraceHitEntity extends Entity implements EntityPickInteractionAware {
-    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.<NetworkRaytraceHitEntity>create(SpawnGroup.MISC, NetworkRaytraceHitEntity::new).size(EntityDimensions.changing(0.25F, 0.25F)).build();
+    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.<NetworkRaytraceHitEntity>create(SpawnGroup.MISC, NetworkRaytraceHitEntity::new).dimensions(EntityDimensions.changing(0.25F, 0.25F)).build();
 
     private NetworkRaytraceHit hit;
 

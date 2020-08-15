@@ -23,13 +23,13 @@ minecraft {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.16.1"
-    mappings "net.fabricmc:yarn:1.16.1+build.21:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.9.0+build.204"
+    minecraft "com.mojang:minecraft:1.16.2"
+    mappings "net.fabricmc:yarn:1.16.2+build.14:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.9.1+build.205"
 
     include "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.15.1+build.380-1.16.1"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.18.0+build.397-1.16"
     modApi "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
     // modRuntime("com.jamieswhiteshirt:developer-mode:1.0.15") {
     //     exclude group: "net.fabricmc.fabric-api"

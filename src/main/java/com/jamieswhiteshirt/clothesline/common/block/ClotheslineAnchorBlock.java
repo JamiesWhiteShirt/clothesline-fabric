@@ -61,9 +61,9 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         Direction direction = getDirection(state);
         BlockPos neighborPos = pos.offset(direction.getOpposite());
         if (direction.getAxis() == Direction.Axis.Y) {
-            return Block.sideCoversSmallSquare(world, neighborPos, direction);
+            return sideCoversSmallSquare(world, neighborPos, direction);
         } else {
-            return Block.isSideSolidFullSquare(world.getBlockState(neighborPos), world, neighborPos, direction);
+            return world.getBlockState(neighborPos).isSideSolidFullSquare(world, neighborPos, direction);
         }
     }
 
