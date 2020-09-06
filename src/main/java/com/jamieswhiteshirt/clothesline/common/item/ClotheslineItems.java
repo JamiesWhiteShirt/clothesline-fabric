@@ -35,7 +35,7 @@ public class ClotheslineItems {
             if (world.getBlockState(to.getBlockPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR) {
                 Vec3d fromVec = Utility.midVec(from.getBlockPos());
                 Vec3d toVec = Utility.midVec(to.getBlockPos());
-                BlockHitResult hitResult = world.raycats(new RaycastContext(fromVec, toVec, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, to.getPlayer()));
+                BlockHitResult hitResult = world.raycast(new RaycastContext(fromVec, toVec, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, to.getPlayer()));
                 if (hitResult.getType() == HitResult.Type.MISS) {
                     if (manager.connect(from.getBlockPos(), to.getBlockPos())) {
                         if (!Util.isCreativePlayer(to.getPlayer())) {
