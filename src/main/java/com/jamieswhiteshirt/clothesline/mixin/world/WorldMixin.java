@@ -27,7 +27,7 @@ public abstract class WorldMixin implements CollisionView, NetworkManagerProvide
                     .values(box::intersectsClosed)
                     .anyMatch(edge -> {
                         Line line = edge.getPathEdge().getLine();
-                        return shape.rayTrace(line.getFromVec(), line.getToVec(), pos) != null;
+                        return shape.raycast(line.getFromVec(), line.getToVec(), pos) != null;
                     });
                 return !intersects;
             }
