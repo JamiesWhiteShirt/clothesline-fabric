@@ -104,7 +104,7 @@ public class Raytracing {
                 lTo.set((float) viewRay.to.x, (float) viewRay.to.y, (float) viewRay.to.z, 1.0F);
                 lTo.transform(w2l);
 
-                Optional<Vec3d> lResult = ATTACHMENT_BOX.rayTrace(new Vec3d(lFrom.getX(), lFrom.getY(), lFrom.getZ()), new Vec3d(lTo.getX(), lTo.getY(), lTo.getZ()));
+                Optional<Vec3d> lResult = ATTACHMENT_BOX.raycast(new Vec3d(lFrom.getX(), lFrom.getY(), lFrom.getZ()), new Vec3d(lTo.getX(), lTo.getY(), lTo.getZ()));
                 if (lResult.isPresent()) {
                     Vec3d lHit = lResult.get();
                     wHit.set((float) lHit.x, (float) lHit.y, (float) lHit.z, 1.0F);
