@@ -1,5 +1,5 @@
 plugins {
-    id "fabric-loom" version "0.4.33"
+    id "fabric-loom" version "0.5.26"
     id "jacoco"
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "maven-publish"
@@ -23,13 +23,13 @@ minecraft {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.16.2"
-    mappings "net.fabricmc:yarn:1.16.2+build.14:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.9.1+build.205"
+    minecraft "com.mojang:minecraft:1.16.3"
+    mappings "net.fabricmc:yarn:1.16.3+build.11:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.9.3+build.207"
 
     include "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.18.0+build.397-1.16"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.21.0+build.407-1.16"
     modApi "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
     // modRuntime("com.jamieswhiteshirt:developer-mode:1.0.15") {
     //     exclude group: "net.fabricmc.fabric-api"
