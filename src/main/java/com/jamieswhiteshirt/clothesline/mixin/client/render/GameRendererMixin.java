@@ -2,10 +2,10 @@ package com.jamieswhiteshirt.clothesline.mixin.client.render;
 
 import com.jamieswhiteshirt.clothesline.api.NetworkManager;
 import com.jamieswhiteshirt.clothesline.api.NetworkManagerProvider;
-import com.jamieswhiteshirt.clothesline.client.raytrace.NetworkRaytraceHit;
-import com.jamieswhiteshirt.clothesline.client.raytrace.NetworkRaytraceHitEntity;
-import com.jamieswhiteshirt.clothesline.client.raytrace.Ray;
-import com.jamieswhiteshirt.clothesline.client.raytrace.Raytracing;
+import com.jamieswhiteshirt.clothesline.client.raycast.NetworkRaycastHit;
+import com.jamieswhiteshirt.clothesline.client.raycast.NetworkRaycastHitEntity;
+import com.jamieswhiteshirt.clothesline.client.raycast.Ray;
+import com.jamieswhiteshirt.clothesline.client.raycast.Raycasting;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
@@ -42,9 +42,9 @@ public class GameRendererMixin {
 
             Ray ray = new Ray(rayFrom, rayTo);
 
-            NetworkRaytraceHit hit = Raytracing.raytraceNetworks(manager, ray, ray.lengthSq, tickDelta);
+            NetworkRaycastHit hit = Raycasting.raycastNetworks(manager, ray, ray.lengthSq, tickDelta);
             if (hit != null) {
-                NetworkRaytraceHitEntity hitResultEntity = new NetworkRaytraceHitEntity(world, hit);
+                NetworkRaycastHitEntity hitResultEntity = new NetworkRaycastHitEntity(world, hit);
                 client.crosshairTarget = new EntityHitResult(hitResultEntity);
                 client.targetedEntity = hitResultEntity;
             }

@@ -1,4 +1,4 @@
-package com.jamieswhiteshirt.clothesline.client.raytrace;
+package com.jamieswhiteshirt.clothesline.client.raycast;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -18,19 +18,19 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
-public final class NetworkRaytraceHitEntity extends Entity implements EntityPickInteractionAware {
-    private static final EntityType<NetworkRaytraceHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.<NetworkRaytraceHitEntity>create(SpawnGroup.MISC, NetworkRaytraceHitEntity::new).dimensions(EntityDimensions.changing(0.25F, 0.25F)).build();
+public final class NetworkRaycastHitEntity extends Entity implements EntityPickInteractionAware {
+    private static final EntityType<NetworkRaycastHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.<NetworkRaycastHitEntity>create(SpawnGroup.MISC, NetworkRaycastHitEntity::new).dimensions(EntityDimensions.changing(0.25F, 0.25F)).build();
 
-    private NetworkRaytraceHit hit;
+    private NetworkRaycastHit hit;
 
-    public NetworkRaytraceHitEntity(EntityType<NetworkRaytraceHitEntity> entityType, World world) {
+    public NetworkRaycastHitEntity(EntityType<NetworkRaycastHitEntity> entityType, World world) {
         super(entityType, world);
     }
 
     @Override
     protected void initDataTracker() { }
 
-    public NetworkRaytraceHitEntity(World world, NetworkRaytraceHit hit) {
+    public NetworkRaycastHitEntity(World world, NetworkRaycastHit hit) {
         this(ENTITY_TYPE, world);
         this.hit = hit;
     }
@@ -56,7 +56,7 @@ public final class NetworkRaytraceHitEntity extends Entity implements EntityPick
         return hit.useItem(player, hand);
     }
 
-    public NetworkRaytraceHit getHit() {
+    public NetworkRaycastHit getHit() {
         return hit;
     }
 

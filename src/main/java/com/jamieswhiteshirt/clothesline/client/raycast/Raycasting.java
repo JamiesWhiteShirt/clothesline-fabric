@@ -1,4 +1,4 @@
-package com.jamieswhiteshirt.clothesline.client.raytrace;
+package com.jamieswhiteshirt.clothesline.client.raycast;
 
 import com.jamieswhiteshirt.clothesline.api.*;
 import com.jamieswhiteshirt.clothesline.api.util.MutableSortedIntMap;
@@ -20,13 +20,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
-public class Raytracing {
+public class Raycasting {
     private static final float EDGE_X = -2.0F / 16.0F;
     private static final float EDGE_Y = 0.0F;
     private static final net.minecraft.util.math.Box ATTACHMENT_BOX = new net.minecraft.util.math.Box(-0.5D, -0.5D, -0.5D, 0.5D, 0.5D, 0.5D);
 
     @Nullable
-    public static NetworkRaytraceHit raytraceNetworks(NetworkManager manager, Ray ray, double maxDistanceSq, float tickDelta) {
+    public static NetworkRaycastHit raycastNetworks(NetworkManager manager, Ray ray, double maxDistanceSq, float tickDelta) {
         com.jamieswhiteshirt.rtree3i.Box box = com.jamieswhiteshirt.rtree3i.Box.create(
             (int) Math.floor(Math.min(ray.from.x, ray.to.x) - 0.5D),
             (int) Math.floor(Math.min(ray.from.y, ray.to.y) - 0.5D),
@@ -36,10 +36,10 @@ public class Raytracing {
             (int) Math.ceil(Math.max(ray.from.z, ray.to.z) + 0.5D)
         );
 
-        NetworkRaytraceHit hit = null;
+        NetworkRaycastHit hit = null;
         List<NetworkEdge> edges = manager.getNetworks().getEdges().values(box::intersectsClosed).collect(Collectors.toList());
         for (NetworkEdge edge : edges) {
-            NetworkRaytraceHit hitCandidate = raytraceEdge(ray, edge, maxDistanceSq, tickDelta);
+            NetworkRaycastHit hitCandidate = raycastEdge(ray, edge, maxDistanceSq, tickDelta);
             if (hitCandidate != null && hitCandidate.distanceSq < maxDistanceSq) {
                 maxDistanceSq = hitCandidate.distanceSq;
                 hit = hitCandidate;
@@ -50,10 +50,10 @@ public class Raytracing {
     }
 
     @Nullable
-    private static NetworkRaytraceHit raytraceEdge(Ray viewRay, NetworkEdge edge, double maxDistanceSq, float tickDelta) {
+    private static NetworkRaycastHit raycastEdge(Ray viewRay, NetworkEdge edge, double maxDistanceSq, float tickDelta) {
         Path.Edge pathEdge = edge.getPathEdge();
         LineProjection projection = LineProjection.create(edge);
-        NetworkRaytraceHit hit = null;
+        NetworkRaycastHit hit = null;
 
         Vec3d from = projection.projectRUF(EDGE_X, EDGE_Y, 0.0F);
         Vec3d to = projection.projectRUF(EDGE_X, EDGE_Y, (float) edge.getPathEdge().getLength() / AttachmentUnit.UNITS_PER_BLOCK);
@@ -76,7 +76,7 @@ public class Raytracing {
                 double rayLengthSquared = (viewNear.subtract(viewRay.from)).lengthSquared();
                 if (rayLengthSquared < maxDistanceSq) {
                     double offset = pathEdge.getFromOffset() * (1.0D - edgeDeltaScalar) + pathEdge.getToOffset() * edgeDeltaScalar;
-                    hit = new EdgeRaytraceHit(rayLengthSquared, edge, offset);
+                    hit = new EdgeRaycastHit(rayLengthSquared, edge, offset);
                 }
             }
         }
@@ -112,7 +112,7 @@ public class Raytracing {
                     double distanceSq = new Vec3d(wHit.getX(), wHit.getY(), wHit.getZ()).squaredDistanceTo(viewRay.from);
                     if (distanceSq < maxDistanceSq) {
                         maxDistanceSq = distanceSq;
-                        hit = new AttachmentRaytraceHit(distanceSq, edge, attachment.getKey(), new Transformation(l2w, new Matrix3f(l2w)));
+                        hit = new AttachmentRaycastHit(distanceSq, edge, attachment.getKey(), new Transformation(l2w, new Matrix3f(l2w)));
                     }
                 }
             }

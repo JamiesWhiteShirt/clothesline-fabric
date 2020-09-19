@@ -1,8 +1,8 @@
 package com.jamieswhiteshirt.clothesline.mixin.client.gui.hud;
 
 import com.jamieswhiteshirt.clothesline.api.*;
-import com.jamieswhiteshirt.clothesline.client.raytrace.NetworkRaytraceHit;
-import com.jamieswhiteshirt.clothesline.client.raytrace.NetworkRaytraceHitEntity;
+import com.jamieswhiteshirt.clothesline.client.raycast.NetworkRaycastHit;
+import com.jamieswhiteshirt.clothesline.client.raycast.NetworkRaycastHitEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.DebugHud;
@@ -30,8 +30,8 @@ public class DebugHudMixin extends DrawableHelper {
     )
     private void getRightText(CallbackInfoReturnable<List<String>> cir) {
         if (!client.hasReducedDebugInfo()) {
-            if (client.targetedEntity instanceof NetworkRaytraceHitEntity) {
-                NetworkRaytraceHit hit = ((NetworkRaytraceHitEntity) client.targetedEntity).getHit();
+            if (client.targetedEntity instanceof NetworkRaycastHitEntity) {
+                NetworkRaycastHit hit = ((NetworkRaycastHitEntity) client.targetedEntity).getHit();
                 NetworkEdge edge = hit.edge;
                 Network network = edge.getNetwork();
                 cir.getReturnValue().addAll(Arrays.asList(

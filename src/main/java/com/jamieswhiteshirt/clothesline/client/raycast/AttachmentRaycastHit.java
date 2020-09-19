@@ -1,4 +1,4 @@
-package com.jamieswhiteshirt.clothesline.client.raytrace;
+package com.jamieswhiteshirt.clothesline.client.raycast;
 
 import com.jamieswhiteshirt.clothesline.api.Network;
 import com.jamieswhiteshirt.clothesline.api.NetworkEdge;
@@ -18,11 +18,11 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
 @Environment(EnvType.CLIENT)
-public class AttachmentRaytraceHit extends NetworkRaytraceHit {
+public class AttachmentRaycastHit extends NetworkRaycastHit {
     public final int attachmentKey;
     private final Transformation l2wTransformation;
 
-    public AttachmentRaytraceHit(double distanceSq, NetworkEdge edge, int attachmentKey, Transformation l2wTransformation) {
+    public AttachmentRaycastHit(double distanceSq, NetworkEdge edge, int attachmentKey, Transformation l2wTransformation) {
         super(distanceSq, edge);
         this.attachmentKey = attachmentKey;
         this.l2wTransformation = l2wTransformation;

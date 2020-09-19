@@ -1,4 +1,4 @@
-package com.jamieswhiteshirt.clothesline.client.raytrace;
+package com.jamieswhiteshirt.clothesline.client.raycast;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

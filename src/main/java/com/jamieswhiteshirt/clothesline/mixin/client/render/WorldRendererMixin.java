@@ -2,7 +2,7 @@ package com.jamieswhiteshirt.clothesline.mixin.client.render;
 
 import com.jamieswhiteshirt.clothesline.api.NetworkManager;
 import com.jamieswhiteshirt.clothesline.api.NetworkManagerProvider;
-import com.jamieswhiteshirt.clothesline.client.raytrace.NetworkRaytraceHitEntity;
+import com.jamieswhiteshirt.clothesline.client.raycast.NetworkRaycastHitEntity;
 import com.jamieswhiteshirt.clothesline.client.render.ClotheslineRenderLayers;
 import com.jamieswhiteshirt.clothesline.client.render.ClotheslineRenderer;
 import com.jamieswhiteshirt.clothesline.common.item.ClotheslineItems;
@@ -88,9 +88,9 @@ public class WorldRendererMixin {
     )
     private void renderHighlight(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f projectionMatrix, CallbackInfo ci, Profiler profiler, Vec3d cameraPos, double x, double y, double z, Matrix4f modelMatrix, boolean hasCapturedFrustum, Frustum frustum, boolean outlineSomething, VertexConsumerProvider.Immediate immediate) {
         HitResult hitResult = client.crosshairTarget;
-        if (renderBlockOutline && hitResult != null && hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof NetworkRaytraceHitEntity) {
+        if (renderBlockOutline && hitResult != null && hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof NetworkRaycastHitEntity) {
             profiler.swap("outline");
-            NetworkRaytraceHitEntity entity = (NetworkRaytraceHitEntity) ((EntityHitResult) hitResult).getEntity();
+            NetworkRaycastHitEntity entity = (NetworkRaycastHitEntity) ((EntityHitResult) hitResult).getEntity();
             VertexConsumer vertexConsumer = immediate.getBuffer(RenderLayer.getLines());
             matrices.push();
             matrices.translate(-x, -y, -z);

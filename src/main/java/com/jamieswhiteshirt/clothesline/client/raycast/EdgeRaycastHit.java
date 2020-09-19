@@ -1,4 +1,4 @@
-package com.jamieswhiteshirt.clothesline.client.raytrace;
+package com.jamieswhiteshirt.clothesline.client.raycast;
 
 import com.jamieswhiteshirt.clothesline.api.Network;
 import com.jamieswhiteshirt.clothesline.api.NetworkEdge;
@@ -21,10 +21,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
 @Environment(EnvType.CLIENT)
-public class EdgeRaytraceHit extends NetworkRaytraceHit {
+public class EdgeRaycastHit extends NetworkRaycastHit {
     public final double offset;
 
-    public EdgeRaytraceHit(double distanceSq, NetworkEdge edge, double offset) {
+    public EdgeRaycastHit(double distanceSq, NetworkEdge edge, double offset) {
         super(distanceSq, edge);
         this.offset = offset;
     }
