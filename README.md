@@ -20,7 +20,8 @@ repositories {
 }
 
 dependencies {
-    modCompile "com.jamieswhiteshirt:clothesline-fabric:<CLOTHESLINE_FABRIC_VERSION>"
+    modImplementation "com.jamieswhiteshirt:clothesline-fabric:<CLOTHESLINE_FABRIC_VERSION>"
+    modImplementation "com.jamieswhiteshirt:rtree-3i-lite-fabric:0.3.0"
 }
 ```
 
