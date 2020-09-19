@@ -3,7 +3,7 @@ package com.jamieswhiteshirt.clothesline.api;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Manages all the clothesline networks in a world.

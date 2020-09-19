@@ -4,7 +4,7 @@ import com.jamieswhiteshirt.rtree3i.RTreeMap;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;

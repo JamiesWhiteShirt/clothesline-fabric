@@ -3,7 +3,7 @@ package com.jamieswhiteshirt.clothesline.common;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class Util {
     public static boolean isCreativePlayer(@Nullable Entity entity) {

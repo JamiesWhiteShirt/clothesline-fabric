@@ -2,7 +2,7 @@ package com.jamieswhiteshirt.clothesline.internal;
 
 import net.minecraft.item.ItemUsageContext;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public interface ConnectorHolder {
     @Nullable

@@ -16,7 +16,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class ConnectorItem extends Item {
     private final ConnectorBehavior behavior;

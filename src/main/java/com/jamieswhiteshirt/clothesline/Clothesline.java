@@ -23,7 +23,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class Clothesline implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger("clothesline");
