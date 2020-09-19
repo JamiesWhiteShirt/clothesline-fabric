@@ -1,3 +1,9 @@
+# 0.3.0
+
+- API changes:
+    - BREAKING: Removed the restriction of maximum network momentum. The hand cranking interaction instead inherits the former restriction, while third-party interactions must apply their own restrictions (if any).
+    - Changed Nullable annotations from jsr305 to Jetbrains annotations.
+
 # 0.2.1
 
 - Updated to Minecraft 1.16.2.
