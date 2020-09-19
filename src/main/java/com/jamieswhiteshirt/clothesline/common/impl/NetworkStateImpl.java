@@ -126,7 +126,7 @@ public final class NetworkStateImpl implements NetworkState {
 
     @Override
     public void setMomentum(int momentum) {
-        this.momentum = Math.min(Math.max(momentum, -MAX_MOMENTUM), MAX_MOMENTUM);
+        this.momentum = momentum;
     }
 
     @Override

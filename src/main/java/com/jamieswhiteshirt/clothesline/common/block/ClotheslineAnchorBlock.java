@@ -36,6 +36,13 @@ import java.util.List;
 import java.util.Random;
 
 public class ClotheslineAnchorBlock extends WallMountedBlock implements InventoryProvider, Waterloggable {
+    /**
+     * The greatest network momentum that can be achieved by hand cranking relative to the direction the crank is being
+     * operated in. Beyond this maximum momentum, the player cannot increase it and can only slow it down.
+     */
+    private static final int MAX_RELATIVE_HAND_CRANK_MOMENTUM = 30;
+    private static final int HAND_CRANK_IMPULSE = 5;
+
     private static final VoxelShape DOWN  = Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 10.0D);
     private static final VoxelShape UP    = Block.createCuboidShape(6.0D, 4.0D, 6.0D, 10.0D, 16.0D, 10.0D);
     private static final VoxelShape NORTH = Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 12.0D, 16.0D);
@@ -147,9 +154,20 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         if (state.get(CRANK)) {
             NetworkNode node = getNode(world, pos);
             if (node != null) {
-                int momentumDelta = getCrankMultiplier(pos, hitResult.getPos().x, hitResult.getPos().z, player) * 5;
                 NetworkState networkState = node.getNetwork().getState();
-                networkState.setMomentum(networkState.getMomentum() + momentumDelta);
+                int impulseDirection = getCrankMultiplier(pos, hitResult.getPos().x, hitResult.getPos().z, player);
+                if (impulseDirection != 0) {
+                    // Momentum relative to the direction of the impulse
+                    int relativeMomentum = networkState.getMomentum() * impulseDirection;
+                    if (relativeMomentum < MAX_RELATIVE_HAND_CRANK_MOMENTUM) {
+                        // The relative momentum is no larger than the maximum relative momentum achievable by hand
+                        // cranking.
+                        // This means an impulse can be applied, but the relative momentum cannot exceed the maximum
+                        // achievable by hand cranking.
+                        relativeMomentum = Math.min(relativeMomentum + HAND_CRANK_IMPULSE, MAX_RELATIVE_HAND_CRANK_MOMENTUM);
+                    }
+                    networkState.setMomentum(relativeMomentum / impulseDirection);
+                }
             }
             return ActionResult.SUCCESS;
         }
@@ -162,8 +180,8 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         NetworkNode node = getNode(world, pos);
         if (node != null) {
             int momentum = Math.abs(node.getNetwork().getState().getMomentum());
-            float pitch = 0.2F + 0.6F * ((float)momentum / NetworkState.MAX_MOMENTUM) + random.nextFloat() * 0.1F;
-            if (random.nextInt(12 * NetworkState.MAX_MOMENTUM) < momentum) {
+            float pitch = 0.2F + 0.6F * momentum / 30.0F + random.nextFloat() * 0.1F;
+            if (random.nextInt(12 * 30) < momentum) {
                 world.playSound(MinecraftClient.getInstance().player, pos, ClotheslineSoundEvents.BLOCK_CLOTHESLINE_ANCHOR_SQUEAK, SoundCategory.BLOCKS, 0.1F, pitch);
             }
         }
