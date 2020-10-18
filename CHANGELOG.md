@@ -1,3 +1,7 @@
+# 0.3.1
+
+- Fixed an issue where items taken from Clothesline Anchors by automation blocks could be duplicated in some situations.
+
 # 0.3.0
 
 - API changes:
