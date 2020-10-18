@@ -125,8 +125,6 @@ curseforge {
         changelogType = "markdown"
         changelog = file("CHANGELOG.md")
         releaseType = "beta"
-        addGameVersion "1.16"
-        addGameVersion "1.16.1"
         addGameVersion "1.16.2"
         addGameVersion "1.16.3"
         addGameVersion "Fabric"
