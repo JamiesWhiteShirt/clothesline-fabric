@@ -1,0 +1,9 @@
+{
+  "item.clothesline.clothesline": "Wäscheleine",
+  "item.clothesline.crank": "Kurbel",
+  "item.clothesline.spinner": "Schleuder",
+  "block.clothesline.clothesline_anchor": "Wäscheleinen-Anker",
+  "subtitles.block.clothesline.clothesline_anchor.squeak": "Rolle quietscht",
+  "subtitles.block.clothesline.clothesline_anchor.rope": "Wäscheleine läuft",
+  "itemGroup.clothesline.items": "Wäscheleine"
+}
