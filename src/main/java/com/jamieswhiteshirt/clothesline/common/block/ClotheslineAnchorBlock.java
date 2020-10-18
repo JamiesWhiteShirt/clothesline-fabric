@@ -317,7 +317,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
         public void setStack(int slot, ItemStack stack) {
             NetworkNode node = getNetworkNode();
             if (node != null) {
-                node.getNetwork().insertItem(slot, stack, false);
+                node.getNetwork().setAttachment(slot, stack);
             }
         }
 
