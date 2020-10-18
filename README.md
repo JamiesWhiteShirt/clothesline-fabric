@@ -1,5 +1,5 @@
 # Clothesline Fabric
-[![CurseForge Downloads](http://cf.way2muchnoise.eu/clothesline-fabric.svg)](https://minecraft.curseforge.com/projects/clothesline-fabric)
+[![CurseForge Downloads](http://cf.way2muchnoise.eu/clothesline-fabric.svg)](https://www.curseforge.com/minecraft/mc-mods/clothesline-fabric)
 [![Maven Repository](https://img.shields.io/maven-metadata/v/https/maven.jamieswhiteshirt.com/libs-release/com/jamieswhiteshirt/clothesline-fabric/maven-metadata.xml.svg)](https://maven.jamieswhiteshirt.com/libs-release/com/jamieswhiteshirt/clothesline-fabric/)
 
 A seamless laundry experience that is definitely not an item transport mod for [Fabric](https://fabricmc.net/).
