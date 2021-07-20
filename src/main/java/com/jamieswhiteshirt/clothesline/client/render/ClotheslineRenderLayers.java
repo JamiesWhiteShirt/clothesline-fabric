@@ -13,7 +13,7 @@ public class ClotheslineRenderLayers extends RenderLayer {
     private static final VertexFormat CLOTHESLINE_VERTEX_FORMAT = new VertexFormat(ImmutableList.<VertexFormatElement>builder()
         .add(VertexFormats.POSITION_ELEMENT)
         .add(VertexFormats.NORMAL_ELEMENT)
-        .add(VertexFormats.TEXTURE_ELEMENT)
+        .add(VertexFormats.TEXTURE_0_ELEMENT)
         .add(VertexFormats.LIGHT_ELEMENT)
         .build()
     );

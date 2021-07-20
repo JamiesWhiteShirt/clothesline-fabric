@@ -5,7 +5,7 @@ import com.jamieswhiteshirt.clothesline.common.util.BasicPersistentNetwork;
 import com.jamieswhiteshirt.clothesline.common.util.NBTSerialization;
 import com.jamieswhiteshirt.clothesline.internal.NetworkProvider;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.PersistentState;
 
 import java.util.stream.Collectors;
@@ -24,7 +24,7 @@ public class NetworkProviderPersistentState extends PersistentState {
     }
 
     @Override
-    public void fromTag(CompoundTag tag) {
+    public void fromTag(NbtCompound tag) {
         int version;
         if (!tag.contains("Version", NbtType.INT)) {
             Clothesline.LOGGER.warn("Invalid save data. Expected a Version, found no Version. Assuming Version 0.");
@@ -51,7 +51,7 @@ public class NetworkProviderPersistentState extends PersistentState {
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
+    public NbtCompound writeNbt(NbtCompound tag) {
         tag.putInt("Version", 0);
         tag.put("Networks", NBTSerialization.writePersistentNetworks(
             provider.getNetworks().stream()

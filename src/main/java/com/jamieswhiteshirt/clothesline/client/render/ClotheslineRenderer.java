@@ -18,8 +18,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
@@ -43,7 +41,7 @@ public final class ClotheslineRenderer {
         this.client = client;
     }
 
-    private static VertexConsumer posNormal(VertexConsumer vertices, Vector4f pos, Vector3f normal) {
+    private static VertexConsumer posNormal(VertexConsumer vertices, Vector4f pos, Vec3f normal) {
         return vertices.vertex(pos.getX(), pos.getY(), pos.getZ()).normal(normal.getX(), normal.getY(), normal.getZ());
     }
 
@@ -52,7 +50,7 @@ public final class ClotheslineRenderer {
         float vTo = toOffset / AttachmentUnit.UNITS_PER_BLOCK;
         float length = vTo - vFrom;
 
-        Vector3f normal = new Vector3f();
+        Vec3f normal = new Vec3f();
         Vector4f pos = new Vector4f();
 
         for (int side = 0; side < 4; side++) {
@@ -104,10 +102,10 @@ public final class ClotheslineRenderer {
             matrices.push();
             matrices.translate(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
             if (state.get(ClotheslineAnchorBlock.FACE) == WallMountLocation.CEILING) {
-                matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180.0F));
+                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180.0F));
                 crankRotation = -crankRotation;
             }
-            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(crankRotation));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(crankRotation));
 
             matrices.push();
             matrices.scale(2.0F, 2.0F, 2.0F);

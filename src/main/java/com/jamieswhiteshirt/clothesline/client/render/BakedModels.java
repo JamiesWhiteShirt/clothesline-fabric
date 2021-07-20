@@ -45,7 +45,7 @@ public class BakedModels {
             }
 
             @Override
-            public void apply(ResourceManager var1) {
+            public void reload(ResourceManager var1) {
                 BakedModelManager bakedModelManager = MinecraftClient.getInstance().getBakedModelManager();
                 crank = bakedModelManager.getModel(CRANK);
                 pulleyWheel = bakedModelManager.getModel(PULLEY_WHEEL);

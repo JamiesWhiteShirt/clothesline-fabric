@@ -2,23 +2,23 @@ package com.jamieswhiteshirt.clothesline.common.util;
 
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class NBTSerialization {
-    public static ListTag writePersistentNetworks(List<BasicPersistentNetwork> networks) {
-        ListTag nbt = new ListTag();
+    public static NbtList writePersistentNetworks(List<BasicPersistentNetwork> networks) {
+        NbtList nbt = new NbtList();
         for (BasicPersistentNetwork network : networks) {
             nbt.add(writePersistentNetwork(network));
         }
         return nbt;
     }
 
-    public static List<BasicPersistentNetwork> readPersistentNetworks(ListTag nbt) {
+    public static List<BasicPersistentNetwork> readPersistentNetworks(NbtList nbt) {
         BasicPersistentNetwork[] networks = new BasicPersistentNetwork[nbt.size()];
         for (int i = 0; i < nbt.size(); i++) {
             networks[i] = readPersistentNetwork(nbt.getCompound(i));
@@ -26,22 +26,22 @@ public class NBTSerialization {
         return Arrays.asList(networks);
     }
 
-    public static CompoundTag writePersistentNetwork(BasicPersistentNetwork network) {
-        CompoundTag nbt = new CompoundTag();
+    public static NbtCompound writePersistentNetwork(BasicPersistentNetwork network) {
+        NbtCompound nbt = new NbtCompound();
         nbt.putUuid("Uuid", network.getUuid());
         nbt.put("State", writeNetworkState(network.getState()));
         return nbt;
     }
 
-    public static BasicPersistentNetwork readPersistentNetwork(CompoundTag compound) {
+    public static BasicPersistentNetwork readPersistentNetwork(NbtCompound compound) {
         return new BasicPersistentNetwork(
             compound.getUuid("Uuid"),
             readNetworkState(compound.getCompound("State"))
         );
     }
 
-    public static CompoundTag writeNetworkState(BasicNetworkState state) {
-        CompoundTag nbt = new CompoundTag();
+    public static NbtCompound writeNetworkState(BasicNetworkState state) {
+        NbtCompound nbt = new NbtCompound();
         nbt.putInt("Shift", state.getShift());
         nbt.putInt("Momentum", state.getMomentum());
         nbt.put("Tree", writeBasicTree(state.getTree()));
@@ -49,7 +49,7 @@ public class NBTSerialization {
         return nbt;
     }
 
-    public static BasicNetworkState readNetworkState(CompoundTag nbt) {
+    public static BasicNetworkState readNetworkState(NbtCompound nbt) {
         return new BasicNetworkState(
             nbt.getInt("Shift"),
             nbt.getInt("Momentum"),
@@ -58,8 +58,8 @@ public class NBTSerialization {
         );
     }
 
-    public static CompoundTag writeBasicTree(BasicTree tree) {
-        CompoundTag nbt = new CompoundTag();
+    public static NbtCompound writeBasicTree(BasicTree tree) {
+        NbtCompound nbt = new NbtCompound();
         nbt.putInt("x", tree.getPos().getX());
         nbt.putInt("y", tree.getPos().getY());
         nbt.putInt("z", tree.getPos().getZ());
@@ -68,7 +68,7 @@ public class NBTSerialization {
         return nbt;
     }
 
-    public static BasicTree readBasicTree(CompoundTag nbt) {
+    public static BasicTree readBasicTree(NbtCompound nbt) {
         return new BasicTree(
             new BlockPos(
                 nbt.getInt("x"),
@@ -80,15 +80,15 @@ public class NBTSerialization {
         );
     }
 
-    public static ListTag writeBasicTreeEdges(List<BasicTree.Edge> edges) {
-        ListTag nbt = new ListTag();
+    public static NbtList writeBasicTreeEdges(List<BasicTree.Edge> edges) {
+        NbtList nbt = new NbtList();
         for (BasicTree.Edge edge : edges) {
             nbt.add(writeBasicTreeEdge(edge));
         }
         return nbt;
     }
 
-    public static List<BasicTree.Edge> readBasicTreeEdges(ListTag nbt) {
+    public static List<BasicTree.Edge> readBasicTreeEdges(NbtList nbt) {
         BasicTree.Edge[] edges = new BasicTree.Edge[nbt.size()];
         for (int i = 0; i < nbt.size(); i++) {
             edges[i] = readBasicTreeEdge(nbt.getCompound(i));
@@ -96,29 +96,29 @@ public class NBTSerialization {
         return Arrays.asList(edges);
     }
 
-    public static CompoundTag writeBasicTreeEdge(BasicTree.Edge edge) {
-        CompoundTag nbt = new CompoundTag();
+    public static NbtCompound writeBasicTreeEdge(BasicTree.Edge edge) {
+        NbtCompound nbt = new NbtCompound();
         nbt.putInt("Length", edge.getLength());
         nbt.put("Tree", writeBasicTree(edge.getTree()));
         return nbt;
     }
 
-    public static BasicTree.Edge readBasicTreeEdge(CompoundTag nbt) {
+    public static BasicTree.Edge readBasicTreeEdge(NbtCompound nbt) {
         return new BasicTree.Edge(
             nbt.getInt("Length"),
             readBasicTree(nbt.getCompound("Tree"))
         );
     }
 
-    public static ListTag writeAttachments(List<BasicAttachment> attachments) {
-        ListTag nbt = new ListTag();
+    public static NbtList writeAttachments(List<BasicAttachment> attachments) {
+        NbtList nbt = new NbtList();
         for (BasicAttachment attachment : attachments) {
             nbt.add(writeAttachment(attachment));
         }
         return nbt;
     }
 
-    public static List<BasicAttachment> readAttachments(ListTag nbt) {
+    public static List<BasicAttachment> readAttachments(NbtList nbt) {
         BasicAttachment[] attachments = new BasicAttachment[nbt.size()];
         for (int i = 0; i < nbt.size(); i++) {
             attachments[i] = readAttachment(nbt.getCompound(i));
@@ -126,17 +126,17 @@ public class NBTSerialization {
         return Arrays.asList(attachments);
     }
 
-    public static CompoundTag writeAttachment(BasicAttachment attachment) {
-        CompoundTag nbt = new CompoundTag();
+    public static NbtCompound writeAttachment(BasicAttachment attachment) {
+        NbtCompound nbt = new NbtCompound();
         nbt.putInt("Offset", attachment.getKey());
-        attachment.getStack().toTag(nbt);
+        attachment.getStack().writeNbt(nbt);
         return nbt;
     }
 
-    public static BasicAttachment readAttachment(CompoundTag nbt) {
+    public static BasicAttachment readAttachment(NbtCompound nbt) {
         return new BasicAttachment(
             nbt.getInt("Offset"),
-            ItemStack.fromTag(nbt)
+            ItemStack.fromNbt(nbt)
         );
     }
 }

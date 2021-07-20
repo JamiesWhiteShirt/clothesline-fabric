@@ -10,7 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -36,10 +36,10 @@ public final class NetworkRaycastHitEntity extends Entity implements EntityPickI
     }
 
     @Override
-    protected void readCustomDataFromTag(CompoundTag var1) { }
+    protected void readCustomDataFromNbt(NbtCompound var1) { }
 
     @Override
-    protected void writeCustomDataToTag(CompoundTag var1) { }
+    protected void writeCustomDataToNbt(NbtCompound var1) { }
 
     @Override
     public boolean handleAttack(Entity entity) {
